@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — SmartFlow</title>
+  <meta name="description" content="Contactez l'équipe SmartFlow pour devenir ville pilote, soutenir le projet ou en savoir plus." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230D1F16'/><path d='M22 8C13 10 10.9 16.17 8.82 21.34L10.71 22l1-2.3A4.49 4.49 0 0 0 13 20C24 20 27 3 27 3c-1 2-8 4-8 4S12.98 4.2 22 8z' fill='%2300C9A7'/></svg>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Contact — SmartFlow" />
+  <meta property="og:description" content="Votre ville peut respirer mieux. Contactez l'équipe SmartFlow." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Contact SmartFlow" />
+  <meta name="twitter:description" content="Devenez ville pilote ou partenaire de SmartFlow." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg-main:#0D1F16;--bg-secondary:#1C3829;--accent:#00C9A7;--accent2:#52B788;--text:#FFFFFF;--text-muted:#A8D5C2;--highlight:#00B4D8;--bg-darkest:#0A1510}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+    h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15}
+    #cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen}
+    #cursor-ring{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);opacity:.45;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,31,22,.93);backdrop-filter:blur(18px);box-shadow:0 1px 0 rgba(0,201,167,.12);transition:background .4s,backdrop-filter .4s}
+    .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--accent);text-decoration:none}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+    .nav-cta{background:var(--accent);color:var(--bg-main)!important;font-weight:700!important;padding:8px 20px;border-radius:999px}
+    @media(max-width:768px){.nav-links{display:none}#navbar{padding:0 20px}}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:1001}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--accent);border-radius:2px;transition:transform .3s,opacity .3s}
+    @media(max-width:768px){.hamburger{display:flex}}
+    .mobile-nav{display:none;position:fixed;inset:0;z-index:997;background:rgba(10,21,16,.97);backdrop-filter:blur(24px);flex-direction:column;align-items:center;justify-content:center;gap:40px}
+    .mobile-nav.open{display:flex}
+    .mobile-nav a{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,6vw,36px);font-weight:700;color:#fff;text-decoration:none;transition:color .2s}
+    .mobile-nav a:hover,.mobile-nav a.active{color:var(--accent)}
+    .mobile-nav-close{position:absolute;top:24px;right:24px;background:none;border:none;cursor:pointer;padding:8px}
+    .mobile-nav-close svg{width:28px;height:28px;stroke:var(--accent);stroke-width:2;stroke-linecap:round;fill:none}
+    @media(hover:none){body{cursor:auto!important}#cursor,#cursor-ring{display:none!important}}
+    a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+    @media(prefers-reduced-motion:reduce){.leaf-particle{animation:none!important;opacity:0!important}.reveal{opacity:1!important;transform:none!important}*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+    /* Page */
+    .contact-page{min-height:100vh;padding:120px 24px 80px;background:var(--bg-secondary);position:relative;overflow:hidden}
+    .contact-page::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(0,201,167,.06) 0%,transparent 65%);pointer-events:none}
+
+    /* Header */
+    .contact-inner{max-width:680px;margin:0 auto;position:relative;z-index:1}
+    .contact-header{text-align:center;margin-bottom:48px}
+    .contact-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
+    .contact-title{font-size:clamp(28px,5vw,48px);font-weight:800;color:#fff;margin-bottom:12px;letter-spacing:-0.02em}
+    .contact-title span{color:var(--accent)}
+    .contact-subtitle{color:var(--text-muted);font-size:16px;max-width:480px;margin:0 auto;line-height:1.65}
+
+    /* Form card */
+    .contact-form-wrap{background:rgba(13,31,22,.75);border:1px solid rgba(0,201,167,.14);border-radius:24px;padding:44px 40px}
+    @media(max-width:540px){.contact-form-wrap{padding:28px 20px;border-radius:18px}}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:480px){.form-row{grid-template-columns:1fr}}
+    .form-group{margin-bottom:18px}
+    .form-label{display:block;font-size:13px;font-weight:500;color:var(--text-muted);margin-bottom:7px}
+    .form-input,.form-textarea{width:100%;background:rgba(28,56,41,.45);border:1px solid rgba(0,201,167,.16);border-radius:10px;padding:12px 15px;color:#fff;font-family:'Inter',sans-serif;font-size:15px;outline:none;transition:border-color .2s,box-shadow .2s}
+    .form-input:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,201,167,.09)}
+    .form-input::placeholder,.form-textarea::placeholder{color:rgba(168,213,194,.35)}
+    .form-textarea{resize:vertical;min-height:100px}
+
+    /* Interest pills */
+    .interest-label{font-size:13px;font-weight:500;color:var(--text-muted);margin-bottom:10px;display:block}
+    .interest-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+    .pill-item{position:relative}
+    .pill-item input[type="checkbox"]{position:absolute;opacity:0;width:0;height:0}
+    .pill-item label{display:inline-block;padding:8px 16px;border-radius:999px;border:1px solid rgba(0,201,167,.2);background:rgba(0,201,167,.04);color:var(--text-muted);font-size:13px;font-weight:500;cursor:pointer;transition:background .2s,border-color .2s,color .2s;user-select:none}
+    .pill-item input:checked+label{background:rgba(0,201,167,.16);border-color:var(--accent);color:#fff}
+    .pill-item label:hover{background:rgba(0,201,167,.09);border-color:rgba(0,201,167,.35)}
+
+    /* Submit */
+    .btn-submit{width:100%;background:var(--accent);color:var(--bg-main);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;padding:15px 32px;border-radius:999px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn-submit:hover{transform:scale(1.03);box-shadow:0 0 28px rgba(0,201,167,.45)}
+    .btn-submit svg{width:18px;height:18px}
+
+    /* Errors */
+    .form-error{font-size:12px;color:#FF6B6B;margin-top:5px;display:none}
+
+    /* Success */
+    .form-success{display:none;text-align:center;padding:56px 24px}
+    .form-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(0,201,167,.12);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .form-success-icon svg{width:30px;height:30px;stroke:var(--accent)}
+    .form-success-title{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:var(--accent);margin-bottom:10px}
+    .form-success-text{color:var(--text-muted);font-size:15px}
+
+    /* Direct contact — below form */
+    .contact-direct{margin-top:28px;text-align:center;font-size:13px;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px}
+    .contact-direct a{color:var(--accent2);text-decoration:none;transition:color .2s}
+    .contact-direct a:hover{color:var(--accent)}
+    .contact-sep{color:rgba(0,201,167,.25)}
+
+    .wave{display:block;width:100%;overflow:hidden;line-height:0}
+    .wave svg{display:block}
+    footer{background:var(--bg-darkest);padding:60px 24px 40px;border-top:1px solid rgba(0,201,167,.08)}
+    .footer-inner{max-width:1100px;margin:0 auto}
+    .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:48px}
+    .footer-logo{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);text-decoration:none}
+    .footer-slogan{color:var(--text-muted);font-size:14px;margin-top:8px;font-style:italic}
+    .footer-links{display:flex;gap:28px;flex-wrap:wrap}
+    .footer-links a{color:var(--text-muted);text-decoration:none;font-size:14px;transition:color .2s}
+    .footer-links a:hover{color:var(--accent)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
+    .footer-copy{font-size:12px;color:var(--text-muted);opacity:.5}
+  </style>
+</head>
+<body>
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">SmartFlow</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="solution.html">La Solution</a></li>
+    <li><a href="projet.html">Le Projet</a></li>
+    <li><a href="contact.html" class="active nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger-btn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation principale">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Fermer le menu"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="index.html">Accueil</a>
+  <a href="solution.html">La Solution</a>
+  <a href="projet.html">Le Projet</a>
+  <a href="contact.html" class="active">Contact</a>
+</div>
+
+<div class="contact-page">
+  <div class="contact-inner">
+
+    <div class="contact-header">
+      <span class="contact-label">Contact</span>
+      <h1 class="contact-title">On vous répond <span>sous 48h</span></h1>
+      <p class="contact-subtitle">Ville pilote, partenariat ou simple curiosité — toutes les demandes sont les bienvenues.</p>
+    </div>
+
+    <div class="contact-form-wrap">
+      <form id="contact-form" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="prenom">Prénom *</label>
+            <input class="form-input" type="text" id="prenom" name="prenom" placeholder="Marie" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="nom">Nom *</label>
+            <input class="form-input" type="text" id="nom" name="nom" placeholder="Dupont" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="email">Email *</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="marie@mairie.fr" required />
+            <div class="form-error" id="email-error">Email invalide.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="organisation">Organisation *</label>
+            <input class="form-input" type="text" id="organisation" name="organisation" placeholder="Mairie, métropole, labo..." required />
+            <div class="form-error" id="org-error">Champ requis.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="interest-label">Je suis intéressé·e par…</span>
+          <div class="interest-pills">
+            <div class="pill-item">
+              <input type="checkbox" id="p-pilote" name="interets" value="pilote" />
+              <label for="p-pilote">Être ville pilote</label>
+            </div>
+            <div class="pill-item">
+              <input type="checkbox" id="p-partenaire" name="interets" value="partenaire" />
+              <label for="p-partenaire">Partenariat technique</label>
+            </div>
+            <div class="pill-item">
+              <input type="checkbox" id="p-info" name="interets" value="info" />
+              <label for="p-info">En savoir plus</label>
+            </div>
+            <div class="pill-item">
+              <input type="checkbox" id="p-rencontre" name="interets" value="rencontre" />
+              <label for="p-rencontre">Rencontrer l'équipe</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">Votre message</label>
+          <textarea class="form-textarea" id="message" name="message" placeholder="Dites-nous en quelques mots ce qui vous intéresse..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" aria-label="Envoyer le message">
+          Envoyer
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <div class="form-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="form-success-title">Message envoyé !</div>
+        <p class="form-success-text">Merci. On vous répond dans les 48h.</p>
+      </div>
+    </div>
+
+    <div class="contact-direct" aria-label="Contact direct">
+      <span>Préférez écrire directement ?</span>
+      <span class="contact-sep">·</span>
+      <a href="mailto:Philippine.carpentier2@gmail.com">Philippine Carpentier</a>
+      <span class="contact-sep">·</span>
+      <a href="mailto:gabrielponthieu@icloud.com">Gabriel Ponthieu</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="wave" style="background:#1C3829">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:48px;width:100%">
+    <path d="M0,0 C360,48 1080,0 1440,24 L1440,48 L0,48Z" fill="#0A1510"/>
+  </svg>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-logo">SmartFlow</a>
+        <p class="footer-slogan">Des feux qui pensent. Pour une ville qui respire.</p>
+      </div>
+      <nav class="footer-links">
+        <a href="index.html">Accueil</a>
+        <a href="solution.html">La Solution</a>
+        <a href="projet.html">Le Projet</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-mentions">Open-source MIT License · RGPD by design · <a href="mentions-legales.html" style="color:inherit;text-decoration:underline">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a></p>
+      <p class="footer-copy">© 2026 Philippine Carpentier &amp; Gabriel Ponthieu</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){const c=document.getElementById('cursor'),r=document.getElementById('cursor-ring');let mx=-100,my=-100,rx=-100,ry=-100;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function loop(){rx+=(mx-rx)*0.18;ry+=(my-ry)*0.18;c.style.left=mx+'px';c.style.top=my+'px';r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,input,textarea,select,label').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2)';r.style.opacity='.8';});el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.opacity='.45';});});})();
+
+// Mobile nav
+(function(){const b=document.getElementById('hamburger-btn'),n=document.getElementById('mobile-nav'),c=document.getElementById('mobile-nav-close');if(!b)return;const close=()=>{n.classList.remove('open');document.body.style.overflow='';};b.addEventListener('click',()=>{n.classList.add('open');document.body.style.overflow='hidden';});c.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});})();
+
+// Form — validation + envoi Formspree
+document.getElementById('contact-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  const fields=[
+    {el:document.getElementById('prenom'), err:null},
+    {el:document.getElementById('nom'),    err:null},
+    {el:document.getElementById('email'),  err:document.getElementById('email-error')},
+    {el:document.getElementById('organisation'), err:document.getElementById('org-error')},
+  ];
+  const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let valid=true;
+
+  fields.forEach(({el,err})=>{
+    if(!el) return;
+    const empty=!el.value.trim();
+    const invalidEmail=(el.type==='email'&&!empty&&!emailRe.test(el.value));
+    if(empty||invalidEmail){
+      el.style.borderColor='#FF6B6B';
+      if(err) err.style.display='block';
+      valid=false;
+    } else {
+      el.style.borderColor='';
+      if(err) err.style.display='none';
+    }
+  });
+
+  if(!valid) return;
+
+  const btn=document.querySelector('.btn-submit');
+  const origHTML=btn.innerHTML;
+  btn.disabled=true;
+  btn.textContent='Envoi en cours…';
+
+  fetch('https://formspree.io/f/VOTRE_ID_FORMSPREE',{
+    method:'POST',
+    body:new FormData(this),
+    headers:{'Accept':'application/json'}
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.ok){
+      document.getElementById('contact-form').style.display='none';
+      document.getElementById('form-success').style.display='block';
+    } else {
+      btn.disabled=false;
+      btn.innerHTML=origHTML;
+      alert('Une erreur est survenue. Merci de réessayer ou d\'écrire directement par email.');
+    }
+  })
+  .catch(()=>{
+    btn.disabled=false;
+    btn.innerHTML=origHTML;
+    alert('Connexion impossible. Vérifiez votre réseau et réessayez.');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mentions légales — SmartFlow</title>
+  <meta name="description" content="Mentions légales du site SmartFlow, conformément à la loi pour la confiance dans l'économie numérique (LCEN)." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230D1F16'/><path d='M22 8C13 10 10.9 16.17 8.82 21.34L10.71 22l1-2.3A4.49 4.49 0 0 0 13 20C24 20 27 3 27 3c-1 2-8 4-8 4S12.98 4.2 22 8z' fill='%2300C9A7'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-main: #0D1F16;
+      --bg-secondary: #1C3829;
+      --accent: #00C9A7;
+      --accent2: #52B788;
+      --text: #FFFFFF;
+      --text-muted: #A8D5C2;
+      --highlight: #00B4D8;
+      --bg-darkest: #0A1510;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg-main); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: none; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; line-height: 1.15; }
+
+    /* --- CURSOR --- */
+    #cursor { position: fixed; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: screen; }
+    #cursor-ring { position: fixed; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--accent); opacity: 0.45; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.22s ease; }
+
+    /* --- NAVBAR --- */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 48px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(13,31,22,0.93);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 rgba(0,201,167,0.12);
+    }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 20px; color: var(--accent); text-decoration: none; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent); color: var(--bg-main) !important; font-weight: 700 !important; padding: 8px 20px; border-radius: 999px; transition: transform 0.2s, box-shadow 0.2s !important; }
+    .nav-cta:hover { transform: scale(1.04); box-shadow: 0 0 16px rgba(0,201,167,0.4); }
+    @media (max-width: 768px) { .nav-links { display: none; } #navbar { padding: 0 20px; } }
+
+    /* --- HAMBURGER & MOBILE NAV --- */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; z-index: 1001; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--accent); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    @media (max-width: 768px) { .hamburger { display: flex; } }
+    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 997; background: rgba(10,21,16,.97); backdrop-filter: blur(24px); flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-family: 'Space Grotesk', sans-serif; font-size: clamp(24px,6vw,36px); font-weight: 700; color: #fff; text-decoration: none; transition: color .2s; }
+    .mobile-nav a:hover, .mobile-nav a.active { color: var(--accent); }
+    .mobile-nav-close { position: absolute; top: 24px; right: 24px; background: none; border: none; cursor: pointer; padding: 8px; }
+    .mobile-nav-close svg { width: 28px; height: 28px; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; fill: none; }
+
+    /* --- TOUCH / FOCUS / REDUCED MOTION --- */
+    @media (hover: none) { body { cursor: auto !important; } #cursor, #cursor-ring { display: none !important; } }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    @media (prefers-reduced-motion: reduce) { * { transition-duration: .01ms !important; } }
+
+    /* --- PAGE CONTENT --- */
+    .legal-page {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    .legal-page h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .legal-page .legal-updated {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+    .legal-page h2 {
+      font-size: 18px;
+      color: var(--accent2);
+      margin-top: 40px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(82,183,136,0.2);
+    }
+    .legal-page p {
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.75;
+    }
+    .legal-page a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    .legal-page a:hover {
+      opacity: 0.8;
+    }
+    .legal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 40px;
+      transition: color .2s;
+    }
+    .legal-back:hover { color: var(--accent); }
+    .legal-back svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* --- FOOTER --- */
+    footer { background: var(--bg-darkest); padding: 40px 0 24px; }
+    .footer-inner { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--accent); text-decoration: none; }
+    .footer-slogan { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .footer-mentions { font-size: 12px; color: rgba(168,213,194,0.5); }
+    .footer-copy { font-size: 12px; color: rgba(168,213,194,0.4); }
+    @media (max-width: 768px) { .footer-inner { padding: 0 20px; } .footer-top { flex-direction: column; } .footer-bottom { flex-direction: column; } }
+  </style>
+</head>
+<body>
+
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="SmartFlow — Accueil">SmartFlow</a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="solution.html">La Solution</a></li>
+    <li><a href="projet.html">Le Projet</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger-btn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Menu navigation">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Fermer le menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="index.html">Accueil</a>
+  <a href="solution.html">La Solution</a>
+  <a href="projet.html">Le Projet</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- CONTENT -->
+<main>
+  <div class="legal-page">
+    <a href="index.html" class="legal-back">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour à l'accueil
+    </a>
+
+    <h1>Mentions légales</h1>
+    <p class="legal-updated">Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN).</p>
+
+    <h2>1. Éditeurs du site</h2>
+    <p>Le site SmartFlow est édité par :</p>
+    <p>
+      <strong>Philippine Carpentier</strong><br>
+      Étudiante — France<br>
+      <strong>Gabriel Ponthieu</strong><br>
+      Étudiant — France
+    </p>
+    <p>Contact : <a href="mailto:contact@smartflow-project.fr">contact@smartflow-project.fr</a></p>
+
+    <h2>2. Directeurs de la publication</h2>
+    <p>Philippine Carpentier et Gabriel Ponthieu, co-responsables du projet SmartFlow.</p>
+
+    <h2>3. Hébergement</h2>
+    <p>
+      Ce site est hébergé par :<br>
+      <strong>GitHub Pages</strong><br>
+      GitHub, Inc. — 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis<br>
+      <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">https://pages.github.com</a>
+    </p>
+
+    <h2>4. Propriété intellectuelle</h2>
+    <p>
+      Le code source du projet SmartFlow est distribué sous licence <strong>MIT</strong>, disponible librement sur GitHub.
+      Les contenus éditoriaux (textes, visuels, maquettes) sont la propriété de leurs auteurs respectifs.
+      Toute reproduction partielle ou totale des contenus sans autorisation préalable est interdite.
+    </p>
+
+    <h2>5. Liens hypertextes</h2>
+    <p>
+      SmartFlow ne peut être tenu responsable des contenus accessibles via des liens hypertextes pointant vers des sites tiers.
+      La mise en place de liens vers le présent site est autorisée sans accord préalable, à condition que le lien ne présente pas ce site sous un angle frauduleux ou trompeur.
+    </p>
+
+    <h2>6. Limitation de responsabilité</h2>
+    <p>
+      Les informations présentées sur ce site ont une vocation de présentation du projet SmartFlow.
+      Elles ne constituent pas un engagement contractuel.
+      Les éditeurs s'efforcent de maintenir les informations à jour mais ne peuvent garantir l'exactitude, l'exhaustivité ou l'actualité des contenus.
+    </p>
+
+    <h2>7. Données personnelles</h2>
+    <p>
+      Le traitement de vos données personnelles collectées via le formulaire de contact est décrit dans notre
+      <a href="politique-confidentialite.html">Politique de confidentialité</a>.
+    </p>
+
+    <h2>8. Droit applicable</h2>
+    <p>
+      Le présent site et ses mentions légales sont soumis au droit français.
+      En cas de litige, et à défaut de résolution amiable, les tribunaux français seront compétents.
+    </p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-logo">SmartFlow</a>
+        <p class="footer-slogan">Des feux qui pensent. Pour une ville qui respire.</p>
+      </div>
+      <nav class="footer-links">
+        <a href="index.html">Accueil</a>
+        <a href="solution.html">La Solution</a>
+        <a href="projet.html">Le Projet</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-mentions">Open-source MIT License · RGPD by design · <a href="mentions-legales.html" style="color:inherit;text-decoration:underline">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a></p>
+      <p class="footer-copy">© 2026 Philippine Carpentier &amp; Gabriel Ponthieu</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const c=document.getElementById('cursor'),r=document.getElementById('cursor-ring');
+  let mx=-100,my=-100,rx=-100,ry=-100;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(c){c.style.left=mx+'px';c.style.top=my+'px';}});
+  (function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;if(r){r.style.left=rx+'px';r.style.top=ry+'px';}requestAnimationFrame(loop);})();
+})();
+(function(){
+  const b=document.getElementById('hamburger-btn'),n=document.getElementById('mobile-nav'),cl=document.getElementById('mobile-nav-close');
+  if(!b)return;
+  const close=()=>{n.classList.remove('open');document.body.style.overflow='';b.setAttribute('aria-expanded','false');};
+  b.addEventListener('click',()=>{n.classList.add('open');document.body.style.overflow='hidden';b.setAttribute('aria-expanded','true');});
+  cl.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+})();
+</script>
+</body>
+</html>
