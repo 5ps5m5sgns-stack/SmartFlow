@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SmartFlow — Des feux qui pensent. Pour une ville qui respire.</title>
-  <meta name="description" content="SmartFlow adapte les feux de signalisation en temps réel grâce à l'IA. Moins d'arrêts inutiles. Moins de CO₂. Plus de fluidité." />
+  <meta name="description" content="SmartFlow adapte les feux de signalisation en temps réel. Moins d'arrêts inutiles. Moins de CO₂. Plus de fluidité." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230D1F16'/><path d='M22 8C13 10 10.9 16.17 8.82 21.34L10.71 22l1-2.3A4.49 4.49 0 0 0 13 20C24 20 27 3 27 3c-1 2-8 4-8 4S12.98 4.2 22 8z' fill='%2300C9A7'/></svg>" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="SmartFlow — Des feux qui pensent. Pour une ville qui respire." />
-  <meta property="og:description" content="SmartFlow adapte les feux de signalisation en temps réel grâce à l'IA. Moins d'arrêts inutiles. Moins de CO₂." />
+  <meta property="og:description" content="SmartFlow adapte les feux de signalisation en temps réel. Moins d'arrêts inutiles. Moins de CO₂." />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="SmartFlow — Des feux qui pensent." />
-  <meta name="twitter:description" content="Moins de CO₂, moins d'attente. L'IA au service de la ville vivable." />
+  <meta name="twitter:description" content="Moins de CO₂, moins d'attente. Un logiciel au service de la ville vivable." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -135,7 +135,7 @@
     .section-subtitle { color: var(--text-muted); font-size: 16px; margin-bottom: 56px; max-width: 680px; }
 
     /* --- PROBLEM SECTION --- */
-    #problem { background: var(--bg-secondary); }
+    #problem { background: var(--bg-secondary); position: relative; overflow: hidden; }
     .problem-hook { font-style: italic; color: #fff; font-size: clamp(18px, 2.5vw, 24px); max-width: 700px; margin-bottom: 56px; line-height: 1.5; font-weight: 500; }
     .problem-hook em { color: var(--accent); font-style: normal; }
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -211,9 +211,41 @@
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .footer-mentions { font-size: 12px; color: var(--text-muted); opacity: 0.65; }
     .footer-copy { font-size: 12px; color: var(--text-muted); opacity: 0.5; }
+
+    /* --- SCROLL PROGRESS BAR --- */
+    #scroll-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--highlight)); z-index: 2000; width: 0%; transition: width .1s linear; }
+
+    /* --- AURORA BLOBS --- */
+    .aurora { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: 0.12; animation: auroraFloat ease-in-out infinite; }
+    @keyframes auroraFloat { 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(30px,-20px) scale(1.08); } }
+
+    /* --- CARD GLOW HOVER --- */
+    .stat-card { position: relative; overflow: hidden; }
+    .stat-card::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(0,201,167,0.08) 0%,transparent 60%); opacity:0; transition:opacity 0.3s; border-radius:inherit; pointer-events:none; }
+    .stat-card:hover::after { opacity:1; }
+    .pillar-card::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(0,201,167,0.07) 0%,transparent 60%); opacity:0; transition:opacity 0.3s; border-radius:inherit; pointer-events:none; }
+    .pillar-card:hover::after { opacity:1; }
+
+    /* --- SECTION TITLE UNDERLINE ANIMATION --- */
+    .section-title-line { display:inline-block; position:relative; }
+    .section-title-line::after { content:''; position:absolute; bottom:-6px; left:0; width:0; height:2px; background:linear-gradient(90deg,var(--accent),var(--highlight)); border-radius:2px; transition:width 0.6s ease 0.2s; }
+    .section-title-line.in-view::after { width:100%; }
+
+    /* --- STAGGER REVEAL --- */
+    .stagger-child { opacity:0; transform:translateY(24px); transition:opacity 0.5s ease, transform 0.5s ease; }
+    .stagger-child.visible { opacity:1; transform:none; }
+
+    /* --- BADGE COUNT PULSE --- */
+    .stat-number { transition: color 0.3s; }
+
+    /* --- BTN GLOW PULSE --- */
+    .btn-primary { position:relative; overflow:hidden; }
+    .btn-primary::after { content:''; position:absolute; inset:-2px; border-radius:inherit; background:radial-gradient(circle at 50% 50%,rgba(0,201,167,0.4),transparent 70%); opacity:0; transition:opacity 0.3s; pointer-events:none; }
+    .btn-primary:hover::after { opacity:1; }
   </style>
 </head>
 <body>
+<div id="scroll-bar" aria-hidden="true"></div>
 
 <div id="cursor" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
@@ -258,7 +290,7 @@
       <span class="hero-title-accent">Pour une ville qui respire.</span>
     </h1>
     <p class="hero-subtitle">
-      SmartFlow adapte les feux de signalisation en temps réel grâce à l'IA.<br>
+      SmartFlow adapte les feux de signalisation en temps réel.<br>
       Moins d'arrêts inutiles. Moins de CO₂. Plus de fluidité pour tous.
     </p>
     <div class="hero-ctas">
@@ -303,6 +335,8 @@
 
 <!-- LE PROBLÈME -->
 <section id="problem">
+  <div class="aurora" aria-hidden="true" style="width:400px;height:400px;background:var(--accent);top:-100px;right:-50px;animation-duration:12s;"></div>
+  <div class="aurora" aria-hidden="true" style="width:300px;height:300px;background:var(--highlight);bottom:-50px;left:-80px;animation-duration:15s;animation-delay:3s;"></div>
   <div class="section-inner">
     <span class="section-tag reveal">Le Problème</span>
     <p class="problem-hook reveal">
@@ -347,7 +381,7 @@
   <div class="section-inner">
     <span class="section-tag reveal">Comment ça marche</span>
     <h2 class="section-title reveal">SmartFlow, en trois actions</h2>
-    <p class="section-subtitle reveal">Une infrastructure logicielle qui transforme un carrefour ordinaire en nœud intelligent — sans remplacer le moindre feu.</p>
+    <p class="section-subtitle reveal">Un logiciel qui transforme chaque carrefour ordinaire en carrefour intelligent — sans remplacer le moindre feu.</p>
     <div class="pillars-grid">
       <div class="pillar-card reveal">
         <div class="pillar-metric">0 donnée stockée</div>
@@ -356,16 +390,16 @@
         </div>
         <div class="pillar-num">01 — Détecter</div>
         <div class="pillar-title">Voir chaque véhicule</div>
-        <p class="pillar-desc">Une caméra IA compte et classifie chaque flux en temps réel — voitures, bus, vélos, piétons — sans stocker aucune image ni donnée personnelle.</p>
+        <p class="pillar-desc">Une caméra compte et classifie chaque flux en temps réel — voitures, bus, vélos, piétons — sans stocker aucune image ni donnée personnelle.</p>
       </div>
       <div class="pillar-card reveal">
-        <div class="pillar-metric">Décision en 300 ms</div>
+        <div class="pillar-metric">Décision instantanée</div>
         <div class="pillar-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
         <div class="pillar-num">02 — Optimiser</div>
         <div class="pillar-title">Adapter en temps réel</div>
-        <p class="pillar-desc">L'algorithme calcule la durée de vert optimale en 300 ms et coordonne les carrefours voisins pour créer une vague verte dynamique.</p>
+        <p class="pillar-desc">Le logiciel calcule la durée de vert optimale et coordonne les carrefours voisins pour créer une vague verte dynamique.</p>
       </div>
       <div class="pillar-card reveal">
         <div class="pillar-metric">+25% après 6 mois</div>
@@ -374,7 +408,7 @@
         </div>
         <div class="pillar-num">03 — Apprendre</div>
         <div class="pillar-title">S'améliorer chaque nuit</div>
-        <p class="pillar-desc">Le modèle analyse chaque nuit les données de la journée et affine ses prédictions. Les performances augmentent de 15 à 25% après 6 mois.</p>
+        <p class="pillar-desc">Le système analyse chaque nuit ce qui s'est passé et affine ses réglages. Les performances augmentent de 15 à 25% après 6 mois.</p>
       </div>
     </div>
     <div style="text-align:center" class="reveal">
@@ -412,7 +446,7 @@
           <li><span class="ba-dot" aria-hidden="true"></span>Cycles adaptatifs calculés en temps réel, flux par flux</li>
           <li><span class="ba-dot" aria-hidden="true"></span>Vague verte coordonnée sur 3 à 5 carrefours simultanément</li>
           <li><span class="ba-dot" aria-hidden="true"></span>−30% de CO₂ à l'échelle du réseau</li>
-          <li><span class="ba-dot" aria-hidden="true"></span>Priorité paramétrable : urgences, bus, vélos, zones sensibles</li>
+          <li><span class="ba-dot" aria-hidden="true"></span>Priorité réglable : urgences, bus, vélos, zones sensibles</li>
           <li><span class="ba-dot" aria-hidden="true"></span>Apprentissage continu — meilleur chaque matin</li>
         </ul>
       </div>
@@ -462,7 +496,7 @@
       </nav>
     </div>
     <div class="footer-bottom">
-      <p class="footer-mentions">Open-source MIT License · RGPD by design · <a href="mentions-legales.html" style="color:inherit;text-decoration:underline">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a></p>
+      <p class="footer-mentions">Open-source MIT License · Respect total de la vie privée · <a href="mentions-legales.html" style="color:inherit;text-decoration:underline">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a></p>
       <p class="footer-copy">© 2026 Philippine Carpentier &amp; Gabriel Ponthieu</p>
     </div>
   </div>
@@ -683,6 +717,64 @@ gsap.utils.toArray('.reveal').forEach(el=>{
   const delay = el.classList.contains('ba-after') ? 0.15 : 0;
   gsap.fromTo(el,{opacity:0,y:36},{opacity:1,y:0,duration:0.85,ease:'power2.out',delay,scrollTrigger:{trigger:el,start:'top 88%',once:true}});
 });
+
+// Scroll progress bar
+(function(){
+  const bar=document.getElementById('scroll-bar');
+  window.addEventListener('scroll',()=>{
+    const h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0?scrollY/h*100:0)+'%';
+  });
+})();
+
+// Animated counters
+(function(){
+  const els=document.querySelectorAll('.stat-number[data-target]');
+  if(!els.length) return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      obs.unobserve(e.target);
+      const el=e.target, target=+el.dataset.target, suffix=el.dataset.suffix||'', prefix=el.dataset.prefix||'';
+      let start=0; const dur=1800, step=16;
+      const timer=setInterval(()=>{
+        start+=step;
+        const p=Math.min(start/dur,1);
+        const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+        const val=Math.round(ease*target);
+        el.textContent=prefix+val+suffix;
+        if(p>=1){clearInterval(timer);el.textContent=prefix+target+suffix;}
+      },step);
+    });
+  },{threshold:0.5});
+  els.forEach(el=>obs.observe(el));
+})();
+
+// Stagger cards
+(function(){
+  document.querySelectorAll('.stats-grid,.pillars-grid').forEach(grid=>{
+    const children=[...grid.children];
+    children.forEach(c=>c.classList.add('stagger-child'));
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting) return;
+        obs.unobserve(e.target);
+        const idx=[...e.target.parentElement.children].indexOf(e.target);
+        setTimeout(()=>e.target.classList.add('visible'),idx*120);
+      });
+    },{threshold:0.15});
+    children.forEach(c=>obs.observe(c));
+  });
+})();
+
+// Section title underline
+(function(){
+  document.querySelectorAll('.section-title').forEach(el=>{
+    el.innerHTML='<span class="section-title-line">'+el.innerHTML+'</span>';
+    const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.querySelector('.section-title-line')?.classList.add('in-view');obs.unobserve(e.target);}});},{threshold:0.5});
+    obs.observe(el);
+  });
+})();
 
 // --- ANIMATED STAT COUNTERS ---
 (function(){
