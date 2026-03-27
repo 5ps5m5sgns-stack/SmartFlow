@@ -177,9 +177,14 @@
     .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
     .footer-copy{font-size:12px;color:var(--text-muted);opacity:.5}
+    #scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--highlight));z-index:2000;width:0%;transition:width .1s linear}
+    .deploy-card{position:relative;overflow:hidden}
+    .deploy-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,201,167,0.08) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;border-radius:inherit;pointer-events:none}
+    .deploy-card:hover::after{opacity:1}
   </style>
 </head>
 <body>
+<div id="scroll-bar" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
 
@@ -342,8 +347,8 @@
       <div class="how-visual" aria-hidden="true">
         <div class="how-visual-inner">
           <p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Vous êtes à l'étape</p>
-          <div class="mini-step active" id="mini-1"><span class="mini-num">01</span><span class="mini-text">Caméra IA — détection flux</span></div>
-          <div class="mini-step" id="mini-2"><span class="mini-num">02</span><span class="mini-text">Analyse du trafic en temps réel</span></div>
+          <div class="mini-step active" id="mini-1"><span class="mini-num">01</span><span class="mini-text">Caméra — comptage véhicules</span></div>
+          <div class="mini-step" id="mini-2"><span class="mini-num">02</span><span class="mini-text">Anticipation du trafic</span></div>
           <div class="mini-step" id="mini-3"><span class="mini-num">03</span><span class="mini-text">Passage au vert automatique</span></div>
           <div class="mini-step" id="mini-4"><span class="mini-num">04</span><span class="mini-text">Coordination réseau voisin</span></div>
           <div class="mini-step" id="mini-5"><span class="mini-num">05</span><span class="mini-text">Amélioration automatique nocturne</span></div>
@@ -377,7 +382,7 @@
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="deploy-name">Matériel léger &lt; 10W</div>
-        <div class="deploy-detail">Fonctionne sur un Raspberry Pi 4 ou serveur edge économique. Consommation électrique négligeable.</div>
+        <div class="deploy-detail">Fonctionne sur un Raspberry Pi 4 ou petit boîtier économique. Consommation électrique négligeable.</div>
       </div>
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -607,6 +612,9 @@ if(fill&&cont){ ScrollTrigger.create({trigger:cont,start:'top 80%',end:'bottom 3
   steps.forEach(s=>obs.observe(s));
 })();
 
+// Scroll progress bar
+(function(){const bar=document.getElementById('scroll-bar');window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%';});})();
+
 // Counters
 document.querySelectorAll('.counter').forEach(el=>{
   const obs=new IntersectionObserver(entries=>{
@@ -617,6 +625,28 @@ document.querySelectorAll('.counter').forEach(el=>{
   },{threshold:0.5});
   obs.observe(el);
 });
+
+// Animated counters for impact strip
+(function(){
+  const els=document.querySelectorAll('.counter[data-val]');
+  if(!els.length) return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      obs.unobserve(e.target);
+      const el=e.target, target=+el.dataset.val;
+      let start=0; const dur=1600, step=16;
+      const timer=setInterval(()=>{
+        start+=step;
+        const p=Math.min(start/dur,1);
+        const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+        el.textContent=Math.round(ease*target);
+        if(p>=1){clearInterval(timer);el.textContent=target;}
+      },step);
+    });
+  },{threshold:0.5});
+  els.forEach(el=>obs.observe(el));
+})();
 </script>
 </body>
 </html>
