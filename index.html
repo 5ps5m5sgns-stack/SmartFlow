@@ -261,9 +261,28 @@
 
     /* --- PULSE GLOW ON HERO-SCROLL ARROW --- */
     .hero-scroll { animation: heroSlideUp 0.8s ease-out 1.2s both; }
+
+    /* --- LOADING SCREEN --- */
+    #loader{position:fixed;inset:0;z-index:10000;background:var(--bg-main);display:flex;align-items:center;justify-content:center;transition:opacity 0.6s,visibility 0.6s}
+    #loader.done{opacity:0;visibility:hidden;pointer-events:none}
+    #loader-logo{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--accent);opacity:0;animation:loaderIn 0.8s ease-out 0.1s both}
+    @keyframes loaderIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:none}}
+    #loader-bar{position:absolute;bottom:50%;left:50%;transform:translateX(-50%) translateY(30px);width:80px;height:2px;background:rgba(0,201,167,0.15);border-radius:2px;overflow:hidden}
+    #loader-bar::after{content:'';display:block;width:100%;height:100%;background:var(--accent);border-radius:2px;animation:loaderProgress 1s ease-in-out both}
+    @keyframes loaderProgress{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+
+    /* --- PARALLAX DEPTH ON BA COLS --- */
+    .ba-col{transition:transform 0.3s ease,box-shadow 0.3s ease}
+    .ba-col:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.2)}
+
+    /* --- FOOTER LINK UNDERLINE --- */
+    .footer-links a{position:relative}
+    .footer-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.3s}
+    .footer-links a:hover::after{width:100%}
   </style>
 </head>
 <body>
+<div id="loader" aria-hidden="true"><span id="loader-logo">SmartFlow</span><div id="loader-bar"></div></div>
 <div id="scroll-bar" aria-hidden="true"></div>
 
 <div id="cursor" aria-hidden="true"></div>
@@ -525,6 +544,9 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.4/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.4/dist/ScrollTrigger.min.js"></script>
 <script>
+// --- LOADER ---
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('done');},900);});
+
 // --- CURSOR ---
 (function(){
   const c=document.getElementById('cursor'),r=document.getElementById('cursor-ring');
@@ -546,15 +568,24 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
   R.setPixelRatio(Math.min(devicePixelRatio,2));
   R.setClearColor(0x0B1A10,1);
+  R.toneMapping=THREE.ACESFilmicToneMapping;
+  R.toneMappingExposure=1.15;
+  R.shadowMap.enabled=true;
+  R.shadowMap.type=THREE.PCFSoftShadowMap;
   const S=new THREE.Scene();
-  S.fog=new THREE.FogExp2(0x0B1A10,0.023);
+  S.fog=new THREE.FogExp2(0x0B1A10,0.02);
   const CAM=new THREE.PerspectiveCamera(40,1,0.1,200);
   CAM.position.set(0,14,17); CAM.lookAt(0,0.5,0);
   function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;R.setSize(w,h,false);CAM.aspect=w/h;CAM.updateProjectionMatrix();}
   window.addEventListener('resize',resize); resize();
 
-  S.add(new THREE.AmbientLight(0x0D1F16,2.0));
-  const sun=new THREE.DirectionalLight(0x334455,0.5); sun.position.set(-8,12,5); S.add(sun);
+  S.add(new THREE.AmbientLight(0x0D1F16,1.6));
+  const sun=new THREE.DirectionalLight(0x4466AA,0.6); sun.position.set(-8,14,5);
+  sun.castShadow=true; sun.shadow.mapSize.width=1024; sun.shadow.mapSize.height=1024;
+  sun.shadow.camera.near=1; sun.shadow.camera.far=40;
+  sun.shadow.camera.left=-18; sun.shadow.camera.right=18; sun.shadow.camera.top=18; sun.shadow.camera.bottom=-18;
+  sun.shadow.bias=-0.002; S.add(sun);
+  const moon=new THREE.DirectionalLight(0x223344,0.25); moon.position.set(10,8,-6); S.add(moon);
   const cLight=new THREE.PointLight(0x00C9A7,3.5,20); cLight.position.set(0,3,0); S.add(cLight);
   const sigEW=new THREE.PointLight(0x00C9A7,3.0,12); sigEW.position.set(3.5,3,0); S.add(sigEW);
   const sigNS=new THREE.PointLight(0xFF4444,3.0,12); sigNS.position.set(0,3,3.5); S.add(sigNS);
@@ -562,23 +593,24 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     const l=new THREE.PointLight(0xFFAA44,2.0,14); l.position.set(x,4.5,z); S.add(l);
   });
 
-  const roadMat=new THREE.MeshStandardMaterial({color:0x111A12,roughness:0.85});
-  const gndMat=new THREE.MeshStandardMaterial({color:0x0A1210,roughness:0.95});
+  const roadMat=new THREE.MeshStandardMaterial({color:0x0F1810,roughness:0.25,metalness:0.05});
+  const gndMat=new THREE.MeshStandardMaterial({color:0x0A1210,roughness:0.92});
   const edgeMat=new THREE.MeshStandardMaterial({color:0x00C9A7,emissive:new THREE.Color(0x00C9A7),emissiveIntensity:0.5,roughness:0.4});
   const dashMat=new THREE.MeshStandardMaterial({color:0x1A2A1C,roughness:0.9});
   const cwMat=new THREE.MeshStandardMaterial({color:0x131D14,roughness:0.88});
   const poleMat=new THREE.MeshStandardMaterial({color:0x0E1410,roughness:0.55,metalness:0.4});
   const bldMat=new THREE.MeshStandardMaterial({color:0x080E09,roughness:0.94});
   const winMat=new THREE.MeshStandardMaterial({color:0x003520,emissive:new THREE.Color(0x002214),emissiveIntensity:1.0});
+  const winWarm=new THREE.MeshStandardMaterial({color:0x302010,emissive:new THREE.Color(0x201008),emissiveIntensity:0.9});
   const hlM=new THREE.MeshStandardMaterial({color:0xFFFFDD,emissive:new THREE.Color(0xFFFFBB),emissiveIntensity:2.2});
   const tlM=new THREE.MeshStandardMaterial({color:0xFF2222,emissive:new THREE.Color(0xFF0000),emissiveIntensity:1.3});
   const glsMat=new THREE.MeshStandardMaterial({color:0x001020,roughness:0.1,metalness:0.9});
 
-  function addM(geo,mat,x,y,z){const m=new THREE.Mesh(geo,mat);if(x!==undefined)m.position.set(x,y||0,z||0);S.add(m);return m;}
+  function addM(geo,mat,x,y,z,sh){const m=new THREE.Mesh(geo,mat);if(x!==undefined)m.position.set(x,y||0,z||0);if(sh){m.castShadow=true;m.receiveShadow=true;}S.add(m);return m;}
 
-  addM(new THREE.PlaneGeometry(100,100),gndMat,0,0,0).rotation.x=-Math.PI/2;
-  addM(new THREE.BoxGeometry(28,0.1,5.5),roadMat,0,0,0);
-  addM(new THREE.BoxGeometry(5.5,0.1,28),roadMat,0,0,0);
+  const gnd=addM(new THREE.PlaneGeometry(100,100),gndMat,0,0,0); gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true;
+  const rd1=addM(new THREE.BoxGeometry(28,0.1,5.5),roadMat,0,0,0); rd1.receiveShadow=true;
+  const rd2=addM(new THREE.BoxGeometry(5.5,0.1,28),roadMat,0,0,0); rd2.receiveShadow=true;
   [[0,0.07,2.76,28,0.04,0.1],[0,0.07,-2.76,28,0.04,0.1],[2.76,0.07,0,0.1,0.04,28],[-2.76,0.07,0,0.1,0.04,28]
   ].forEach(([x,y,z,w,h,d])=>addM(new THREE.BoxGeometry(w,h,d),edgeMat,x,y,z));
   for(let p=-12;p<=12;p+=1.9){
@@ -634,14 +666,16 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const fireflies=new THREE.Points(fGeo,new THREE.PointsMaterial({color:0x00C9A7,size:0.08,transparent:true,opacity:0.5,depthWrite:false}));
   S.add(fireflies);
 
+  const winMats=[winMat,winMat,winMat,winWarm,winWarm];
   [{x:8.5,z:8.5,w:5.0,h:7.0},{x:-8.2,z:8.5,w:4.0,h:9.5},{x:8.5,z:-8.2,w:4.5,h:5.5},{x:-8.5,z:-8.5,w:3.8,h:8.5},
    {x:12.5,z:8.0,w:3.5,h:5.5},{x:-12.5,z:-8.0,w:3.5,h:7.0},{x:8.0,z:12.5,w:4.0,h:4.5},{x:-8.0,z:-12.5,w:4.5,h:7.5},
+   {x:13.5,z:-7.0,w:3.0,h:4.0},{x:-13.5,z:7.0,w:3.2,h:5.5},{x:7.0,z:-12.5,w:3.0,h:6.0},{x:-7.0,z:12.5,w:2.8,h:4.5},
   ].forEach(({x,z,w,h})=>{
     const d=w*0.8;
-    addM(new THREE.BoxGeometry(w,h,d),bldMat,x,h/2,z);
+    const b=addM(new THREE.BoxGeometry(w,h,d),bldMat,x,h/2,z,true);
     for(let wy=0.5;wy<h-0.4;wy+=1.1)
       for(let wx=-w/2+0.4;wx<w/2-0.2;wx+=0.84)
-        if(Math.random()<0.5) addM(new THREE.BoxGeometry(0.32,0.32,0.03),winMat,x+wx,wy,z+d/2+0.01);
+        if(Math.random()<0.5) addM(new THREE.BoxGeometry(0.32,0.32,0.03),winMats[Math.floor(Math.random()*5)],x+wx,wy,z+d/2+0.01);
   });
 
   function mkTLight(px,pz,startGreen){
@@ -686,8 +720,8 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   ];
   function mkCar(bMat,sc){
     const g=new THREE.Group();
-    const body=new THREE.Mesh(new THREE.BoxGeometry(1.02*sc,0.27*sc,0.53*sc),bMat); body.position.y=0.25*sc; g.add(body);
-    const cab=new THREE.Mesh(new THREE.BoxGeometry(0.5*sc,0.21*sc,0.45*sc),glsMat); cab.position.set(-0.04*sc,0.45*sc,0); g.add(cab);
+    const body=new THREE.Mesh(new THREE.BoxGeometry(1.02*sc,0.27*sc,0.53*sc),bMat); body.position.y=0.25*sc; body.castShadow=true; g.add(body);
+    const cab=new THREE.Mesh(new THREE.BoxGeometry(0.5*sc,0.21*sc,0.45*sc),glsMat); cab.position.set(-0.04*sc,0.45*sc,0); cab.castShadow=true; g.add(cab);
     [-0.22*sc,0.22*sc].forEach(z=>{
       const h=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.05),hlM); h.position.set(0.5*sc,0.25*sc,z); g.add(h);
       const t=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.05),tlM); t.position.set(-0.5*sc,0.25*sc,z); g.add(t);
@@ -758,6 +792,8 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     CAM.position.set(Math.sin(camAngle)*18,13.5-sy*3,Math.cos(camAngle)*18);
     CAM.lookAt(0,0.5-sy*0.5,0);
     cLight.intensity=3.0+Math.sin(T*1.8)*0.8;
+    winMat.emissiveIntensity=0.85+Math.sin(T*0.4)*0.2;
+    winWarm.emissiveIntensity=0.7+Math.sin(T*0.6+1.5)*0.25;
     R.render(S,CAM);
   }
   animate();
