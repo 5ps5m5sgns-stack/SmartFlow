@@ -100,6 +100,32 @@
     .trust-item svg { width: 11px; height: 11px; stroke: var(--accent); stroke-width: 2.5; fill: none; opacity: 0.8; }
     .trust-sep { color: rgba(0,201,167,0.25); font-size: 12px; }
 
+    /* --- LAURÉAT BADGE --- */
+    .laureate-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #FFD700;
+      border: 1.5px solid rgba(255,215,0,0.4);
+      border-radius: 999px; padding: 10px 24px; margin-bottom: 32px;
+      background: linear-gradient(135deg, rgba(255,215,0,0.08) 0%, rgba(255,180,0,0.04) 100%);
+      backdrop-filter: blur(8px);
+      position: relative;
+      overflow: hidden;
+      animation: laureateGlow 3s ease-in-out infinite;
+    }
+    .laureate-badge::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255,215,0,0.15), transparent, rgba(255,215,0,0.1), transparent);
+      animation: laureateRotate 6s linear infinite;
+    }
+    .laureate-badge span { position: relative; z-index: 1; }
+    .laureate-badge svg { position: relative; z-index: 1; flex-shrink: 0; }
+    @keyframes laureateGlow {
+      0%, 100% { box-shadow: 0 0 12px rgba(255,215,0,0.1), 0 0 40px rgba(255,215,0,0.05); }
+      50% { box-shadow: 0 0 20px rgba(255,215,0,0.25), 0 0 60px rgba(255,215,0,0.1); }
+    }
+    @keyframes laureateRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     .hero-scroll { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(168,213,194,0.4); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
     .scroll-arrow { width: 16px; height: 16px; border-right: 2px solid rgba(0,201,167,0.5); border-bottom: 2px solid rgba(0,201,167,0.5); transform: rotate(45deg); animation: bounce 1.7s infinite; }
     @keyframes bounce { 0%,100% { transform: rotate(45deg) translateY(0); } 50% { transform: rotate(45deg) translateY(5px); } }
