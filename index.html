@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SmartFlow — Des feux qui pensent. Pour une ville qui respire.</title>
+  <title>SmartFlow · Des feux qui pensent. Pour une ville qui respire.</title>
   <meta name="description" content="SmartFlow adapte les feux de signalisation en temps réel. Moins d'arrêts inutiles. Moins de CO₂. Plus de fluidité." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230D1F16'/><path d='M22 8C13 10 10.9 16.17 8.82 21.34L10.71 22l1-2.3A4.49 4.49 0 0 0 13 20C24 20 27 3 27 3c-1 2-8 4-8 4S12.98 4.2 22 8z' fill='%2300C9A7'/></svg>" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="SmartFlow — Des feux qui pensent. Pour une ville qui respire." />
+  <meta property="og:title" content="SmartFlow · Des feux qui pensent. Pour une ville qui respire." />
   <meta property="og:description" content="SmartFlow adapte les feux de signalisation en temps réel. Moins d'arrêts inutiles. Moins de CO₂." />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="SmartFlow — Des feux qui pensent." />
+  <meta name="twitter:title" content="SmartFlow · Des feux qui pensent." />
   <meta name="twitter:description" content="Moins de CO₂, moins d'attente. Un logiciel au service de la ville vivable." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -69,16 +69,6 @@
     /* subtle vignette top pour séparer du nav */
     .hero-overlay::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 160px; background: linear-gradient(to bottom, rgba(13,31,22,0.5), transparent); }
     .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 840px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--accent); border: 1px solid rgba(0,201,167,0.35);
-      border-radius: 999px; padding: 7px 18px; margin-bottom: 28px;
-      background: rgba(0,201,167,0.07);
-      animation: badgePulse 3s ease-in-out infinite;
-    }
-    @keyframes badgePulse { 0%,100%{ box-shadow:0 0 0 rgba(0,201,167,0); } 50%{ box-shadow:0 0 18px rgba(0,201,167,0.18); } }
-    .hero-badge svg { width: 14px; height: 14px; }
     .hero-title {
       font-size: clamp(40px, 7.5vw, 80px);
       font-weight: 800;
@@ -250,7 +240,6 @@
 
     /* --- HERO TITLE ENTRANCE ANIMATION --- */
     @keyframes heroSlideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
-    .hero-content .hero-badge { animation: heroSlideUp 0.8s ease-out 0.2s both, badgePulse 3s ease-in-out 1s infinite; }
     .hero-content .hero-title { animation: heroSlideUp 0.8s ease-out 0.4s both; }
     .hero-content .hero-subtitle { animation: heroSlideUp 0.8s ease-out 0.6s both; }
     .hero-content .hero-ctas { animation: heroSlideUp 0.8s ease-out 0.8s both; }
@@ -290,7 +279,7 @@
 
 <!-- NAVBAR -->
 <nav id="navbar" role="navigation" aria-label="Navigation principale">
-  <a href="index.html" class="nav-logo" aria-label="SmartFlow — Accueil">SmartFlow</a>
+  <a href="index.html" class="nav-logo" aria-label="SmartFlow, Accueil">SmartFlow</a>
   <ul class="nav-links" role="list">
     <li><a href="index.html" class="active">Accueil</a></li>
     <li><a href="solution.html">La Solution</a></li>
@@ -319,10 +308,6 @@
   <svg aria-hidden="true" class="leaf-particle" style="left:45%;bottom:10%;width:10px;color:#52B788;animation-duration:11s;animation-delay:4.5s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
 
   <div class="hero-content">
-    <div class="hero-badge">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
-      Projet Open-Source · Licence MIT
-    </div>
     <h1 class="hero-title">
       Des feux qui pensent.
       <span class="hero-title-accent">Pour une ville qui respire.</span>
@@ -379,7 +364,7 @@
     <span class="section-tag reveal">Le Problème</span>
     <p class="problem-hook reveal">
       Ces feux ne voient rien. Ne savent rien.<br>
-      Ils comptent juste le temps — <em>depuis 50 ans</em>.
+      Ils comptent juste le temps. <em>Depuis 50 ans</em>.
     </p>
     <div class="stats-grid">
       <div class="stat-card reveal">
@@ -387,7 +372,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z"/><path d="M12 8v4l3 3"/></svg>
         </div>
         <div class="stat-number" data-target="50" data-suffix=" ans">50 ans</div>
-        <div class="stat-desc">C'est l'âge moyen des cycles de feux dans nos villes — conçus pour une autre époque du trafic.</div>
+        <div class="stat-desc">C'est l'âge moyen des cycles de feux dans nos villes. Conçus pour une autre époque du trafic.</div>
       </div>
       <div class="stat-card reveal">
         <div class="stat-icon-wrap">
@@ -419,23 +404,23 @@
   <div class="section-inner">
     <span class="section-tag reveal">Comment ça marche</span>
     <h2 class="section-title reveal">SmartFlow, en trois actions</h2>
-    <p class="section-subtitle reveal">Un logiciel qui transforme chaque carrefour ordinaire en carrefour intelligent — sans remplacer le moindre feu.</p>
+    <p class="section-subtitle reveal">Un logiciel qui transforme chaque carrefour ordinaire en carrefour intelligent, sans remplacer le moindre feu.</p>
     <div class="pillars-grid">
       <div class="pillar-card reveal">
         <div class="pillar-metric">0 donnée stockée</div>
         <div class="pillar-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
-        <div class="pillar-num">01 — Détecter</div>
+        <div class="pillar-num">01. Détecter</div>
         <div class="pillar-title">Voir chaque véhicule</div>
-        <p class="pillar-desc">Une caméra compte et classifie chaque flux en temps réel — voitures, bus, vélos, piétons — sans stocker aucune image ni donnée personnelle.</p>
+        <p class="pillar-desc">Une caméra compte et classifie chaque flux en temps réel : voitures, bus, vélos, piétons. Sans stocker aucune image ni donnée personnelle.</p>
       </div>
       <div class="pillar-card reveal">
         <div class="pillar-metric">Décision instantanée</div>
         <div class="pillar-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
-        <div class="pillar-num">02 — Optimiser</div>
+        <div class="pillar-num">02. Optimiser</div>
         <div class="pillar-title">Adapter en temps réel</div>
         <p class="pillar-desc">Le logiciel calcule la durée de vert optimale et coordonne les carrefours voisins pour créer une vague verte dynamique.</p>
       </div>
@@ -444,7 +429,7 @@
         <div class="pillar-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
         </div>
-        <div class="pillar-num">03 — Apprendre</div>
+        <div class="pillar-num">03. Apprendre</div>
         <div class="pillar-title">S'améliorer chaque nuit</div>
         <p class="pillar-desc">Le système analyse chaque nuit ce qui s'est passé et affine ses réglages. Les performances augmentent de 15 à 25% après 6 mois.</p>
       </div>
@@ -485,7 +470,7 @@
           <li><span class="ba-dot" aria-hidden="true"></span>Vague verte coordonnée sur 3 à 5 carrefours simultanément</li>
           <li><span class="ba-dot" aria-hidden="true"></span>−30% de CO₂ à l'échelle du réseau</li>
           <li><span class="ba-dot" aria-hidden="true"></span>Priorité réglable : urgences, bus, vélos, zones sensibles</li>
-          <li><span class="ba-dot" aria-hidden="true"></span>Apprentissage continu — meilleur chaque matin</li>
+          <li><span class="ba-dot" aria-hidden="true"></span>Apprentissage continu, meilleur chaque matin</li>
         </ul>
       </div>
     </div>
@@ -568,10 +553,6 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
   R.setPixelRatio(Math.min(devicePixelRatio,2));
   R.setClearColor(0x0B1A10,1);
-  R.toneMapping=THREE.ACESFilmicToneMapping;
-  R.toneMappingExposure=1.15;
-  R.shadowMap.enabled=true;
-  R.shadowMap.type=THREE.PCFSoftShadowMap;
   const S=new THREE.Scene();
   S.fog=new THREE.FogExp2(0x0B1A10,0.02);
   const CAM=new THREE.PerspectiveCamera(40,1,0.1,200);
@@ -580,12 +561,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   window.addEventListener('resize',resize); resize();
 
   S.add(new THREE.AmbientLight(0x0D1F16,1.6));
-  const sun=new THREE.DirectionalLight(0x4466AA,0.6); sun.position.set(-8,14,5);
-  sun.castShadow=true; sun.shadow.mapSize.width=1024; sun.shadow.mapSize.height=1024;
-  sun.shadow.camera.near=1; sun.shadow.camera.far=40;
-  sun.shadow.camera.left=-18; sun.shadow.camera.right=18; sun.shadow.camera.top=18; sun.shadow.camera.bottom=-18;
-  sun.shadow.bias=-0.002; S.add(sun);
-  const moon=new THREE.DirectionalLight(0x223344,0.25); moon.position.set(10,8,-6); S.add(moon);
+  const sun=new THREE.DirectionalLight(0x4466AA,0.6); sun.position.set(-8,14,5); S.add(sun);
   const cLight=new THREE.PointLight(0x00C9A7,3.5,20); cLight.position.set(0,3,0); S.add(cLight);
   const sigEW=new THREE.PointLight(0x00C9A7,3.0,12); sigEW.position.set(3.5,3,0); S.add(sigEW);
   const sigNS=new THREE.PointLight(0xFF4444,3.0,12); sigNS.position.set(0,3,3.5); S.add(sigNS);
@@ -601,16 +577,15 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const poleMat=new THREE.MeshStandardMaterial({color:0x0E1410,roughness:0.55,metalness:0.4});
   const bldMat=new THREE.MeshStandardMaterial({color:0x080E09,roughness:0.94});
   const winMat=new THREE.MeshStandardMaterial({color:0x003520,emissive:new THREE.Color(0x002214),emissiveIntensity:1.0});
-  const winWarm=new THREE.MeshStandardMaterial({color:0x302010,emissive:new THREE.Color(0x201008),emissiveIntensity:0.9});
   const hlM=new THREE.MeshStandardMaterial({color:0xFFFFDD,emissive:new THREE.Color(0xFFFFBB),emissiveIntensity:2.2});
   const tlM=new THREE.MeshStandardMaterial({color:0xFF2222,emissive:new THREE.Color(0xFF0000),emissiveIntensity:1.3});
   const glsMat=new THREE.MeshStandardMaterial({color:0x001020,roughness:0.1,metalness:0.9});
 
-  function addM(geo,mat,x,y,z,sh){const m=new THREE.Mesh(geo,mat);if(x!==undefined)m.position.set(x,y||0,z||0);if(sh){m.castShadow=true;m.receiveShadow=true;}S.add(m);return m;}
+  function addM(geo,mat,x,y,z){const m=new THREE.Mesh(geo,mat);if(x!==undefined)m.position.set(x,y||0,z||0);S.add(m);return m;}
 
-  const gnd=addM(new THREE.PlaneGeometry(100,100),gndMat,0,0,0); gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true;
-  const rd1=addM(new THREE.BoxGeometry(28,0.1,5.5),roadMat,0,0,0); rd1.receiveShadow=true;
-  const rd2=addM(new THREE.BoxGeometry(5.5,0.1,28),roadMat,0,0,0); rd2.receiveShadow=true;
+  const gnd=addM(new THREE.PlaneGeometry(100,100),gndMat,0,0,0); gnd.rotation.x=-Math.PI/2;
+  addM(new THREE.BoxGeometry(28,0.1,5.5),roadMat,0,0,0);
+  addM(new THREE.BoxGeometry(5.5,0.1,28),roadMat,0,0,0);
   [[0,0.07,2.76,28,0.04,0.1],[0,0.07,-2.76,28,0.04,0.1],[2.76,0.07,0,0.1,0.04,28],[-2.76,0.07,0,0.1,0.04,28]
   ].forEach(([x,y,z,w,h,d])=>addM(new THREE.BoxGeometry(w,h,d),edgeMat,x,y,z));
   for(let p=-12;p<=12;p+=1.9){
@@ -625,14 +600,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     addM(new THREE.BoxGeometry(0.22,0.05,5.3),cwMat,-2.95-o,0.06,0);
   });
 
-  const swMat=new THREE.MeshStandardMaterial({color:0x0F1A12,roughness:0.85});
-  // Trottoirs le long de la route X (nord et sud)
-  addM(new THREE.BoxGeometry(28,0.08,1.2),swMat,0,0.04,3.6);
-  addM(new THREE.BoxGeometry(28,0.08,1.2),swMat,0,0.04,-3.6);
-  // Trottoirs le long de la route Z (est et ouest)
-  addM(new THREE.BoxGeometry(1.2,0.08,28),swMat,3.6,0.04,0);
-  addM(new THREE.BoxGeometry(1.2,0.08,28),swMat,-3.6,0.04,0);
-
+  // Street lamps
   [[4.8,4.8],[-4.8,4.8],[4.8,-4.8],[-4.8,-4.8]].forEach(([x,z])=>{
     const g=new THREE.Group();
     const post=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.07,5.0,8),poleMat); post.position.y=2.5; g.add(post);
@@ -640,42 +608,15 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     g.position.set(x,0,z); S.add(g);
   });
 
-  const trunkMat=new THREE.MeshStandardMaterial({color:0x1A1008,roughness:0.9});
-  const foliageMat=new THREE.MeshStandardMaterial({color:0x0A2A12,roughness:0.8});
-  [[6.2,6.2],[-6.2,6.2],[6.2,-6.2],[-6.2,-6.2],[5.0,9.5],[-5.0,9.5],[5.0,-9.5],[-5.0,-9.5]].forEach(([x,z])=>{
-    const g=new THREE.Group();
-    const h=1.5+Math.random()*2;
-    const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.08,h,6),trunkMat);
-    trunk.position.y=h/2; g.add(trunk);
-    const foliage=new THREE.Mesh(new THREE.SphereGeometry(0.6+Math.random()*0.4,8,8),foliageMat);
-    foliage.position.y=h+0.3; g.add(foliage);
-    g.position.set(x,0,z); S.add(g);
-  });
-
-  const FC=80;
-  const fGeo=new THREE.BufferGeometry();
-  const fPos=new Float32Array(FC*3);
-  const fPhase=new Float32Array(FC);
-  for(let i=0;i<FC;i++){
-    fPos[i*3]=(Math.random()-.5)*30;
-    fPos[i*3+1]=0.5+Math.random()*6;
-    fPos[i*3+2]=(Math.random()-.5)*30;
-    fPhase[i]=Math.random()*Math.PI*2;
-  }
-  fGeo.setAttribute('position',new THREE.BufferAttribute(fPos,3));
-  const fireflies=new THREE.Points(fGeo,new THREE.PointsMaterial({color:0x00C9A7,size:0.08,transparent:true,opacity:0.5,depthWrite:false}));
-  S.add(fireflies);
-
-  const winMats=[winMat,winMat,winMat,winWarm,winWarm];
+  // 8 buildings
   [{x:8.5,z:8.5,w:5.0,h:7.0},{x:-8.2,z:8.5,w:4.0,h:9.5},{x:8.5,z:-8.2,w:4.5,h:5.5},{x:-8.5,z:-8.5,w:3.8,h:8.5},
-   {x:12.5,z:8.0,w:3.5,h:5.5},{x:-12.5,z:-8.0,w:3.5,h:7.0},{x:8.0,z:12.5,w:4.0,h:4.5},{x:-8.0,z:-12.5,w:4.5,h:7.5},
-   {x:13.5,z:-7.0,w:3.0,h:4.0},{x:-13.5,z:7.0,w:3.2,h:5.5},{x:7.0,z:-12.5,w:3.0,h:6.0},{x:-7.0,z:12.5,w:2.8,h:4.5},
+   {x:12.5,z:8.0,w:3.5,h:5.5},{x:-12.5,z:-8.0,w:3.5,h:7.0},{x:8.0,z:12.5,w:4.0,h:4.5},{x:-8.0,z:-12.5,w:4.5,h:7.5}
   ].forEach(({x,z,w,h})=>{
     const d=w*0.8;
-    const b=addM(new THREE.BoxGeometry(w,h,d),bldMat,x,h/2,z,true);
+    addM(new THREE.BoxGeometry(w,h,d),bldMat,x,h/2,z);
     for(let wy=0.5;wy<h-0.4;wy+=1.1)
       for(let wx=-w/2+0.4;wx<w/2-0.2;wx+=0.84)
-        if(Math.random()<0.5) addM(new THREE.BoxGeometry(0.32,0.32,0.03),winMats[Math.floor(Math.random()*5)],x+wx,wy,z+d/2+0.01);
+        if(Math.random()<0.5) addM(new THREE.BoxGeometry(0.32,0.32,0.03),winMat,x+wx,wy,z+d/2+0.01);
   });
 
   function mkTLight(px,pz,startGreen){
@@ -720,8 +661,8 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   ];
   function mkCar(bMat,sc){
     const g=new THREE.Group();
-    const body=new THREE.Mesh(new THREE.BoxGeometry(1.02*sc,0.27*sc,0.53*sc),bMat); body.position.y=0.25*sc; body.castShadow=true; g.add(body);
-    const cab=new THREE.Mesh(new THREE.BoxGeometry(0.5*sc,0.21*sc,0.45*sc),glsMat); cab.position.set(-0.04*sc,0.45*sc,0); cab.castShadow=true; g.add(cab);
+    const body=new THREE.Mesh(new THREE.BoxGeometry(1.02*sc,0.27*sc,0.53*sc),bMat); body.position.y=0.25*sc; g.add(body);
+    const cab=new THREE.Mesh(new THREE.BoxGeometry(0.5*sc,0.21*sc,0.45*sc),glsMat); cab.position.set(-0.04*sc,0.45*sc,0); g.add(cab);
     [-0.22*sc,0.22*sc].forEach(z=>{
       const h=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.05),hlM); h.position.set(0.5*sc,0.25*sc,z); g.add(h);
       const t=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.05),tlM); t.position.set(-0.5*sc,0.25*sc,z); g.add(t);
@@ -779,21 +720,11 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
       if(car.axis==='x') car.mesh.position.set(car.dir>0?p:-p,0.07,car.lane);
       else car.mesh.position.set(car.lane,0.07,car.dir>0?p:-p);
     });
-    // Firefly float
-    for(let i=0;i<FC;i++){
-      fPos[i*3]+=Math.sin(T*0.3+fPhase[i])*0.003;
-      fPos[i*3+1]+=Math.sin(T*0.5+fPhase[i]*2)*0.002;
-      fPos[i*3+2]+=Math.cos(T*0.4+fPhase[i])*0.003;
-    }
-    fGeo.attributes.position.needsUpdate=true;
-    fireflies.material.opacity=0.3+Math.sin(T*0.8)*0.2;
     camAngle+=0.00075;
     const sy=Math.min(scrollY/600,1);
     CAM.position.set(Math.sin(camAngle)*18,13.5-sy*3,Math.cos(camAngle)*18);
     CAM.lookAt(0,0.5-sy*0.5,0);
     cLight.intensity=3.0+Math.sin(T*1.8)*0.8;
-    winMat.emissiveIntensity=0.85+Math.sin(T*0.4)*0.2;
-    winWarm.emissiveIntensity=0.7+Math.sin(T*0.6+1.5)*0.25;
     R.render(S,CAM);
   }
   animate();
@@ -872,33 +803,6 @@ gsap.utils.toArray('.reveal').forEach(el=>{
     const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.querySelector('.section-title-line')?.classList.add('in-view');obs.unobserve(e.target);}});},{threshold:0.5});
     obs.observe(el);
   });
-})();
-
-// --- ANIMATED STAT COUNTERS ---
-(function(){
-  const counters = document.querySelectorAll('.stat-number[data-target]');
-  if(!counters.length) return;
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(!entry.isIntersecting) return;
-      obs.unobserve(entry.target);
-      const el = entry.target;
-      const target = +el.dataset.target;
-      const suffix = el.dataset.suffix || '';
-      const prefix = el.dataset.prefix || '';
-      const duration = 1400;
-      const start = performance.now();
-      function tick(now){
-        const p = Math.min((now-start)/duration,1);
-        const eased = 1-(1-p)*(1-p)*(1-p);
-        const val = Math.round(eased*target);
-        el.textContent = prefix + val + suffix;
-        if(p<1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    });
-  },{threshold:0.4});
-  counters.forEach(c=>obs.observe(c));
 })();
 
 // Card tilt on mouse
