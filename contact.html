@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg-main:#0D1F16;--bg-secondary:#1C3829;--accent:#00C9A7;--accent2:#52B788;--text:#FFFFFF;--text-muted:#A8D5C2;--highlight:#00B4D8;--bg-darkest:#0A1510}
+    :root{--bg-main:#0A1A10;--bg-secondary:#172C20;--accent:#00A88D;--accent2:#3D9E72;--text:#FFFFFF;--text-muted:#8FB8A4;--highlight:#00A88D;--bg-darkest:#070F09}
     html{scroll-behavior:smooth}
     body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
     h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15}
@@ -71,7 +71,7 @@
     .contact-subtitle{color:var(--text-muted);font-size:16px;max-width:480px;margin:0 auto;line-height:1.65}
 
     /* Form card */
-    .contact-form-wrap{background:rgba(13,31,22,.75);border:1px solid rgba(0,201,167,.14);border-radius:24px;padding:44px 40px}
+    .contact-form-wrap{background:rgba(7,15,9,.85);border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:44px 40px;box-shadow:0 8px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
     @media(max-width:540px){.contact-form-wrap{padding:28px 20px;border-radius:18px}}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
     @media(max-width:480px){.form-row{grid-template-columns:1fr}}
@@ -92,8 +92,8 @@
     .pill-item label:hover{background:rgba(0,201,167,.09);border-color:rgba(0,201,167,.35)}
 
     /* Submit */
-    .btn-submit{width:100%;background:var(--accent);color:var(--bg-main);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;padding:15px 32px;border-radius:999px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
-    .btn-submit:hover{transform:scale(1.03);box-shadow:0 0 28px rgba(0,201,167,.45)}
+    .btn-submit{width:100%;background:var(--accent);color:#070F09;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;padding:15px 32px;border-radius:999px;border:none;cursor:pointer;transition:transform .25s,box-shadow .25s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.5),0 4px 12px rgba(0,168,141,.15)}
     .btn-submit svg{width:18px;height:18px}
 
     /* Errors */

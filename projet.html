@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg-main:#0D1F16;--bg-secondary:#1C3829;--accent:#00C9A7;--accent2:#52B788;--text:#FFFFFF;--text-muted:#A8D5C2;--highlight:#00B4D8;--bg-darkest:#0A1510}
+    :root{--bg-main:#0A1A10;--bg-secondary:#172C20;--accent:#00A88D;--accent2:#3D9E72;--text:#FFFFFF;--text-muted:#8FB8A4;--highlight:#00A88D;--bg-darkest:#070F09}
     html{scroll-behavior:smooth}
     body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
     h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15}
@@ -81,8 +81,8 @@
     .mission-text strong{color:#fff}
     .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     @media(max-width:768px){.values-grid{grid-template-columns:1fr}}
-    .value-card{background:rgba(13,31,22,.6);border:1px solid rgba(0,201,167,.14);border-radius:16px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:transform .25s,box-shadow .25s}
-    .value-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,201,167,.1)}
+    .value-card{background:rgba(10,26,16,.8);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05)}
+    .value-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.55),0 4px 16px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08)}
     .value-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,201,167,.09);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .value-icon svg{width:20px;height:20px;stroke:var(--accent)}
     .value-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:6px}
@@ -90,7 +90,7 @@
 
     /* Reconnaissance */
     #reconnaissance{background:var(--bg-main);padding:80px 24px}
-    .reco-card{max-width:720px;margin:0 auto;background:linear-gradient(135deg,rgba(255,215,0,0.04) 0%,rgba(0,201,167,0.04) 100%);border:1px solid rgba(255,215,0,0.18);border-radius:20px;padding:40px 36px;text-align:center;position:relative;overflow:hidden}
+    .reco-card{max-width:720px;margin:0 auto;background:rgba(10,26,16,.85);border:1px solid rgba(255,215,0,0.12);border-radius:20px;padding:40px 36px;text-align:center;position:relative;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,215,0,0.06)}
     .reco-card::before{content:'';position:absolute;top:-1px;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.5),transparent)}
     .reco-icon{width:56px;height:56px;margin:0 auto 20px;background:rgba(255,215,0,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center}
     .reco-icon svg{width:28px;height:28px}
@@ -104,8 +104,8 @@
     .cta-title{font-size:clamp(24px,3.5vw,38px);font-weight:700;color:#fff;margin-bottom:14px}
     .cta-sub{color:var(--text-muted);font-size:16px;max-width:460px;margin:0 auto 40px}
 
-    .btn-primary{background:var(--accent);color:#0D1F16;font-weight:700;font-size:15px;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s,box-shadow .2s}
-    .btn-primary:hover{transform:scale(1.04);box-shadow:0 0 28px rgba(0,201,167,.5)}
+    .btn-primary{background:var(--accent);color:#070F09;font-weight:700;font-size:15px;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 4px 12px rgba(0,168,141,.15)}
     .btn-secondary{background:transparent;color:var(--accent);font-weight:600;font-size:15px;padding:13px 28px;border-radius:999px;border:1.5px solid var(--accent);cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .2s}
     .btn-secondary:hover{background:rgba(0,201,167,.1);transform:scale(1.03)}
     .section-cta{text-align:center;margin-top:56px}
@@ -121,7 +121,7 @@
     .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
     .footer-copy{font-size:12px;color:var(--text-muted);opacity:.5}
-    #scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--highlight));z-index:2000;width:0%;transition:width .1s linear}
+    #scroll-bar{position:fixed;top:0;left:0;height:1px;background:var(--accent);opacity:.6;z-index:2000;width:0%;transition:width .1s linear}
     .value-card{position:relative;overflow:hidden}
     .value-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,201,167,0.08) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;border-radius:inherit;pointer-events:none}
     .value-card:hover::after{opacity:1}
@@ -168,7 +168,7 @@
   <div class="section-inner">
     <h2 class="section-title reveal">Notre mission</h2>
     <p class="mission-text reveal">
-      Les villes françaises perdent chaque jour des tonnes de CO₂ à cause de feux de signalisation qui <strong>ne s'adaptent pas à la réalité du trafic</strong>. SmartFlow propose une solution logicielle, open-source et déployable sur l'infrastructure existante, pour transformer chaque carrefour ordinaire en <strong>carrefour intelligent</strong> au service de la transition écologique urbaine.
+      Les feux actuels ne s'adaptent pas au trafic réel. SmartFlow est un logiciel open-source qui transforme chaque carrefour ordinaire en <strong>carrefour intelligent</strong>, sans changer l'infrastructure existante.
     </p>
     <div class="values-grid">
       <div class="value-card reveal">
@@ -177,7 +177,7 @@
         </div>
         <div>
           <div class="value-title">Open-source</div>
-          <div class="value-desc">Licence MIT. Chaque ville peut adapter, auditer et améliorer le code. Aucune dépendance envers un éditeur.</div>
+          <div class="value-desc">Licence MIT. Chaque ville peut adapter et auditer le code librement.</div>
         </div>
       </div>
       <div class="value-card reveal">
@@ -195,7 +195,7 @@
         </div>
         <div>
           <div class="value-title">Sobriété numérique</div>
-          <div class="value-desc">Le logiciel tourne en local sur du matériel économe. Aucun cloud tiers requis pour le fonctionnement nominal.</div>
+          <div class="value-desc">Fonctionne en local sur du matériel économe. Pas de cloud tiers.</div>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
       </div>
       <p class="reco-label">Reconnaissance</p>
       <h2 class="reco-title">Lauréat de la Bourse Jeune 2025</h2>
-      <p class="reco-desc">SmartFlow a été élu meilleur projet environnemental parmi plus de 200 candidatures. Une reconnaissance qui confirme notre approche : des solutions concrètes, déployables et au service de la transition écologique des villes.</p>
+      <p class="reco-desc">Meilleur projet environnemental parmi plus de 200 candidatures. La preuve que notre approche est concrète et déployable.</p>
     </div>
   </div>
 </section>

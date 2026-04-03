@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg-main:#0D1F16;--bg-secondary:#1C3829;--accent:#00C9A7;--accent2:#52B788;--text:#FFFFFF;--text-muted:#A8D5C2;--highlight:#00B4D8;--bg-darkest:#0A1510}
+    :root{--bg-main:#0A1A10;--bg-secondary:#172C20;--accent:#00A88D;--accent2:#3D9E72;--text:#FFFFFF;--text-muted:#8FB8A4;--highlight:#00A88D;--bg-darkest:#070F09}
     html{scroll-behavior:smooth}
     body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
     h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15}
@@ -106,7 +106,7 @@
     .step-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;color:#fff}
     .step-desc{color:var(--text-muted);font-size:15px;line-height:1.65}
     /* Result callout per step */
-    .step-result{display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:12px 16px;background:rgba(0,201,167,.07);border-radius:10px;border-left:3px solid var(--accent)}
+    .step-result{display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:12px 16px;background:rgba(0,0,0,.25);border-radius:10px;border-left:2px solid rgba(0,168,141,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
     .step-result svg{width:14px;height:14px;flex-shrink:0;stroke:var(--accent);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
     .step-result span{font-size:13px;color:var(--text-muted);line-height:1.55}
     .step-result strong{color:#fff}
@@ -117,7 +117,7 @@
     /* Right panel (sticky) */
     .how-visual{position:sticky;top:100px}
     @media(max-width:900px){.how-visual{display:none}}
-    .how-visual-inner{background:rgba(13,31,22,.9);border:1px solid rgba(0,201,167,.15);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:10px}
+    .how-visual-inner{background:rgba(7,15,9,.9);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
     .mini-step{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;background:rgba(0,201,167,.03);border:1px solid transparent;transition:background .3s,border-color .3s,transform .2s}
     .mini-step.active{background:rgba(0,201,167,.1);border-color:rgba(0,201,167,.3);transform:translateX(4px)}
     .mini-num{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0}
@@ -129,8 +129,8 @@
     .deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     @media(max-width:768px){.deploy-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:480px){.deploy-grid{grid-template-columns:1fr}}
-    .deploy-card{background:rgba(28,56,41,.4);border:1px solid rgba(0,201,167,.12);border-radius:16px;padding:24px 22px;transition:border-color .25s,transform .25s}
-    .deploy-card:hover{border-color:rgba(0,201,167,.3);transform:translateY(-3px)}
+    .deploy-card{background:rgba(10,26,16,.8);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:24px 22px;transition:transform .3s,box-shadow .3s;box-shadow:0 4px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05)}
+    .deploy-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.55),0 4px 16px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);border-color:rgba(0,168,141,.15)}
     .deploy-check{width:32px;height:32px;border-radius:8px;background:rgba(0,201,167,.1);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
     .deploy-check svg{width:16px;height:16px;stroke:var(--accent);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
     .deploy-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
@@ -138,7 +138,7 @@
 
     /* Impact */
     #impact{background:var(--bg-secondary);position:relative;overflow:hidden}
-    .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,201,167,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,201,167,.06) 1px,transparent 1px);background-size:56px 56px;z-index:0;pointer-events:none}
+    .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:56px 56px;z-index:0;pointer-events:none}
     #impact .section-inner{position:relative;z-index:1}
     /* At-a-glance strip */
     .impact-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-radius:16px;overflow:hidden;border:1px solid rgba(0,201,167,.15);margin-bottom:64px}
@@ -146,8 +146,8 @@
     .impact-strip-item{background:rgba(13,31,22,.7);padding:24px 28px;text-align:center}
     .impact-strip-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,52px);font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-0.02em}
     .impact-strip-item:nth-child(1) .impact-strip-num{color:var(--accent)}
-    .impact-strip-item:nth-child(2) .impact-strip-num{color:var(--highlight)}
-    .impact-strip-item:nth-child(3) .impact-strip-num{color:var(--accent2)}
+    .impact-strip-item:nth-child(2) .impact-strip-num{color:var(--accent)}
+    .impact-strip-item:nth-child(3) .impact-strip-num{color:var(--accent)}
     .impact-strip-label{font-size:13px;color:var(--text-muted);line-height:1.4}
     /* Detailed grid */
     .impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
@@ -155,8 +155,8 @@
     .big-stat{display:flex;align-items:flex-end;gap:16px;margin-bottom:36px}
     .big-stat:last-child{margin-bottom:0}
     .big-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(52px,7vw,76px);font-weight:800;line-height:1;color:var(--accent);letter-spacing:-0.02em}
-    .big-stat:nth-child(2) .big-num{color:var(--highlight)}
-    .big-stat:nth-child(3) .big-num{color:var(--accent2)}
+    .big-stat:nth-child(2) .big-num{color:var(--accent)}
+    .big-stat:nth-child(3) .big-num{color:var(--accent)}
     .big-label{color:var(--text-muted);font-size:16px;padding-bottom:8px;max-width:200px;line-height:1.4}
     .benefits-list{list-style:none;display:flex;flex-direction:column;gap:14px}
     .benefits-list li{color:var(--text-muted);font-size:15px;line-height:1.5;display:flex;align-items:flex-start;gap:10px}
@@ -176,8 +176,8 @@
     tbody tr:hover:not(.highlight-row) td{background:rgba(0,201,167,.04)}
 
     .section-cta{text-align:center;margin-top:56px}
-    .btn-primary{background:var(--accent);color:#0D1F16;font-weight:700;font-size:15px;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .2s,box-shadow .2s}
-    .btn-primary:hover{transform:scale(1.04);box-shadow:0 0 28px rgba(0,201,167,.5)}
+    .btn-primary{background:var(--accent);color:#070F09;font-weight:700;font-size:15px;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 4px 12px rgba(0,168,141,.15)}
     .btn-secondary{background:transparent;color:var(--accent);font-weight:600;font-size:15px;padding:13px 28px;border-radius:999px;border:1.5px solid rgba(0,201,167,.6);cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .2s,border-color .2s}
     .btn-secondary:hover{background:rgba(0,201,167,.1);transform:scale(1.03);border-color:var(--accent)}
 
@@ -192,7 +192,7 @@
     .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
     .footer-copy{font-size:12px;color:var(--text-muted);opacity:.5}
-    #scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--highlight));z-index:2000;width:0%;transition:width .1s linear}
+    #scroll-bar{position:fixed;top:0;left:0;height:1px;background:var(--accent);opacity:.6;z-index:2000;width:0%;transition:width .1s linear}
     .deploy-card{position:relative;overflow:hidden}
     .deploy-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,201,167,0.08) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;border-radius:inherit;pointer-events:none}
     .deploy-card:hover::after{opacity:1}
@@ -289,7 +289,7 @@
             Étape 1. Détecter
           </div>
           <div class="step-title">La caméra compte les voitures, c'est tout</div>
-          <p class="step-desc">Une caméra déjà installée sur le poteau observe le carrefour. Elle compte combien de véhicules arrivent, dans quelle direction. Aucune image n'est gardée, aucune plaque lue.</p>
+          <p class="step-desc">Une caméra compte les véhicules et leur direction. Aucune image gardée, aucune plaque lue.</p>
           <div class="step-result">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             <span><strong>En pratique :</strong> compatible avec les caméras de surveillance déjà en place. Aucune installation lourde.</span>
@@ -303,7 +303,7 @@
             Étape 2. Prédire
           </div>
           <div class="step-title">Il voit venir le bouchon avant vous</div>
-          <p class="step-desc">Le logiciel analyse les données en temps réel et anticipe ce qui va arriver dans la prochaine minute. Il ne réagit pas à un bouchon, il l'empêche de se former.</p>
+          <p class="step-desc">Le logiciel anticipe le trafic dans la minute suivante. Il empêche le bouchon de se former avant même qu'il existe.</p>
           <div class="step-result">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             <span><strong>En pratique :</strong> les heures de pointe sont absorbées plus facilement. Moins de freinages inutiles, moins de CO₂.</span>
@@ -317,7 +317,7 @@
             Étape 3. Décider
           </div>
           <div class="step-title">Le feu passe au vert au bon moment</div>
-          <p class="step-desc">Le système décide combien de temps doit durer chaque phase de vert, ni trop court, ni trop long. On peut lui dire de donner la priorité aux bus, vélos ou urgences.</p>
+          <p class="step-desc">Le système choisit la durée de vert idéale. Priorité paramétrable : bus, vélos, urgences.</p>
           <div class="step-result">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             <span><strong>En pratique :</strong> −25% de temps d'attente moyen. Les bus arrivent à l'heure. Les ambulances passent sans attendre.</span>
@@ -331,7 +331,7 @@
             Étape 4. Connecter
           </div>
           <div class="step-title">Les carrefours voisins se coordonnent</div>
-          <p class="step-desc">Quand un feu passe au vert, il prévient ses voisins. Ils ajustent leurs cycles pour que vous arriviez toujours sur du vert. Une vraie vague verte sur toute la rue.</p>
+          <p class="step-desc">Les carrefours se coordonnent pour créer une vague verte sur toute la rue. Vous ne vous arrêtez plus à chaque feu.</p>
           <div class="step-result">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             <span><strong>En pratique :</strong> vous ne vous arrêtez plus à chaque feu. Le trafic s'écoule sans à-coups.</span>
@@ -345,7 +345,7 @@
             Étape 5. Apprendre
           </div>
           <div class="step-title">Il s'améliore tout seul chaque nuit</div>
-          <p class="step-desc">Pendant que la ville dort, le système passe en revue sa journée. Il repère ce qui a bien marché, ce qui a moins bien marché, et ajuste ses réglages pour le lendemain.</p>
+          <p class="step-desc">Chaque nuit, le système analyse sa journée et ajuste ses réglages automatiquement.</p>
           <div class="step-result">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             <span><strong>En pratique :</strong> les résultats progressent avec le temps. Après 6 mois, les gains sont 15 à 25% supérieurs au premier jour.</span>
@@ -392,7 +392,7 @@
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="deploy-name">Caméra IP simple</div>
-        <div class="deploy-detail">Compatible avec les caméras déjà en place. Si le carrefour n'en a pas, une caméra abordable suffit. Installation rapide sur le poteau existant.</div>
+        <div class="deploy-detail">Compatible avec les caméras existantes. Sinon, une caméra abordable suffit.</div>
       </div>
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -402,22 +402,22 @@
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="deploy-name">Réseau 4G/fibre standard</div>
-        <div class="deploy-detail">Aucune fibre dédiée entre carrefours. La coordination passe par le réseau 4G ou fibre existant de la collectivité.</div>
+        <div class="deploy-detail">Utilise le réseau existant. Aucune infrastructure dédiée requise.</div>
       </div>
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="deploy-name">1 jour par carrefour</div>
-        <div class="deploy-detail">Installation, calibrage et mise en service complète. Un technicien suffit. Aucune interruption du trafic requise.</div>
+        <div class="deploy-detail">Installation et mise en service complète. Un technicien suffit, sans couper le trafic.</div>
       </div>
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="deploy-name">Open-source MIT</div>
-        <div class="deploy-detail">Code auditable, modifiable, auto-hébergeable. Zéro dépendance à un éditeur tiers. La ville reste maître de son infrastructure.</div>
+        <div class="deploy-detail">Code libre et auditable. La ville garde le contrôle total, sans dépendance à un éditeur.</div>
       </div>
       <div class="deploy-card reveal">
         <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
         <div class="deploy-name">Conforme RGPD</div>
-        <div class="deploy-detail">Traitement des données exclusivement en local. Aucun envoi vers un cloud tiers. Délibération du Conseil Municipal facilitée.</div>
+        <div class="deploy-detail">Données traitées en local uniquement. Aucun envoi vers un cloud tiers.</div>
       </div>
     </div>
   </div>
