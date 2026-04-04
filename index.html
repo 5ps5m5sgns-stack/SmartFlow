@@ -79,11 +79,12 @@
     @media (prefers-reduced-motion: reduce) { .leaf-particle { animation: none !important; opacity: 0 !important; } .reveal { opacity: 1 !important; transform: none !important; } .scroll-arrow { animation: none !important; } * { transition-duration: .01ms !important; } }
 
     /* --- HERO --- */
-    #hero { position: relative; width: 100%; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-    .hero-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 30%, rgba(13,31,22,0.7) 100%); z-index: 1; pointer-events: none; }
-    /* subtle vignette top pour séparer du nav */
-    .hero-overlay::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 160px; background: linear-gradient(to bottom, rgba(13,31,22,0.5), transparent); }
+    #hero { position: relative; width: 100%; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg-main); }
+    .hero-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 55% at 50% -5%, rgba(19,201,154,0.13) 0%, transparent 65%), radial-gradient(ellipse 40% 35% at 80% 90%, rgba(19,201,154,0.05) 0%, transparent 55%); pointer-events: none; z-index: 0; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px); background-size: 72px 72px; pointer-events: none; z-index: 0; -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 0%, transparent 100%); mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 0%, transparent 100%); }
+    .hero-orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; animation: orbFloat ease-in-out infinite; }
+    @keyframes orbFloat { 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(var(--tx,40px),var(--ty,-30px)) scale(1.04); } }
+    .hero-vignette { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(16,43,28,0.4) 0%, transparent 30%, transparent 70%, rgba(16,43,28,0.6) 100%); pointer-events: none; z-index: 1; }
     .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 840px; }
     .hero-title {
       font-size: clamp(40px, 7.5vw, 80px);
@@ -172,7 +173,7 @@
     .problem-hook em { color: var(--accent); font-style: normal; }
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr; } }
-    .stat-card { background: rgba(16,43,28,0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px 28px 32px; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s; position: relative; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.2); }
+    .stat-card { background: rgba(16,43,28,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px 28px 32px; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s; position: relative; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.2); }
     .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(19,201,154,0.3), transparent); pointer-events: none; }
     .stat-card:hover { transform: translateY(-8px); box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.12); }
     .stat-icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: rgba(0,201,167,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
@@ -187,7 +188,7 @@
     #pillars { background: var(--bg-main); }
     .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 56px; }
     @media (max-width: 768px) { .pillars-grid { grid-template-columns: 1fr; } }
-    .pillar-card { background: rgba(16,43,28,0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px 28px; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s; box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); position: relative; overflow: hidden; }
+    .pillar-card { background: rgba(16,43,28,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px 28px; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s; box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); position: relative; overflow: hidden; }
     .pillar-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(19,201,154,0.25), transparent); pointer-events: none; }
     .pillar-card:hover { transform: translateY(-8px); box-shadow: 0 28px 70px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.12); }
     .pillar-metric { display: inline-block; font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.2); border-radius: 999px; padding: 3px 12px; margin-bottom: 18px; letter-spacing: 0.04em; }
@@ -203,8 +204,8 @@
     @media (max-width: 768px) { .ba-grid { grid-template-columns: 1fr; } }
     .ba-col { border-radius: 20px; padding: 36px 32px; }
     @media (max-width: 480px) { .ba-col { padding: 28px 20px; } }
-    .ba-before { background: rgba(0,0,0,0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); }
-    .ba-after { background: rgba(16,43,28,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(19,201,154,0.15); box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08); }
+    .ba-before { background: rgba(0,0,0,0.2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); }
+    .ba-after { background: rgba(16,43,28,0.7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(19,201,154,0.15); box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08); }
     .ba-col-label { display: flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px; }
     .ba-col-label svg { width: 18px; height: 18px; flex-shrink: 0; }
     .ba-before .ba-col-label { color: rgba(255,110,110,0.9); }
@@ -338,14 +339,17 @@
 
 <!-- HERO -->
 <section id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-gradient" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-orb" aria-hidden="true" style="width:650px;height:650px;background:rgba(19,201,154,0.09);top:-180px;left:-80px;animation-duration:18s;--tx:70px;--ty:50px"></div>
+  <div class="hero-orb" aria-hidden="true" style="width:450px;height:450px;background:rgba(19,201,154,0.06);bottom:-80px;right:0;animation-duration:24s;animation-delay:5s;--tx:-50px;--ty:-40px"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
 
-  <svg aria-hidden="true" class="leaf-particle" style="left:7%;bottom:22%;width:18px;color:#52B788;animation-duration:9s;animation-delay:0s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
-  <svg aria-hidden="true" class="leaf-particle" style="left:82%;bottom:32%;width:14px;color:#00C9A7;animation-duration:12s;animation-delay:3s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
-  <svg aria-hidden="true" class="leaf-particle" style="left:62%;bottom:14%;width:12px;color:#52B788;animation-duration:10s;animation-delay:6s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
-  <svg aria-hidden="true" class="leaf-particle" style="left:22%;bottom:28%;width:16px;color:#00C9A7;animation-duration:14s;animation-delay:1.5s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
-  <svg aria-hidden="true" class="leaf-particle" style="left:45%;bottom:10%;width:10px;color:#52B788;animation-duration:11s;animation-delay:4.5s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
+  <svg aria-hidden="true" class="leaf-particle" style="left:7%;bottom:22%;width:18px;color:#4DB888;animation-duration:9s;animation-delay:0s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
+  <svg aria-hidden="true" class="leaf-particle" style="left:82%;bottom:32%;width:14px;color:#13C99A;animation-duration:12s;animation-delay:3s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
+  <svg aria-hidden="true" class="leaf-particle" style="left:62%;bottom:14%;width:12px;color:#4DB888;animation-duration:10s;animation-delay:6s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
+  <svg aria-hidden="true" class="leaf-particle" style="left:22%;bottom:28%;width:16px;color:#13C99A;animation-duration:14s;animation-delay:1.5s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
+  <svg aria-hidden="true" class="leaf-particle" style="left:45%;bottom:10%;width:10px;color:#4DB888;animation-duration:11s;animation-delay:4.5s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
 
   <div class="hero-content">
     <h1 class="hero-title">
@@ -565,12 +569,11 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.4/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.4/dist/ScrollTrigger.min.js"></script>
 <script>
 // --- LOADER ---
-window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('done');},900);});
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('done');},400);});
 
 // --- CURSOR ---
 (function(){
@@ -587,188 +590,7 @@ window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loa
 // --- NAVBAR ---
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>80));
 
-// --- THREE.JS HERO ---
-(function(){
-  const canvas=document.getElementById('hero-canvas');
-  const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
-  R.setPixelRatio(Math.min(devicePixelRatio,2));
-  R.setClearColor(0x0B1A10,1);
-  const S=new THREE.Scene();
-  S.fog=new THREE.FogExp2(0x0B1A10,0.02);
-  const CAM=new THREE.PerspectiveCamera(40,1,0.1,200);
-  CAM.position.set(0,14,17); CAM.lookAt(0,0.5,0);
-  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;R.setSize(w,h,false);CAM.aspect=w/h;CAM.updateProjectionMatrix();}
-  window.addEventListener('resize',resize); resize();
 
-  S.add(new THREE.AmbientLight(0x0D1F16,1.6));
-  const sun=new THREE.DirectionalLight(0x4466AA,0.6); sun.position.set(-8,14,5); S.add(sun);
-  const cLight=new THREE.PointLight(0x00C9A7,3.5,20); cLight.position.set(0,3,0); S.add(cLight);
-  const sigEW=new THREE.PointLight(0x00C9A7,3.0,12); sigEW.position.set(3.5,3,0); S.add(sigEW);
-  const sigNS=new THREE.PointLight(0xFF4444,3.0,12); sigNS.position.set(0,3,3.5); S.add(sigNS);
-  [[4.8,4.8],[-4.8,4.8],[4.8,-4.8],[-4.8,-4.8]].forEach(([x,z])=>{
-    const l=new THREE.PointLight(0xFFAA44,2.0,14); l.position.set(x,4.5,z); S.add(l);
-  });
-
-  const roadMat=new THREE.MeshStandardMaterial({color:0x0F1810,roughness:0.25,metalness:0.05});
-  const gndMat=new THREE.MeshStandardMaterial({color:0x0A1210,roughness:0.92});
-  const edgeMat=new THREE.MeshStandardMaterial({color:0x00C9A7,emissive:new THREE.Color(0x00C9A7),emissiveIntensity:0.5,roughness:0.4});
-  const dashMat=new THREE.MeshStandardMaterial({color:0x1A2A1C,roughness:0.9});
-  const cwMat=new THREE.MeshStandardMaterial({color:0x131D14,roughness:0.88});
-  const poleMat=new THREE.MeshStandardMaterial({color:0x0E1410,roughness:0.55,metalness:0.4});
-  const bldMat=new THREE.MeshStandardMaterial({color:0x080E09,roughness:0.94});
-  const winMat=new THREE.MeshStandardMaterial({color:0x003520,emissive:new THREE.Color(0x002214),emissiveIntensity:1.0});
-  const hlM=new THREE.MeshStandardMaterial({color:0xFFFFDD,emissive:new THREE.Color(0xFFFFBB),emissiveIntensity:2.2});
-  const tlM=new THREE.MeshStandardMaterial({color:0xFF2222,emissive:new THREE.Color(0xFF0000),emissiveIntensity:1.3});
-  const glsMat=new THREE.MeshStandardMaterial({color:0x001020,roughness:0.1,metalness:0.9});
-
-  function addM(geo,mat,x,y,z){const m=new THREE.Mesh(geo,mat);if(x!==undefined)m.position.set(x,y||0,z||0);S.add(m);return m;}
-
-  const gnd=addM(new THREE.PlaneGeometry(100,100),gndMat,0,0,0); gnd.rotation.x=-Math.PI/2;
-  addM(new THREE.BoxGeometry(28,0.1,5.5),roadMat,0,0,0);
-  addM(new THREE.BoxGeometry(5.5,0.1,28),roadMat,0,0,0);
-  [[0,0.07,2.76,28,0.04,0.1],[0,0.07,-2.76,28,0.04,0.1],[2.76,0.07,0,0.1,0.04,28],[-2.76,0.07,0,0.1,0.04,28]
-  ].forEach(([x,y,z,w,h,d])=>addM(new THREE.BoxGeometry(w,h,d),edgeMat,x,y,z));
-  for(let p=-12;p<=12;p+=1.9){
-    if(Math.abs(p)<3.4) continue;
-    addM(new THREE.BoxGeometry(1.0,0.05,0.13),dashMat,p,0.06,0);
-    addM(new THREE.BoxGeometry(0.13,0.05,1.0),dashMat,0,0.06,p);
-  }
-  [0,0.34,0.68,1.02,1.36].forEach(o=>{
-    addM(new THREE.BoxGeometry(5.3,0.05,0.22),cwMat,0,0.06,2.95+o);
-    addM(new THREE.BoxGeometry(5.3,0.05,0.22),cwMat,0,0.06,-2.95-o);
-    addM(new THREE.BoxGeometry(0.22,0.05,5.3),cwMat,2.95+o,0.06,0);
-    addM(new THREE.BoxGeometry(0.22,0.05,5.3),cwMat,-2.95-o,0.06,0);
-  });
-
-  // Street lamps
-  [[4.8,4.8],[-4.8,4.8],[4.8,-4.8],[-4.8,-4.8]].forEach(([x,z])=>{
-    const g=new THREE.Group();
-    const post=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.07,5.0,8),poleMat); post.position.y=2.5; g.add(post);
-    const globe=new THREE.Mesh(new THREE.SphereGeometry(0.14,10,10),new THREE.MeshStandardMaterial({color:0xFFAA44,emissive:new THREE.Color(0xFF8822),emissiveIntensity:2.2})); globe.position.y=5.1; g.add(globe);
-    g.position.set(x,0,z); S.add(g);
-  });
-
-  // 8 buildings
-  [{x:8.5,z:8.5,w:5.0,h:7.0},{x:-8.2,z:8.5,w:4.0,h:9.5},{x:8.5,z:-8.2,w:4.5,h:5.5},{x:-8.5,z:-8.5,w:3.8,h:8.5},
-   {x:12.5,z:8.0,w:3.5,h:5.5},{x:-12.5,z:-8.0,w:3.5,h:7.0},{x:8.0,z:12.5,w:4.0,h:4.5},{x:-8.0,z:-12.5,w:4.5,h:7.5}
-  ].forEach(({x,z,w,h})=>{
-    const d=w*0.8;
-    addM(new THREE.BoxGeometry(w,h,d),bldMat,x,h/2,z);
-    for(let wy=0.5;wy<h-0.4;wy+=1.1)
-      for(let wx=-w/2+0.4;wx<w/2-0.2;wx+=0.84)
-        if(Math.random()<0.5) addM(new THREE.BoxGeometry(0.32,0.32,0.03),winMat,x+wx,wy,z+d/2+0.01);
-  });
-
-  function mkTLight(px,pz,startGreen){
-    const g=new THREE.Group();
-    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.065,0.075,3.0,8),poleMat); pole.position.y=1.5; g.add(pole);
-    const hsg=new THREE.Mesh(new THREE.BoxGeometry(0.27,1.0,0.22),poleMat); hsg.position.y=3.05; g.add(hsg);
-    const rM=new THREE.MeshStandardMaterial({color:startGreen?0x180000:0xFF3333,emissive:new THREE.Color(startGreen?0x000000:0xFF3333),emissiveIntensity:startGreen?0:1.5,roughness:0.35});
-    const yM=new THREE.MeshStandardMaterial({color:0x181000,emissive:new THREE.Color(0xFFAA00),emissiveIntensity:0,roughness:0.35});
-    const gM=new THREE.MeshStandardMaterial({color:startGreen?0x00C9A7:0x001A10,emissive:new THREE.Color(startGreen?0x00C9A7:0x000000),emissiveIntensity:startGreen?1.5:0,roughness:0.35});
-    const rb=new THREE.Mesh(new THREE.SphereGeometry(0.095,14,14),rM); rb.position.set(0,3.3,0.11); g.add(rb);
-    const yb=new THREE.Mesh(new THREE.SphereGeometry(0.095,14,14),yM); yb.position.set(0,3.05,0.11); g.add(yb);
-    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.095,14,14),gM); gb.position.set(0,2.8,0.11); g.add(gb);
-    g.position.set(px,0,pz); S.add(g);
-    return{rM,yM,gM};
-  }
-  const TL=[
-    mkTLight(3.5,3.5,true), mkTLight(-3.5,-3.5,true),
-    mkTLight(3.5,-3.5,false), mkTLight(-3.5,3.5,false),
-  ];
-  function setGreen(l){
-    l.rM.color.setHex(0x180000);l.rM.emissiveIntensity=0;
-    l.yM.emissiveIntensity=0;
-    l.gM.color.setHex(0x00C9A7);l.gM.emissive.setHex(0x00C9A7);l.gM.emissiveIntensity=1.5;
-  }
-  function setYellow(l){
-    l.rM.color.setHex(0x180000);l.rM.emissiveIntensity=0;
-    l.yM.color.setHex(0xFFAA00);l.yM.emissive.setHex(0xFFAA00);l.yM.emissiveIntensity=1.5;
-    l.gM.color.setHex(0x001A10);l.gM.emissiveIntensity=0;
-  }
-  function setRed(l){
-    l.rM.color.setHex(0xFF3333);l.rM.emissive.setHex(0xFF3333);l.rM.emissiveIntensity=1.5;
-    l.yM.emissiveIntensity=0;
-    l.gM.color.setHex(0x001A10);l.gM.emissiveIntensity=0;
-  }
-
-  const carMats=[
-    new THREE.MeshStandardMaterial({color:0x182430,roughness:0.5,metalness:0.55}),
-    new THREE.MeshStandardMaterial({color:0x142210,roughness:0.58,metalness:0.38}),
-    new THREE.MeshStandardMaterial({color:0x281608,roughness:0.62,metalness:0.3}),
-    new THREE.MeshStandardMaterial({color:0x1C1A2C,roughness:0.5,metalness:0.55}),
-    new THREE.MeshStandardMaterial({color:0x201014,roughness:0.62,metalness:0.25}),
-  ];
-  function mkCar(bMat,sc){
-    const g=new THREE.Group();
-    const body=new THREE.Mesh(new THREE.BoxGeometry(1.02*sc,0.27*sc,0.53*sc),bMat); body.position.y=0.25*sc; g.add(body);
-    const cab=new THREE.Mesh(new THREE.BoxGeometry(0.5*sc,0.21*sc,0.45*sc),glsMat); cab.position.set(-0.04*sc,0.45*sc,0); g.add(cab);
-    [-0.22*sc,0.22*sc].forEach(z=>{
-      const h=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.05),hlM); h.position.set(0.5*sc,0.25*sc,z); g.add(h);
-      const t=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.05),tlM); t.position.set(-0.5*sc,0.25*sc,z); g.add(t);
-    });
-    return g;
-  }
-  const ROAD=22;
-  const carDefs=[
-    {axis:'x',dir:1, lane:0.87,phase:0.00,mi:0,sc:1.02},
-    {axis:'x',dir:1, lane:0.87,phase:0.43,mi:2,sc:0.96},
-    {axis:'x',dir:-1,lane:-0.87,phase:0.54,mi:1,sc:1.0},
-    {axis:'x',dir:-1,lane:-0.87,phase:0.21,mi:3,sc:0.97},
-    {axis:'z',dir:1, lane:0.87,phase:0.25,mi:4,sc:1.0},
-    {axis:'z',dir:1, lane:0.87,phase:0.75,mi:0,sc:0.96},
-    {axis:'z',dir:-1,lane:-0.87,phase:0.67,mi:2,sc:1.0},
-    {axis:'z',dir:-1,lane:-0.87,phase:0.13,mi:3,sc:0.97},
-    {axis:'x',dir:1, lane:0.87,phase:0.82,mi:4,sc:1.0},
-    {axis:'z',dir:-1,lane:-0.87,phase:0.41,mi:1,sc:1.06},
-  ];
-  const cars=carDefs.map(d=>{
-    const m=mkCar(carMats[d.mi],d.sc);
-    if(d.axis==='x'&&d.dir===-1) m.rotation.y=Math.PI;
-    else if(d.axis==='z'&&d.dir===1) m.rotation.y=-Math.PI/2;
-    else if(d.axis==='z'&&d.dir===-1) m.rotation.y=Math.PI/2;
-    S.add(m);
-    return{...d,mesh:m,t:d.phase,spd:0.046+Math.random()*0.018};
-  });
-
-  let phase='xg',phaseT=0;
-  const pDur={xg:4.5,xy:0.9,zg:4.5,zy:0.9};
-  const pNext={xg:'xy',xy:'zg',zg:'zy',zy:'xg'};
-  function applyPhase(p){
-    if(p==='xg'){setGreen(TL[0]);setGreen(TL[1]);setRed(TL[2]);setRed(TL[3]);sigEW.color.setHex(0x00C9A7);sigNS.color.setHex(0xFF4444);}
-    else if(p==='xy'){setYellow(TL[0]);setYellow(TL[1]);setRed(TL[2]);setRed(TL[3]);sigEW.color.setHex(0xFFAA00);sigNS.color.setHex(0xFF4444);}
-    else if(p==='zg'){setRed(TL[0]);setRed(TL[1]);setGreen(TL[2]);setGreen(TL[3]);sigEW.color.setHex(0xFF4444);sigNS.color.setHex(0x00C9A7);}
-    else{setRed(TL[0]);setRed(TL[1]);setYellow(TL[2]);setYellow(TL[3]);sigEW.color.setHex(0xFF4444);sigNS.color.setHex(0xFFAA00);}
-  }
-  applyPhase(phase);
-
-  let camAngle=0;
-  const clock=new THREE.Clock();
-  function animate(){
-    requestAnimationFrame(animate);
-    const dt=Math.min(clock.getDelta(),0.05);
-    const T=Date.now()*0.001;
-    phaseT+=dt;
-    if(phaseT>=pDur[phase]){phaseT=0;phase=pNext[phase];applyPhase(phase);}
-    cars.forEach(car=>{
-      const raw=(car.t*ROAD)-(ROAD/2);
-      const green=(car.axis==='x')?(phase==='xg'):(phase==='zg');
-      let spd=car.spd;
-      if(!green&&raw>-3.8&&raw<-1.5){const f=Math.max(0,(-1.5-raw)/2.3);spd*=f*f*f;}
-      car.t=(car.t+spd*dt)%1;
-      const p=(car.t*ROAD)-(ROAD/2);
-      if(car.axis==='x') car.mesh.position.set(car.dir>0?p:-p,0.07,car.lane);
-      else car.mesh.position.set(car.lane,0.07,car.dir>0?p:-p);
-    });
-    camAngle+=0.00075;
-    const sy=Math.min(scrollY/600,1);
-    CAM.position.set(Math.sin(camAngle)*18,13.5-sy*3,Math.cos(camAngle)*18);
-    CAM.lookAt(0,0.5-sy*0.5,0);
-    cLight.intensity=3.0+Math.sin(T*1.8)*0.8;
-    R.render(S,CAM);
-  }
-  animate();
-})();
 
 // --- MOBILE NAV ---
 (function(){
