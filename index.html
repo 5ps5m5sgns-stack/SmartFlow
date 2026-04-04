@@ -623,7 +623,6 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   sun.shadow.camera.left=-20; sun.shadow.camera.right=20;
   sun.shadow.camera.top=20; sun.shadow.camera.bottom=-20;
   sun.shadow.bias=-0.002; S.add(sun);
-  S.add(Object.assign(new THREE.DirectionalLight(0x223344,0.2),{position:{set:(x,y,z)=>{sun.position;return {x,y,z}}}  }));
   const moon=new THREE.DirectionalLight(0x223344,0.22); moon.position.set(10,8,-6); S.add(moon);
   const cLight=new THREE.PointLight(0x00C9A7,4.0,22); cLight.position.set(0,3,0); S.add(cLight);
   const sigEW=new THREE.PointLight(0x00C9A7,3.2,14); sigEW.position.set(3.5,3,0); S.add(sigEW);
@@ -695,7 +694,6 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   [[6.5,6.5],[-6.5,6.5],[6.5,-6.5],[-6.5,-6.5],[5.2,10],[-5.2,10],[5.2,-10],[-5.2,-10]].forEach(([x,z])=>{
     const g=new THREE.Group();
     const h=1.8+Math.random()*1.8;
-    g.add(Object.assign(new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.09,h,6),trunkMat),{position:{x:0,y:h/2,z:0}}));
     const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.09,h,6),trunkMat); trunk.position.y=h/2; g.add(trunk);
     const foliage=new THREE.Mesh(new THREE.SphereGeometry(0.65+Math.random()*0.35,8,8),foliageMat); foliage.position.y=h+0.35; g.add(foliage);
     g.position.set(x,0,z); S.add(g);
