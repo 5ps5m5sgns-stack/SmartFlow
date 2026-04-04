@@ -309,6 +309,35 @@
     .footer-links a{position:relative}
     .footer-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.3s}
     .footer-links a:hover::after{width:100%}
+
+    /* --- TRAFFIC LIGHTS (CSS-only, décoratifs) --- */
+    .tl-wrap { position:absolute; bottom:0; z-index:1; display:flex; flex-direction:column; align-items:center; pointer-events:none; }
+    .tl-left  { left:7%; opacity:0.65; }
+    .tl-right { right:9%; opacity:0.4; transform:scale(0.75); transform-origin:bottom center; }
+    @media (max-width:900px) { .tl-wrap { display:none; } }
+    .tl-housing { width:44px; background:rgba(8,10,12,0.92); border-radius:10px 10px 8px 8px; padding:12px 8px; display:flex; flex-direction:column; gap:9px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 36px rgba(0,0,0,0.65),inset 0 1px 0 rgba(255,255,255,0.07),4px 0 0 rgba(0,0,0,0.3); }
+    .tl-light { width:28px; height:28px; border-radius:50%; margin:0 auto; }
+    .tl-r { background:#3a0800; animation:tlRed 10s linear infinite; }
+    .tl-y { background:#2a1800; animation:tlYellow 10s linear infinite; }
+    .tl-g { background:#001a08; animation:tlGreen 10s linear infinite; }
+    .tl-right .tl-r,.tl-right .tl-y,.tl-right .tl-g { animation-delay:-5s; }
+    .tl-pole { width:5px; height:100px; background:rgba(180,190,200,0.12); border-radius:3px 3px 0 0; }
+    @keyframes tlRed {
+      0%,38%   { background:#ff2800; box-shadow:0 0 10px #ff2800,0 0 26px rgba(255,40,0,.5); }
+      41%,99%  { background:#3a0800; box-shadow:none; }
+      100%     { background:#ff2800; box-shadow:0 0 10px #ff2800,0 0 26px rgba(255,40,0,.5); }
+    }
+    @keyframes tlYellow {
+      0%,38%   { background:#2a1800; box-shadow:none; }
+      41%,49%  { background:#ffaa00; box-shadow:0 0 10px #ffaa00,0 0 26px rgba(255,170,0,.5); }
+      52%,88%  { background:#2a1800; box-shadow:none; }
+      91%,100% { background:#ffaa00; box-shadow:0 0 10px #ffaa00,0 0 26px rgba(255,170,0,.5); }
+    }
+    @keyframes tlGreen {
+      0%,49%   { background:#001a08; box-shadow:none; }
+      52%,88%  { background:#00cc44; box-shadow:0 0 10px #00cc44,0 0 26px rgba(0,200,68,.5); }
+      91%,100% { background:#001a08; box-shadow:none; }
+    }
   </style>
 </head>
 <body>
@@ -344,6 +373,25 @@
   <div class="hero-orb" aria-hidden="true" style="width:650px;height:650px;background:rgba(19,201,154,0.09);top:-180px;left:-80px;animation-duration:18s;--tx:70px;--ty:50px"></div>
   <div class="hero-orb" aria-hidden="true" style="width:450px;height:450px;background:rgba(19,201,154,0.06);bottom:-80px;right:0;animation-duration:24s;animation-delay:5s;--tx:-50px;--ty:-40px"></div>
   <div class="hero-vignette" aria-hidden="true"></div>
+
+  <!-- Feux tricolores décoratifs gauche -->
+  <div class="tl-wrap tl-left" aria-hidden="true">
+    <div class="tl-housing">
+      <div class="tl-light tl-r"></div>
+      <div class="tl-light tl-y"></div>
+      <div class="tl-light tl-g"></div>
+    </div>
+    <div class="tl-pole"></div>
+  </div>
+  <!-- Feux tricolores décoratifs droite -->
+  <div class="tl-wrap tl-right" aria-hidden="true">
+    <div class="tl-housing">
+      <div class="tl-light tl-r"></div>
+      <div class="tl-light tl-y"></div>
+      <div class="tl-light tl-g"></div>
+    </div>
+    <div class="tl-pole"></div>
+  </div>
 
   <svg aria-hidden="true" class="leaf-particle" style="left:7%;bottom:22%;width:18px;color:#4DB888;animation-duration:9s;animation-delay:0s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
   <svg aria-hidden="true" class="leaf-particle" style="left:82%;bottom:32%;width:14px;color:#13C99A;animation-duration:12s;animation-delay:3s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
