@@ -200,8 +200,8 @@
 
     /* --- BEFORE / AFTER --- */
     #before-after { background: var(--bg-main); padding-top: 60px; }
-    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    @media (max-width: 768px) { .ba-grid { grid-template-columns: 1fr; } }
+    .ba-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0 20px; align-items: stretch; }
+    @media (max-width: 768px) { .ba-grid { grid-template-columns: 1fr; gap: 16px 0; } }
     .ba-col { border-radius: 20px; padding: 36px 32px; }
     @media (max-width: 480px) { .ba-col { padding: 28px 20px; } }
     .ba-before { background: rgba(0,0,0,0.2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05); }
@@ -211,10 +211,25 @@
     .ba-before .ba-col-label { color: rgba(255,110,110,0.9); }
     .ba-after .ba-col-label { color: var(--accent); }
     .ba-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .ba-list li { font-size: 15px; color: var(--text-muted); display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
+    .ba-list li { font-size: 15px; color: var(--text-muted); display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; opacity:0; transform:translateX(-12px); transition: opacity .45s ease, transform .45s cubic-bezier(0.22,1,0.36,1); }
+    .ba-after .ba-list li { transform: translateX(12px); }
+    .ba-col.items-in .ba-list li { opacity:1; transform:none; }
+    .ba-col.items-in .ba-list li:nth-child(1){transition-delay:.05s}
+    .ba-col.items-in .ba-list li:nth-child(2){transition-delay:.14s}
+    .ba-col.items-in .ba-list li:nth-child(3){transition-delay:.23s}
+    .ba-col.items-in .ba-list li:nth-child(4){transition-delay:.32s}
+    .ba-col.items-in .ba-list li:nth-child(5){transition-delay:.41s}
     .ba-dot { display: block; flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%; margin-top: 7px; }
     .ba-before .ba-dot { background: rgba(255,100,100,0.55); }
     .ba-after .ba-dot { background: var(--accent); box-shadow: 0 0 8px rgba(0,201,167,0.55); }
+    /* VS divider */
+    .ba-vs { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:20px 0; }
+    .ba-vs-line { width:1px; flex:1; min-height:16px; background:linear-gradient(to bottom,transparent,rgba(255,255,255,.1),transparent); }
+    .ba-vs-text { font-size:10px; font-weight:800; letter-spacing:.14em; color:rgba(255,255,255,.18); text-transform:uppercase; writing-mode:vertical-lr; padding:6px 0; }
+    @media (max-width:768px) { .ba-vs { display:none; } }
+    /* After-col glow on reveal */
+    @keyframes afterBorderGlow { 0%,100%{border-color:rgba(19,201,154,.15)} 50%{border-color:rgba(19,201,154,.35)} }
+    .ba-after.items-in { animation: afterBorderGlow 3s ease-in-out infinite; }
 
     /* --- CTA BAND --- */
     #cta-band { background: var(--bg-secondary); position: relative; overflow: hidden; }
@@ -571,7 +586,7 @@
     <h2 class="section-title reveal" style="text-align:center">Le même carrefour. Avant et après.</h2>
     <p class="section-subtitle reveal" style="text-align:center;margin-left:auto;margin-right:auto">SmartFlow ne remplace pas les feux. Il leur donne la capacité de voir, de penser, et de s'améliorer.</p>
     <div class="ba-grid">
-      <div class="ba-col ba-before reveal">
+      <div class="ba-col ba-before reveal" id="ba-before-col">
         <div class="ba-col-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
           Aujourd'hui
@@ -584,7 +599,12 @@
           <li><span class="ba-dot" aria-hidden="true"></span>Zéro donnée, zéro apprentissage, zéro amélioration</li>
         </ul>
       </div>
-      <div class="ba-col ba-after reveal">
+      <div class="ba-vs" aria-hidden="true">
+        <div class="ba-vs-line"></div>
+        <span class="ba-vs-text">vs</span>
+        <div class="ba-vs-line"></div>
+      </div>
+      <div class="ba-col ba-after reveal" id="ba-after-col">
         <div class="ba-col-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
           Avec SmartFlow
@@ -1037,6 +1057,21 @@ gsap.utils.toArray('.reveal').forEach(el=>{
     badge.style.transition='transform .45s cubic-bezier(0.22,1,0.36,1),border-color .3s,background .3s,color .3s';
     badge.style.transform='';
   });
+})();
+
+// Before/After list stagger
+(function(){
+  const cols=document.querySelectorAll('.ba-before,.ba-after');
+  if(!cols.length) return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      obs.unobserve(e.target);
+      // slight delay so GSAP reveal (opacity/y) starts first
+      setTimeout(()=>e.target.classList.add('items-in'), 200);
+    });
+  },{threshold:0.3});
+  cols.forEach(c=>obs.observe(c));
 })();
 
 // Trust strip fade-in letters
