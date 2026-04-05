@@ -191,7 +191,7 @@ canvas{display:block;width:100%}
         <span class="p-title">Feux classiques</span>
         <span class="p-phase" id="fix-phase">EW 🔴 0s</span>
       </div>
-      <canvas id="cv-fix" width="360" height="380"></canvas>
+      <canvas id="cv-fix" width="360" height="480"></canvas>
       <div class="stats">
         <div class="stat">
           <span class="stat-lbl">En file</span>
@@ -215,7 +215,7 @@ canvas{display:block;width:100%}
         <span class="p-title">SmartFlow IA</span>
         <span class="p-phase" id="smt-phase">EW 🔴 0s</span>
       </div>
-      <canvas id="cv-smt" width="360" height="380"></canvas>
+      <canvas id="cv-smt" width="360" height="480"></canvas>
       <div class="stats">
         <div class="stat">
           <span class="stat-lbl">En file</span>
@@ -239,9 +239,9 @@ canvas{display:block;width:100%}
   </div>
 
   <!-- COMPARISON -->
-  <div class="compare">
-    <div class="cmp-label">SmartFlow réduit l'attente de <strong id="cmp-pct">—</strong> sur ce carrefour</div>
-    <div class="cmp-ratio" id="cmp-ratio">— ×</div>
+  <div class="compare" id="compare" style="display:none">
+    <div class="cmp-label">SmartFlow réduit l'attente de <strong id="cmp-pct"></strong> sur ce carrefour</div>
+    <div class="cmp-ratio" id="cmp-ratio"></div>
     <div class="cmp-bar-wrap"><div class="cmp-bar" id="cmp-bar"></div></div>
   </div>
 </section>
@@ -264,7 +264,6 @@ canvas{display:block;width:100%}
       <p class="dl-sub">Notre dossier de présentation complet — architecture technique, résultats, roadmap et étude d'impact.</p>
       <div class="dl-meta">
         <span class="dl-badge">PDF</span>
-        <span class="dl-badge">Présentation Jury</span>
       </div>
     </div>
     <a href="SmartFlow-Presentation.pdf" download="SmartFlow-Presentation.pdf" class="btn-dl">
@@ -310,7 +309,7 @@ window.addEventListener('scroll',()=>{
 // ═══════════════════════════════════════════
 //  SIMULATION CONSTANTS
 // ═══════════════════════════════════════════
-const W=360,H=380,CX=180,CY=190,RH=22,LO=7,CL=15,CW=9,MAX_SPD=1.8,MIN_GAP=3,SM=2;
+const W=360,H=480,CX=180,CY=240,RH=26,LO=9,CL=18,CW=11,MAX_SPD=2.0,MIN_GAP=4,SM=2;
 const STOP={S:CY-RH-SM,N:CY+RH+SM,E:CX-RH-SM,W:CX+RH+SM};
 const LANE={S:CX+LO,N:CX-LO,E:CY+LO,W:CY-LO};
 const COLORS={S:'#4a8fff',N:'#a78bfa',E:'#fb923c',W:'#f87171'};
@@ -530,6 +529,7 @@ function updateUI(){
     const r=a.avgWait/b.avgWait,p=Math.round((1-1/r)*100);
     $('cmp-ratio').textContent=r.toFixed(1)+' ×';$('cmp-pct').textContent=Math.min(p,99)+'%';
     $('cmp-bar').style.width=Math.min(95,(r-1)/5*100)+'%';
+    document.getElementById('compare').style.display='flex';
   }
 }
 
@@ -548,7 +548,8 @@ document.querySelectorAll('.spd-btn').forEach(b=>{
 });
 $('rst').addEventListener('click',()=>{
   simFix.reset();simSmt.reset();
-  $('cmp-pct').textContent='—';$('cmp-ratio').textContent='— ×';$('cmp-bar').style.width='0%';
+  $('cmp-pct').textContent='';$('cmp-ratio').textContent='';$('cmp-bar').style.width='0%';
+  document.getElementById('compare').style.display='none';
 });
 </script>
 </body>
