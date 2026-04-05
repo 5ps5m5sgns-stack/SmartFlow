@@ -600,243 +600,240 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 (function(){
   const canvas=document.getElementById('hero-canvas');
   if(!canvas||typeof THREE==='undefined')return;
-  const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});
+
+  const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
   R.setPixelRatio(Math.min(devicePixelRatio,1.5));
-  R.setClearColor(0x0B1D11,1);
+  R.setClearColor(0x000000,0);
   R.toneMapping=THREE.ACESFilmicToneMapping;
-  R.toneMappingExposure=1.1;
+  R.toneMappingExposure=1.2;
   R.shadowMap.enabled=true;
   R.shadowMap.type=THREE.PCFSoftShadowMap;
+
   const S=new THREE.Scene();
-  S.fog=new THREE.FogExp2(0x0A1810,0.018);
-  const CAM=new THREE.PerspectiveCamera(48,1,0.1,200);
-  CAM.position.set(0,10,13); CAM.lookAt(0,0,0);
-  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;R.setSize(w,h,false);CAM.aspect=w/h;CAM.updateProjectionMatrix();}
+  S.fog=new THREE.Fog(0x0B1D12,18,38);
+
+  const CAM=new THREE.PerspectiveCamera(45,1,0.1,100);
+  CAM.position.set(0,11,9); CAM.lookAt(0,0,0);
+
+  function resize(){
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    R.setSize(w,h,false); CAM.aspect=w/h; CAM.updateProjectionMatrix();
+  }
   window.addEventListener('resize',resize); resize();
 
-  // Lights
-  S.add(new THREE.AmbientLight(0x0A1F14,1.4));
-  const sun=new THREE.DirectionalLight(0x2244AA,0.4);
-  sun.position.set(-8,14,5); sun.castShadow=true;
-  sun.shadow.mapSize.width=1024; sun.shadow.mapSize.height=1024;
-  sun.shadow.camera.near=1; sun.shadow.camera.far=45;
-  sun.shadow.camera.left=-20; sun.shadow.camera.right=20;
-  sun.shadow.camera.top=20; sun.shadow.camera.bottom=-20;
-  sun.shadow.bias=-0.002; S.add(sun);
-  const moon=new THREE.DirectionalLight(0x223344,0.22); moon.position.set(10,8,-6); S.add(moon);
-  const cLight=new THREE.PointLight(0x00C9A7,5.0,18); cLight.position.set(0,3.5,0); S.add(cLight);
-  const sigEW=new THREE.PointLight(0x00C9A7,4.0,12); sigEW.position.set(3.5,2.5,0); S.add(sigEW);
-  const sigNS=new THREE.PointLight(0xFF3333,4.0,12); sigNS.position.set(0,2.5,3.5); S.add(sigNS);
-  [[4.8,4.8],[-4.8,4.8],[4.8,-4.8],[-4.8,-4.8]].forEach(([x,z])=>{
-    const l=new THREE.PointLight(0xFFCC66,2.8,12); l.position.set(x,4.5,z); S.add(l);
-  });
-  // Road surface light to make it shimmer
-  const roadLight=new THREE.PointLight(0x00C9A7,2.0,20); roadLight.position.set(0,0.5,0); S.add(roadLight);
+  // ── Lumières ──────────────────────────────────────────
+  S.add(new THREE.AmbientLight(0x0C1F14,2.5));
 
-  // Materials
-  const roadMat=new THREE.MeshStandardMaterial({color:0x0B1410,roughness:0.12,metalness:0.3});
-  const gndMat=new THREE.MeshStandardMaterial({color:0x080E09,roughness:0.95});
-  const edgeMat=new THREE.MeshStandardMaterial({color:0x00C9A7,emissive:new THREE.Color(0x00C9A7),emissiveIntensity:0.7,roughness:0.3});
-  const dashMat=new THREE.MeshStandardMaterial({color:0x1A3020,emissive:new THREE.Color(0x0A1A10),emissiveIntensity:0.3,roughness:0.9});
-  const cwMat=new THREE.MeshStandardMaterial({color:0x1A2A1C,emissive:new THREE.Color(0x0A1A0C),emissiveIntensity:0.2,roughness:0.88});
-  const poleMat=new THREE.MeshStandardMaterial({color:0x111A12,roughness:0.45,metalness:0.6});
-  const hlM=new THREE.MeshStandardMaterial({color:0xFFFFDD,emissive:new THREE.Color(0xFFFFBB),emissiveIntensity:2.5});
-  const tlRM=new THREE.MeshStandardMaterial({color:0xFF2222,emissive:new THREE.Color(0xFF0000),emissiveIntensity:1.5});
-  const glsMat=new THREE.MeshStandardMaterial({color:0x001020,roughness:0.08,metalness:0.92});
-  const swMat=new THREE.MeshStandardMaterial({color:0x0C1610,roughness:0.85});
-  const trunkMat=new THREE.MeshStandardMaterial({color:0x1A1008,roughness:0.9});
-  const foliageMat=new THREE.MeshStandardMaterial({color:0x082A0E,roughness:0.75});
+  const dirL=new THREE.DirectionalLight(0xffffff,0.3);
+  dirL.position.set(5,12,8); dirL.castShadow=true;
+  dirL.shadow.mapSize.set(1024,1024);
+  dirL.shadow.camera.near=1; dirL.shadow.camera.far=40;
+  dirL.shadow.camera.left=dirL.shadow.camera.bottom=-14;
+  dirL.shadow.camera.right=dirL.shadow.camera.top=14;
+  dirL.shadow.bias=-0.002; S.add(dirL);
 
-  function addM(geo,mat,x,y,z,sh){const m=new THREE.Mesh(geo,mat);if(x!==undefined)m.position.set(x,y||0,z||0);if(sh){m.castShadow=true;m.receiveShadow=true;}S.add(m);return m;}
+  // Lumière centrale du carrefour (accent SmartFlow)
+  const cL=new THREE.PointLight(0x00C9A7,6,14); cL.position.set(0,4,0); S.add(cL);
 
-  // Ground & roads
-  const gnd=addM(new THREE.PlaneGeometry(120,120),gndMat,0,0,0); gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true;
-  const rd1=addM(new THREE.BoxGeometry(30,0.11,5.8),roadMat,0,0,0); rd1.receiveShadow=true;
-  const rd2=addM(new THREE.BoxGeometry(5.8,0.11,30),roadMat,0,0,0); rd2.receiveShadow=true;
+  // Lumières de signalisation (changent avec les feux)
+  const lEW=new THREE.PointLight(0x00C9A7,4,10); lEW.position.set(0,1.5,0); S.add(lEW);
+  const lNS=new THREE.PointLight(0xFF3300,4,10); lNS.position.set(0,1.5,0); S.add(lNS);
 
-  // Glowing edge lines
-  [[0,0.08,2.9,30,0.05,0.12],[0,0.08,-2.9,30,0.05,0.12],[2.9,0.08,0,0.12,0.05,30],[-2.9,0.08,0,0.12,0.05,30]
-  ].forEach(([x,y,z,w,h,d])=>addM(new THREE.BoxGeometry(w,h,d),edgeMat,x,y,z));
+  // ── Matériaux ──────────────────────────────────────────
+  const M=(c,r,m,e,ei)=>{
+    const mat=new THREE.MeshStandardMaterial({color:c,roughness:r??0.8,metalness:m??0});
+    if(e!==undefined){mat.emissive=new THREE.Color(e);mat.emissiveIntensity=ei??1;}
+    return mat;
+  };
+  const mGround = M(0x07100A,0.98);
+  const mRoad   = M(0x0C1510,0.08,0.35);           // très réfléchissante
+  const mSidew  = M(0x0D1A10,0.9);
+  const mEdge   = M(0x00C9A7,0.2,0,0x00C9A7,0.8);  // bordure verte lumineuse
+  const mDash   = M(0x1C3A22,0.8,0,0x0A2010,0.4);
+  const mPole   = M(0x0E1812,0.4,0.7);
+  const mHsg    = M(0x080C08,0.9);
+  const mHL     = M(0xFFFFCC,0,0,0xFFFFBB,3.0);    // phares blancs
+  const mTL     = M(0xFF2200,0,0,0xFF2200,2.0);    // feux arrière rouges
+  const mGlass  = M(0x050A12,0.05,0.95);
 
-  // Center dashes
-  for(let p=-13;p<=13;p+=2.0){
-    if(Math.abs(p)<3.2)continue;
-    addM(new THREE.BoxGeometry(1.1,0.06,0.14),dashMat,p,0.065,0);
-    addM(new THREE.BoxGeometry(0.14,0.06,1.1),dashMat,0,0.065,p);
+  const add=(geo,mat,x,y,z,cast,recv)=>{
+    const m=new THREE.Mesh(geo,mat);
+    if(x!==undefined) m.position.set(x,y,z);
+    if(cast) m.castShadow=true;
+    if(recv) m.receiveShadow=true;
+    S.add(m); return m;
+  };
+
+  // ── Sol & Routes ────────────────────────────────────────
+  const gnd=add(new THREE.PlaneGeometry(80,80),mGround); gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true;
+
+  // Bandes de route (axe X et axe Z)
+  const r1=add(new THREE.BoxGeometry(28,0.08,5.2),mRoad,0,0,0,false,true);
+  const r2=add(new THREE.BoxGeometry(5.2,0.08,28),mRoad,0,0,0,false,true);
+
+  // Trottoirs
+  [[ 0,0.03, 3.6,28,0.06,1.0],[ 0,0.03,-3.6,28,0.06,1.0],
+   [ 3.6,0.03,0,1.0,0.06,28],[-3.6,0.03,0,1.0,0.06,28]
+  ].forEach(([x,y,z,w,h,d])=>add(new THREE.BoxGeometry(w,h,d),mSidew,x,y,z));
+
+  // Bordures lumineuses (lignes vertes bords de route)
+  [[ 0,0.06, 2.6,28,0.04,0.08],[ 0,0.06,-2.6,28,0.04,0.08],
+   [ 2.6,0.06,0,0.08,0.04,28],[-2.6,0.06,0,0.08,0.04,28]
+  ].forEach(([x,y,z,w,h,d])=>add(new THREE.BoxGeometry(w,h,d),mEdge,x,y,z));
+
+  // Pointillés axe X
+  for(let p=-12;p<=12;p+=2.2){
+    if(Math.abs(p)<2.8) continue;
+    add(new THREE.BoxGeometry(1.0,0.04,0.1),mDash,p,0.05,0);
+  }
+  // Pointillés axe Z
+  for(let p=-12;p<=12;p+=2.2){
+    if(Math.abs(p)<2.8) continue;
+    add(new THREE.BoxGeometry(0.1,0.04,1.0),mDash,0,0.05,p);
   }
 
-  // Crosswalks
-  [0,0.36,0.72,1.08,1.44].forEach(o=>{
-    addM(new THREE.BoxGeometry(5.5,0.055,0.23),cwMat,0,0.065,3.1+o);
-    addM(new THREE.BoxGeometry(5.5,0.055,0.23),cwMat,0,0.065,-3.1-o);
-    addM(new THREE.BoxGeometry(0.23,0.055,5.5),cwMat,3.1+o,0.065,0);
-    addM(new THREE.BoxGeometry(0.23,0.055,5.5),cwMat,-3.1-o,0.065,0);
+  // Passages piétons (bandes blanches)
+  const mCW=M(0x1E3322,0.7,0,0x0A1A10,0.3);
+  [0,0.32,0.64,0.96].forEach(o=>{
+    add(new THREE.BoxGeometry(5.0,0.045,0.18),mCW,0,0.06, 2.75+o);
+    add(new THREE.BoxGeometry(5.0,0.045,0.18),mCW,0,0.06,-2.75-o);
+    add(new THREE.BoxGeometry(0.18,0.045,5.0),mCW, 2.75+o,0.06,0);
+    add(new THREE.BoxGeometry(0.18,0.045,5.0),mCW,-2.75-o,0.06,0);
   });
 
-  // Sidewalks
-  addM(new THREE.BoxGeometry(30,0.09,1.3),swMat,0,0.045,3.75);
-  addM(new THREE.BoxGeometry(30,0.09,1.3),swMat,0,0.045,-3.75);
-  addM(new THREE.BoxGeometry(1.3,0.09,30),swMat,3.75,0.045,0);
-  addM(new THREE.BoxGeometry(1.3,0.09,30),swMat,-3.75,0.045,0);
-
-  // Street lamps
-  [[4.8,4.8],[-4.8,4.8],[4.8,-4.8],[-4.8,-4.8]].forEach(([x,z])=>{
+  // ── Feux tricolores ────────────────────────────────────
+  function mkLight(px,pz,rot,sg){
     const g=new THREE.Group();
-    const post=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.07,5.2,8),poleMat); post.position.y=2.6; g.add(post);
-    const arm=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.05,0.05),poleMat); arm.position.set(0.35,5.2,0); g.add(arm);
-    const globe=new THREE.Mesh(new THREE.SphereGeometry(0.15,10,10),new THREE.MeshStandardMaterial({color:0xFFAA44,emissive:new THREE.Color(0xFF9922),emissiveIntensity:2.5})); globe.position.set(0.7,5.2,0); g.add(globe);
-    g.position.set(x,0,z); S.add(g);
-  });
 
-  // Trees
-  [[6.5,6.5],[-6.5,6.5],[6.5,-6.5],[-6.5,-6.5],[5.2,10],[-5.2,10],[5.2,-10],[-5.2,-10]].forEach(([x,z])=>{
-    const g=new THREE.Group();
-    const h=1.8+Math.random()*1.8;
-    const trunk=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.09,h,6),trunkMat); trunk.position.y=h/2; g.add(trunk);
-    const foliage=new THREE.Mesh(new THREE.SphereGeometry(0.65+Math.random()*0.35,8,8),foliageMat); foliage.position.y=h+0.35; g.add(foliage);
-    g.position.set(x,0,z); S.add(g);
-  });
+    // Poteau
+    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.068,3.4,10),mPole);
+    pole.position.y=1.7; pole.castShadow=true; g.add(pole);
 
-  // Intersection glow disc
-  const glowDiscMat=new THREE.MeshStandardMaterial({color:0x00C9A7,emissive:new THREE.Color(0x00C9A7),emissiveIntensity:0.08,transparent:true,opacity:0.18,roughness:1});
-  const glowDisc=addM(new THREE.CylinderGeometry(4.2,4.2,0.02,64),glowDiscMat,0,0.06,0);
+    // Boîtier
+    const box=new THREE.Mesh(new THREE.BoxGeometry(0.28,1.05,0.22),mHsg);
+    box.position.y=3.35; g.add(box);
 
-  // Road markings — stop lines
-  const stopMat=new THREE.MeshStandardMaterial({color:0xffffff,emissive:new THREE.Color(0xffffff),emissiveIntensity:0.15,roughness:0.8});
-  [[2.9,5.8,0.12],[- 2.9,5.8,0.12]].forEach(([x,w,d])=>addM(new THREE.BoxGeometry(w,0.04,d),stopMat,x,0.085,0));
-  [[2.9,0.12,5.8],[-2.9,0.12,5.8]].forEach(([z,w,d])=>addM(new THREE.BoxGeometry(w,0.04,d),stopMat,0,0.085,z));
-
-  // Traffic lights
-  function mkTLight(px,pz,startGreen){
-    const g=new THREE.Group();
-    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.065,0.078,3.2,8),poleMat); pole.position.y=1.6; g.add(pole);
-    const hsg=new THREE.Mesh(new THREE.BoxGeometry(0.3,1.1,0.25),new THREE.MeshStandardMaterial({color:0x080C09,roughness:0.7})); hsg.position.y=3.25; g.add(hsg);
-    // Visor hoods
-    [3.52,3.25,2.98].forEach(y=>{
-      const v=new THREE.Mesh(new THREE.BoxGeometry(0.32,0.04,0.18),poleMat); v.position.set(0,y,0.13); g.add(v);
+    // Visières
+    [3.62,3.35,3.08].forEach(y=>{
+      const v=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.035,0.15),mPole);
+      v.position.set(0,y,0.12); g.add(v);
     });
-    const rM=new THREE.MeshStandardMaterial({color:startGreen?0x1A0000:0xFF2800,emissive:new THREE.Color(startGreen?0x000000:0xFF2800),emissiveIntensity:startGreen?0:2.0,roughness:0.3});
-    const yM=new THREE.MeshStandardMaterial({color:0x1A1000,emissive:new THREE.Color(0xFFAA00),emissiveIntensity:0,roughness:0.3});
-    const gM=new THREE.MeshStandardMaterial({color:startGreen?0x00C9A7:0x001A0A,emissive:new THREE.Color(startGreen?0x00C9A7:0x000000),emissiveIntensity:startGreen?2.0:0,roughness:0.3});
-    const rb=new THREE.Mesh(new THREE.SphereGeometry(0.1,14,14),rM); rb.position.set(0,3.52,0.13); g.add(rb);
-    const yb=new THREE.Mesh(new THREE.SphereGeometry(0.1,14,14),yM); yb.position.set(0,3.25,0.13); g.add(yb);
-    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.1,14,14),gM); gb.position.set(0,2.98,0.13); g.add(gb);
-    g.position.set(px,0,pz); S.add(g);
+
+    // Ampoules
+    const rM=M(sg?0x1A0000:0xFF2800,0.2,0,sg?0x000000:0xFF2800,sg?0:2.5);
+    const yM=M(0x1A1000,0.2,0,0xFFAA00,0);
+    const gM=M(sg?0x00C9A7:0x001A08,0.2,0,sg?0x00C9A7:0x000000,sg?2.5:0);
+
+    const rb=new THREE.Mesh(new THREE.SphereGeometry(0.095,12,12),rM); rb.position.set(0,3.62,0.12); g.add(rb);
+    const yb=new THREE.Mesh(new THREE.SphereGeometry(0.095,12,12),yM); yb.position.set(0,3.35,0.12); g.add(yb);
+    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.095,12,12),gM); gb.position.set(0,3.08,0.12); g.add(gb);
+
+    g.position.set(px,0,pz);
+    g.rotation.y=rot;
+    S.add(g);
     return{rM,yM,gM};
   }
+  // 4 feux aux coins, orientés vers le carrefour
   const TL=[
-    mkTLight(3.6,3.6,true), mkTLight(-3.6,-3.6,true),
-    mkTLight(3.6,-3.6,false), mkTLight(-3.6,3.6,false),
+    mkLight( 3.2, 3.2, Math.PI*1.25, true ),
+    mkLight(-3.2,-3.2, Math.PI*0.25, true ),
+    mkLight( 3.2,-3.2, Math.PI*0.75, false),
+    mkLight(-3.2, 3.2, Math.PI*1.75, false),
   ];
-  function setGreen(l){l.rM.color.setHex(0x1A0000);l.rM.emissiveIntensity=0;l.yM.emissiveIntensity=0;l.gM.color.setHex(0x00C9A7);l.gM.emissive.setHex(0x00C9A7);l.gM.emissiveIntensity=2.0;}
-  function setYellow(l){l.rM.color.setHex(0x1A0000);l.rM.emissiveIntensity=0;l.yM.color.setHex(0xFFAA00);l.yM.emissive.setHex(0xFFAA00);l.yM.emissiveIntensity=2.0;l.gM.color.setHex(0x001A0A);l.gM.emissiveIntensity=0;}
-  function setRed(l){l.rM.color.setHex(0xFF2800);l.rM.emissive.setHex(0xFF2800);l.rM.emissiveIntensity=2.0;l.yM.emissiveIntensity=0;l.gM.color.setHex(0x001A0A);l.gM.emissiveIntensity=0;}
 
-  // Cars
-  const carMats=[
-    new THREE.MeshStandardMaterial({color:0x182430,roughness:0.45,metalness:0.6}),
-    new THREE.MeshStandardMaterial({color:0x142210,roughness:0.55,metalness:0.4}),
-    new THREE.MeshStandardMaterial({color:0x281608,roughness:0.6,metalness:0.35}),
-    new THREE.MeshStandardMaterial({color:0x1C1A2C,roughness:0.45,metalness:0.6}),
-    new THREE.MeshStandardMaterial({color:0x201014,roughness:0.6,metalness:0.28}),
-  ];
-  function mkCar(bMat,sc){
+  const setG=l=>{l.rM.color.setHex(0x1A0000);l.rM.emissiveIntensity=0;l.yM.emissiveIntensity=0;l.gM.color.setHex(0x00C9A7);l.gM.emissive.setHex(0x00C9A7);l.gM.emissiveIntensity=2.5;};
+  const setY=l=>{l.rM.color.setHex(0x1A0000);l.rM.emissiveIntensity=0;l.yM.color.setHex(0xFFAA00);l.yM.emissive.setHex(0xFFAA00);l.yM.emissiveIntensity=2.5;l.gM.color.setHex(0x001A08);l.gM.emissiveIntensity=0;};
+  const setR=l=>{l.rM.color.setHex(0xFF2800);l.rM.emissive.setHex(0xFF2800);l.rM.emissiveIntensity=2.5;l.yM.emissiveIntensity=0;l.gM.color.setHex(0x001A08);l.gM.emissiveIntensity=0;};
+
+  // ── Voitures minimalistes ──────────────────────────────
+  const carColors=[0x1A2C40,0x142814,0x30180A,0x1A1830,0x281420];
+  function mkCar(ci,sc){
     const g=new THREE.Group();
-    const body=new THREE.Mesh(new THREE.BoxGeometry(1.05*sc,0.28*sc,0.56*sc),bMat); body.position.y=0.26*sc; body.castShadow=true; g.add(body);
-    const cab=new THREE.Mesh(new THREE.BoxGeometry(0.52*sc,0.22*sc,0.47*sc),glsMat); cab.position.set(-0.05*sc,0.47*sc,0); cab.castShadow=true; g.add(cab);
-    // Wheels
-    const wMat=new THREE.MeshStandardMaterial({color:0x080808,roughness:0.9});
-    [[0.35*sc,0.13*sc,0.3*sc],[0.35*sc,0.13*sc,-0.3*sc],[-0.35*sc,0.13*sc,0.3*sc],[-0.35*sc,0.13*sc,-0.3*sc]].forEach(([wx,wy,wz])=>{
-      const w=new THREE.Mesh(new THREE.CylinderGeometry(0.11*sc,0.11*sc,0.07*sc,10),wMat); w.position.set(wx,wy,wz); w.rotation.x=Math.PI/2; g.add(w);
-    });
-    [-0.24*sc,0.24*sc].forEach(z=>{
-      const hl=new THREE.Mesh(new THREE.BoxGeometry(0.07,0.06,0.05),hlM); hl.position.set(0.53*sc,0.26*sc,z); g.add(hl);
-      const tl=new THREE.Mesh(new THREE.BoxGeometry(0.07,0.06,0.05),tlRM); tl.position.set(-0.53*sc,0.26*sc,z); g.add(tl);
+    const bm=M(carColors[ci],0.3,0.7);
+    const body=new THREE.Mesh(new THREE.BoxGeometry(1.1*sc,0.22*sc,0.52*sc),bm);
+    body.position.y=0.22*sc; body.castShadow=true; g.add(body);
+    const roof=new THREE.Mesh(new THREE.BoxGeometry(0.54*sc,0.18*sc,0.44*sc),mGlass);
+    roof.position.set(-0.06*sc,0.38*sc,0); roof.castShadow=true; g.add(roof);
+    // Phares & feux
+    [-0.22*sc,0.22*sc].forEach(z=>{
+      const h=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.05,0.04),mHL); h.position.set( 0.56*sc,0.22*sc,z); g.add(h);
+      const t=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.05,0.04),mTL); t.position.set(-0.56*sc,0.22*sc,z); g.add(t);
     });
     return g;
   }
-  const ROAD=24;
+
+  const ROAD=22;
   const carDefs=[
-    {axis:'x',dir:1, lane:0.9, phase:0.00,mi:0,sc:1.02},
-    {axis:'x',dir:1, lane:0.9, phase:0.44,mi:2,sc:0.96},
-    {axis:'x',dir:-1,lane:-0.9,phase:0.55,mi:1,sc:1.0},
-    {axis:'x',dir:-1,lane:-0.9,phase:0.22,mi:3,sc:0.97},
-    {axis:'z',dir:1, lane:0.9, phase:0.26,mi:4,sc:1.0},
-    {axis:'z',dir:1, lane:0.9, phase:0.76,mi:0,sc:0.96},
-    {axis:'z',dir:-1,lane:-0.9,phase:0.68,mi:2,sc:1.0},
-    {axis:'z',dir:-1,lane:-0.9,phase:0.14,mi:3,sc:0.97},
-    {axis:'x',dir:1, lane:0.9, phase:0.82,mi:4,sc:1.0},
-    {axis:'z',dir:-1,lane:-0.9,phase:0.42,mi:1,sc:1.06},
+    {ax:'x',dir:1, ln: 0.85,ph:0.00,ci:0,sc:1.0},
+    {ax:'x',dir:1, ln: 0.85,ph:0.46,ci:2,sc:0.95},
+    {ax:'x',dir:-1,ln:-0.85,ph:0.55,ci:1,sc:1.0},
+    {ax:'x',dir:-1,ln:-0.85,ph:0.20,ci:3,sc:0.97},
+    {ax:'z',dir:1, ln: 0.85,ph:0.28,ci:4,sc:1.0},
+    {ax:'z',dir:1, ln: 0.85,ph:0.74,ci:0,sc:0.95},
+    {ax:'z',dir:-1,ln:-0.85,ph:0.65,ci:2,sc:1.0},
+    {ax:'z',dir:-1,ln:-0.85,ph:0.12,ci:3,sc:0.97},
+    {ax:'x',dir:1, ln: 0.85,ph:0.80,ci:4,sc:1.0},
+    {ax:'z',dir:-1,ln:-0.85,ph:0.40,ci:1,sc:1.05},
   ];
   const cars=carDefs.map(d=>{
-    const m=mkCar(carMats[d.mi],d.sc);
-    if(d.axis==='x'&&d.dir===-1) m.rotation.y=Math.PI;
-    else if(d.axis==='z'&&d.dir===1) m.rotation.y=-Math.PI/2;
-    else if(d.axis==='z'&&d.dir===-1) m.rotation.y=Math.PI/2;
+    const m=mkCar(d.ci,d.sc);
+    if(d.ax==='x'&&d.dir===-1) m.rotation.y=Math.PI;
+    else if(d.ax==='z'&&d.dir===1)  m.rotation.y=-Math.PI/2;
+    else if(d.ax==='z'&&d.dir===-1) m.rotation.y= Math.PI/2;
     S.add(m);
-    return{...d,mesh:m,t:d.phase,spd:0.044+Math.random()*0.02};
+    return{...d,mesh:m,t:d.ph,spd:0.042+Math.random()*0.02};
   });
 
-  // Fireflies
-  const FC=70;
-  const fGeo=new THREE.BufferGeometry();
-  const fPos=new Float32Array(FC*3);
-  const fPhase=new Float32Array(FC);
-  for(let i=0;i<FC;i++){fPos[i*3]=(Math.random()-.5)*32;fPos[i*3+1]=0.5+Math.random()*7;fPos[i*3+2]=(Math.random()-.5)*32;fPhase[i]=Math.random()*Math.PI*2;}
-  fGeo.setAttribute('position',new THREE.BufferAttribute(fPos,3));
-  const fireflies=new THREE.Points(fGeo,new THREE.PointsMaterial({color:0x00C9A7,size:0.09,transparent:true,opacity:0.5,depthWrite:false}));
-  S.add(fireflies);
-
-  // Traffic light phase logic
-  let phase='xg',phaseT=0;
-  const pDur={xg:5.0,xy:0.85,zg:5.0,zy:0.85};
-  const pNext={xg:'xy',xy:'zg',zg:'zy',zy:'xg'};
+  // ── Phase feux ────────────────────────────────────────
+  let phase='xg',phT=0;
+  const dur={xg:5,xy:0.8,zg:5,zy:0.8};
+  const nxt={xg:'xy',xy:'zg',zg:'zy',zy:'xg'};
   function applyPhase(p){
-    if(p==='xg'){setGreen(TL[0]);setGreen(TL[1]);setRed(TL[2]);setRed(TL[3]);sigEW.color.setHex(0x00C9A7);sigNS.color.setHex(0xFF3333);}
-    else if(p==='xy'){setYellow(TL[0]);setYellow(TL[1]);setRed(TL[2]);setRed(TL[3]);sigEW.color.setHex(0xFFAA00);sigNS.color.setHex(0xFF3333);}
-    else if(p==='zg'){setRed(TL[0]);setRed(TL[1]);setGreen(TL[2]);setGreen(TL[3]);sigEW.color.setHex(0xFF3333);sigNS.color.setHex(0x00C9A7);}
-    else{setRed(TL[0]);setRed(TL[1]);setYellow(TL[2]);setYellow(TL[3]);sigEW.color.setHex(0xFF3333);sigNS.color.setHex(0xFFAA00);}
+    if(p==='xg'){setG(TL[0]);setG(TL[1]);setR(TL[2]);setR(TL[3]);lEW.color.setHex(0x00C9A7);lEW.intensity=4;lNS.color.setHex(0xFF3300);lNS.intensity=2;}
+    else if(p==='xy'){setY(TL[0]);setY(TL[1]);setR(TL[2]);setR(TL[3]);lEW.color.setHex(0xFFAA00);lEW.intensity=3;}
+    else if(p==='zg'){setR(TL[0]);setR(TL[1]);setG(TL[2]);setG(TL[3]);lNS.color.setHex(0x00C9A7);lNS.intensity=4;lEW.color.setHex(0xFF3300);lEW.intensity=2;}
+    else{setR(TL[0]);setR(TL[1]);setY(TL[2]);setY(TL[3]);lNS.color.setHex(0xFFAA00);lNS.intensity=3;}
   }
   applyPhase(phase);
 
-  let camAngle=0;
-  const clock=new THREE.Clock();
+  // ── Boucle d'animation ────────────────────────────────
+  let camA=0;
+  const clk=new THREE.Clock();
   function animate(){
     requestAnimationFrame(animate);
-    const dt=Math.min(clock.getDelta(),0.05);
+    const dt=Math.min(clk.getDelta(),0.05);
     const T=Date.now()*0.001;
-    // Phase timing
-    phaseT+=dt;
-    if(phaseT>=pDur[phase]){phaseT=0;phase=pNext[phase];applyPhase(phase);}
-    // Cars
-    cars.forEach(car=>{
-      const green=(car.axis==='x')?(phase==='xg'):(phase==='zg');
-      const yellow=(car.axis==='x')?(phase==='xy'):(phase==='zy');
-      let spd=car.spd;
-      const raw=(car.t*ROAD)-(ROAD/2);
-      if(!green&&!yellow&&raw>-4.2&&raw<-1.8){const f=Math.max(0,(-1.8-raw)/2.4);spd*=f*f*f;}
-      if(yellow&&raw>-4.2&&raw<-1.0){const f=Math.max(0,(-1.0-raw)/3.2);spd*=f*f;}
-      car.t=(car.t+spd*dt)%1;
-      const p=(car.t*ROAD)-(ROAD/2);
-      if(car.axis==='x') car.mesh.position.set(car.dir>0?p:-p,0.08,car.lane);
-      else car.mesh.position.set(car.lane,0.08,car.dir>0?p:-p);
+
+    // Phase
+    phT+=dt;
+    if(phT>=dur[phase]){phT=0;phase=nxt[phase];applyPhase(phase);}
+
+    // Voitures
+    cars.forEach(c=>{
+      const go=(c.ax==='x')?(phase==='xg'):(phase==='zg');
+      const yo=(c.ax==='x')?(phase==='xy'):(phase==='zy');
+      const raw=(c.t*ROAD)-(ROAD/2);
+      let spd=c.spd;
+      if(!go&&!yo&&raw>-3.8&&raw<-1.5){const f=Math.max(0,(-1.5-raw)/2.3);spd*=f*f*f;}
+      if(yo&&raw>-3.8&&raw<-0.8){const f=Math.max(0,(-0.8-raw)/3.0);spd*=f*f;}
+      c.t=(c.t+spd*dt)%1;
+      const p=(c.t*ROAD)-(ROAD/2);
+      if(c.ax==='x') c.mesh.position.set(c.dir>0?p:-p,0.06,c.ln);
+      else c.mesh.position.set(c.ln,0.06,c.dir>0?p:-p);
     });
-    // Fireflies
-    for(let i=0;i<FC;i++){
-      fPos[i*3]+=Math.sin(T*0.3+fPhase[i])*0.004;
-      fPos[i*3+1]+=Math.sin(T*0.5+fPhase[i]*2)*0.002;
-      fPos[i*3+2]+=Math.cos(T*0.4+fPhase[i])*0.004;
-    }
-    fGeo.attributes.position.needsUpdate=true;
-    fireflies.material.opacity=0.28+Math.sin(T*0.9)*0.18;
-    // Camera slow orbit
-    camAngle+=0.00055;
-    const sy=Math.min(scrollY/700,1);
-    CAM.position.set(Math.sin(camAngle)*13,9.5-sy*2,Math.cos(camAngle)*13);
+
+    // Caméra : légère rotation lente + légère oscillation verticale
+    camA+=0.00045;
+    CAM.position.set(
+      Math.sin(camA)*11,
+      10+Math.sin(T*0.18)*0.4,
+      Math.cos(camA)*9
+    );
     CAM.lookAt(0,0,0);
-    // Dynamic lights pulse
-    cLight.intensity=4.0+Math.sin(T*1.6)*1.0;
-    glowDiscMat.emissiveIntensity=0.06+Math.sin(T*1.2)*0.04;
+
+    // Pulsation lumière centrale
+    cL.intensity=5.5+Math.sin(T*1.4)*1.2;
+
     R.render(S,CAM);
   }
   animate();
