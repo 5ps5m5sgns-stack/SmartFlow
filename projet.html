@@ -104,7 +104,8 @@
     .reco-label{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#FFD700;margin-bottom:12px}
     .reco-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-bottom:12px}
     .reco-desc{color:var(--text-muted);font-size:15px;line-height:1.7;max-width:560px;margin:0 auto}
-    .reco-count{font-weight:800;color:#FFD700;display:inline-block}
+    .reco-count{font-weight:800;color:#FFD700;display:inline-block;transition:text-shadow .5s ease,transform .5s cubic-bezier(0.22,1,0.36,1)}
+    .reco-card.in-view .reco-count{text-shadow:0 0 14px rgba(255,215,0,.6);transform:scale(1.08)}
 
     /* CTA section */
     #cta-contact{background:var(--bg-main);padding:80px 24px;text-align:center}
@@ -296,29 +297,15 @@ gsap.utils.toArray('.reveal').forEach(el=>{
 // Scroll progress bar
 (function(){const bar=document.getElementById('scroll-bar');window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%';});})();
 
-// Reconnaissance : top-line expand + count-up 200
+// Reconnaissance : top-line expand + number highlight
 (function(){
   const card=document.querySelector('.reco-card');
-  const countEl=document.querySelector('.reco-count[data-target]');
   if(!card) return;
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(!e.isIntersecting) return;
       obs.unobserve(e.target);
-      // line expand
       card.classList.add('in-view');
-      // count-up
-      if(countEl){
-        const target=+countEl.dataset.target;
-        let start=0; const dur=1400; const step=16;
-        const timer=setInterval(()=>{
-          start+=step;
-          const p=Math.min(start/dur,1);
-          const ease=1-Math.pow(1-p,3);
-          countEl.textContent=Math.round(ease*target);
-          if(p>=1){clearInterval(timer);countEl.textContent=target;}
-        },step);
-      }
     });
   },{threshold:0.4});
   obs.observe(card);
