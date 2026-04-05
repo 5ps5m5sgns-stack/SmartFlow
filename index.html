@@ -175,18 +175,18 @@
 
     /* --- BEFORE / AFTER 3D --- */
     #before-after { background: var(--bg-main); padding-top: 60px; }
-    .ba-arena { display:grid; grid-template-columns:1fr 64px 1fr; align-items:stretch; margin-top:48px; }
+    .ba-arena { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch; margin-top:48px; }
     @media(max-width:768px){ .ba-arena{ grid-template-columns:1fr; gap:14px; } }
     /* Panels */
     .ba-panel { border-radius:22px; padding:36px 30px; position:relative; overflow:hidden; transition:transform .55s cubic-bezier(0.22,1,0.36,1),box-shadow .55s; will-change:transform; }
     @media(max-width:480px){ .ba-panel{ padding:24px 18px; } }
-    .ba-panel--before { background:rgba(12,4,4,.75); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(255,60,60,.1); box-shadow:0 8px 48px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04); transform:perspective(1400px) rotateY(5deg) translateX(-8px); }
-    .ba-panel--after  { background:rgba(5,18,12,.82); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(19,201,154,.14); box-shadow:0 8px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(19,201,154,.06); transform:perspective(1400px) rotateY(-5deg) translateX(8px); }
+    .ba-panel--before { background:rgba(18,4,4,.82); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(255,60,60,.22); box-shadow:0 8px 48px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,80,80,.08); transform:perspective(1400px) rotateY(5deg) translateX(-8px); }
+    .ba-panel--after  { background:rgba(4,20,14,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(19,201,154,.26); box-shadow:0 8px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(19,201,154,.1); transform:perspective(1400px) rotateY(-5deg) translateX(8px); }
     @media(max-width:768px){ .ba-panel--before,.ba-panel--after{ transform:none; } }
     /* Ambient glow blob inside each panel */
-    .ba-panel-glow { position:absolute; width:260px; height:260px; border-radius:50%; pointer-events:none; filter:blur(72px); }
-    .ba-panel--before .ba-panel-glow { background:rgba(255,40,40,.1); top:-70px; left:-50px; }
-    .ba-panel--after  .ba-panel-glow { background:rgba(19,201,154,.1); top:-70px; right:-50px; }
+    .ba-panel-glow { position:absolute; width:300px; height:300px; border-radius:50%; pointer-events:none; filter:blur(72px); }
+    .ba-panel--before .ba-panel-glow { background:rgba(255,50,50,.22); top:-80px; left:-60px; }
+    .ba-panel--after  .ba-panel-glow { background:rgba(19,201,154,.22); top:-80px; right:-60px; }
     /* Panel label row */
     .ba-panel-label { display:flex; align-items:center; gap:12px; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:22px; }
     .ba-panel--before .ba-panel-label { color:rgba(255,95,95,.9); }
@@ -213,20 +213,10 @@
     .ba-panel.items-in .ba-item:nth-child(4){ transition:opacity .38s .28s,transform .5s .28s cubic-bezier(0.22,1,0.36,1),background .22s,border-color .22s; }
     .ba-panel.items-in .ba-item:nth-child(5){ transition:opacity .38s .36s,transform .5s .36s cubic-bezier(0.22,1,0.36,1),background .22s,border-color .22s; }
     /* Dot */
-    .ba-dot { display:block; flex-shrink:0; width:6px; height:6px; border-radius:50%; margin-top:9px; }
-    .ba-panel--before .ba-dot { background:rgba(255,90,90,.55); }
-    .ba-panel--after  .ba-dot { background:var(--accent); box-shadow:0 0 7px rgba(0,201,167,.5); }
+    .ba-dot { display:block; flex-shrink:0; width:8px; height:8px; border-radius:50%; margin-top:8px; flex-shrink:0; }
+    .ba-panel--before .ba-dot { background:#ff4040; box-shadow:0 0 6px rgba(255,50,50,.9), 0 0 14px rgba(255,50,50,.5); }
+    .ba-panel--after  .ba-dot { background:var(--accent); box-shadow:0 0 6px rgba(0,201,167,.9), 0 0 14px rgba(0,201,167,.55); }
     /* VS centre column */
-    .ba-vs-col { display:flex; flex-direction:column; align-items:center; justify-content:center; }
-    .ba-vs-line { width:1px; flex:1; background:linear-gradient(to bottom,transparent,rgba(255,255,255,.07),transparent); }
-    .ba-vs-orb { position:relative; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.1); }
-    .ba-vs-label { font-size:9px; font-weight:800; letter-spacing:.14em; color:rgba(255,255,255,.28); text-transform:uppercase; position:relative; z-index:1; }
-    .ba-vs-ring { position:absolute; border-radius:50%; border:1px solid rgba(255,255,255,.06); animation:vsRingPulse 3.5s ease-in-out infinite; pointer-events:none; }
-    .ba-vs-ring-1 { width:64px;  height:64px;  animation-delay:0s; }
-    .ba-vs-ring-2 { width:86px;  height:86px;  animation-delay:.9s; }
-    .ba-vs-ring-3 { width:106px; height:106px; animation-delay:1.8s; }
-    @keyframes vsRingPulse { 0%,100%{opacity:0;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
-    @media(max-width:768px){ .ba-vs-col{ display:none; } }
     /* After panel border glow on reveal */
     @keyframes afterBorderPulse { 0%,100%{border-color:rgba(19,201,154,.14)} 55%{border-color:rgba(19,201,154,.34)} }
     .ba-panel--after.items-in { animation:afterBorderPulse 3.5s ease-in-out infinite; }
@@ -592,17 +582,6 @@
       </div>
 
       <!-- VS orb -->
-      <div class="ba-vs-col" aria-hidden="true">
-        <div class="ba-vs-line"></div>
-        <div class="ba-vs-orb">
-          <span class="ba-vs-label">vs</span>
-          <div class="ba-vs-ring ba-vs-ring-1"></div>
-          <div class="ba-vs-ring ba-vs-ring-2"></div>
-          <div class="ba-vs-ring ba-vs-ring-3"></div>
-        </div>
-        <div class="ba-vs-line"></div>
-      </div>
-
       <!-- Panel Après -->
       <div class="ba-panel ba-panel--after reveal">
         <div class="ba-panel-glow" aria-hidden="true"></div>
