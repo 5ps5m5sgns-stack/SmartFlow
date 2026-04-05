@@ -317,8 +317,6 @@
     /* Nav links : montée douce + point accent */
     .nav-links a:not(.nav-cta){position:relative;transition:color .2s,transform .2s}
     .nav-links a:not(.nav-cta):hover{transform:translateY(-1px)}
-    .nav-links a:not(.nav-cta)::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%) scaleX(0);width:4px;height:4px;background:var(--accent);border-radius:50%;transition:transform .25s cubic-bezier(0.22,1,0.36,1),opacity .25s;opacity:0}
-    .nav-links a:not(.nav-cta):hover::after,.nav-links a.active:not(.nav-cta)::after{transform:translateX(-50%) scaleX(1);opacity:1}
 
     /* Nav logo shimmer au hover */
     .nav-logo{transition:opacity .2s,letter-spacing .25s}
