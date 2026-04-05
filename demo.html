@@ -71,7 +71,7 @@ body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;
 .rst-btn:hover{border-color:rgba(255,255,255,.28);color:#fff}
 
 /* ── SIM GRID ── */
-#sim{padding:0 24px 40px;max-width:940px;margin:0 auto}
+#sim{padding:0 24px 40px;max-width:1200px;margin:0 auto}
 .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media(max-width:720px){.sim-grid{grid-template-columns:1fr}}
 
@@ -119,7 +119,7 @@ canvas{display:block;width:100%}
 .cmp-bar{height:100%;background:linear-gradient(90deg,var(--accent),#52e8ce);border-radius:4px;width:0%;transition:width .6s ease}
 
 /* ── DOWNLOAD SECTION ── */
-#download{padding:60px 24px;max-width:940px;margin:0 auto}
+#download{padding:60px 24px;max-width:1200px;margin:0 auto}
 .dl-card{background:var(--bg-secondary);border:1px solid rgba(19,201,154,.15);border-radius:20px;padding:40px 48px;display:flex;align-items:center;gap:36px;flex-wrap:wrap;position:relative;overflow:hidden}
 .dl-card::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(19,201,154,.08) 0%,transparent 65%);pointer-events:none}
 .dl-icon{width:56px;height:56px;border-radius:14px;background:rgba(19,201,154,.1);border:1px solid rgba(19,201,154,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -191,7 +191,7 @@ canvas{display:block;width:100%}
         <span class="p-title">Feux classiques</span>
         <span class="p-phase" id="fix-phase">EW 🔴 0s</span>
       </div>
-      <canvas id="cv-fix" width="360" height="480"></canvas>
+      <canvas id="cv-fix" width="460" height="480"></canvas>
       <div class="stats">
         <div class="stat">
           <span class="stat-lbl">En file</span>
@@ -215,7 +215,7 @@ canvas{display:block;width:100%}
         <span class="p-title">SmartFlow IA</span>
         <span class="p-phase" id="smt-phase">EW 🔴 0s</span>
       </div>
-      <canvas id="cv-smt" width="360" height="480"></canvas>
+      <canvas id="cv-smt" width="460" height="480"></canvas>
       <div class="stats">
         <div class="stat">
           <span class="stat-lbl">En file</span>
@@ -309,7 +309,7 @@ window.addEventListener('scroll',()=>{
 // ═══════════════════════════════════════════
 //  SIMULATION CONSTANTS
 // ═══════════════════════════════════════════
-const W=360,H=480,CX=180,CY=240,RH=26,LO=9,CL=18,CW=11,MAX_SPD=2.0,MIN_GAP=4,SM=2;
+const W=460,H=480,CX=230,CY=240,RH=26,LO=9,CL=18,CW=11,MAX_SPD=2.0,MIN_GAP=4,SM=2;
 const STOP={S:CY-RH-SM,N:CY+RH+SM,E:CX-RH-SM,W:CX+RH+SM};
 const LANE={S:CX+LO,N:CX-LO,E:CY+LO,W:CY-LO};
 const COLORS={S:'#4a8fff',N:'#a78bfa',E:'#fb923c',W:'#f87171'};
