@@ -119,6 +119,26 @@
     .footer-links{display:flex;gap:28px;flex-wrap:wrap}
     .footer-links a{color:var(--text-muted);text-decoration:none;font-size:14px;transition:color .2s}
     .footer-links a:hover{color:var(--accent)}
+
+    /* --- HOVER EFFECTS --- */
+    .nav-links a:not(.nav-cta){position:relative;transition:color .2s,transform .2s}
+    .nav-links a:not(.nav-cta):hover{transform:translateY(-1px)}
+    .nav-links a:not(.nav-cta)::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%) scaleX(0);width:4px;height:4px;background:var(--accent);border-radius:50%;transition:transform .25s cubic-bezier(0.22,1,0.36,1),opacity .25s;opacity:0}
+    .nav-links a:not(.nav-cta):hover::after,.nav-links a.active:not(.nav-cta)::after{transform:translateX(-50%) scaleX(1);opacity:1}
+    .nav-logo{transition:opacity .2s,letter-spacing .25s}
+    .nav-logo:hover{opacity:.85;letter-spacing:.01em}
+    .section-tag{transition:color .2s,transform .25s;display:inline-block}
+    .section-tag:hover{transform:translateX(3px)}
+    .value-card:hover{border-color:rgba(19,201,154,.2)}
+    .value-card:hover .value-icon{background:rgba(19,201,154,.16);transform:scale(1.08)}
+    .value-icon{transition:background .25s,transform .3s cubic-bezier(0.22,1,0.36,1)}
+    .reco-card:hover{transform:translateY(-4px);box-shadow:0 20px 64px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,215,0,0.12)}
+    .reco-card{transition:transform .35s cubic-bezier(0.22,1,0.36,1),box-shadow .35s}
+    .btn-secondary{position:relative;overflow:hidden}
+    .btn-secondary::before{content:'';position:absolute;inset:0;background:rgba(19,201,154,.07);border-radius:inherit;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(0.22,1,0.36,1)}
+    .btn-secondary:hover::before{transform:scaleX(1)}
+    .footer-links a{transition:color .2s,transform .2s}
+    .footer-links a:hover{transform:translateY(-1px)}
     .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
     .footer-copy{font-size:12px;color:var(--text-muted);opacity:.5}
