@@ -49,7 +49,7 @@
 
     /* --- CURSOR --- */
     #cursor { position: fixed; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: screen; }
-    #cursor-ring { position: fixed; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--accent); opacity: 0.45; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.22s ease; }
+    #cursor-ring { position: fixed; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--accent); opacity: 0.45; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.2s, border-color 0.3s; }
 
     /* --- NAVBAR --- */
     #navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s; }
@@ -105,10 +105,10 @@
     }
     @keyframes shimmer { 0%{ background-position:0% center; } 100%{ background-position:200% center; } }
     .hero-subtitle { font-size: clamp(15px, 2vw, 18px); color: var(--text-muted); margin: 24px auto 40px; max-width: 540px; line-height: 1.7; text-shadow: 0 1px 12px rgba(0,0,0,0.5); }
-    .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; align-items: center; }
     .btn-primary { background: var(--accent); color: #0C2015; font-weight: 700; font-size: 15px; padding: 14px 32px; border-radius: 999px; border: none; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s; box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25); }
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.45), 0 4px 16px rgba(19,201,154,0.2), inset 0 1px 0 rgba(255,255,255,0.3); }
-    .btn-secondary { background: transparent; color: var(--accent); font-weight: 600; font-size: 15px; padding: 13px 28px; border-radius: 999px; border: 1.5px solid rgba(0,201,167,0.6); cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.2s, border-color 0.2s; }
+    .btn-secondary { background: transparent; color: var(--accent); font-weight: 600; font-size: 15px; padding: 13px 28px; border-radius: 999px; border: 1.5px solid rgba(0,201,167,0.6); cursor: pointer; text-decoration: none; display: inline-block; position: relative; overflow: hidden; transition: background 0.2s, transform 0.2s, border-color 0.2s; }
     .btn-secondary:hover { background: rgba(0,201,167,0.1); transform: scale(1.03); border-color: var(--accent); }
 
     /* Trust strip */
@@ -352,6 +352,33 @@
     .pillar-metric{transition:background .25s,border-color .25s,transform .25s}
     .pillar-card:hover .pillar-metric{background:rgba(19,201,154,.16);border-color:rgba(19,201,154,.35);transform:translateY(-1px)}
 
+    /* --- LAURÉAT BADGE HOVER --- */
+    .laureate-badge{transition:border-color .3s,background .3s,color .3s}
+    .laureate-badge:hover{border-color:rgba(255,215,0,.8);background:linear-gradient(135deg,rgba(255,215,0,.2) 0%,rgba(255,180,0,.14) 100%);color:#FFED80}
+    .laureate-badge:hover::before{animation-duration:1.8s}
+
+    /* --- HERO FLOAT --- */
+    @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .hero-content{animation:heroFloat 7s ease-in-out infinite}
+
+    /* --- SECTION TITLE ACCENT LINE --- */
+    .section-title-line{position:relative;display:inline}
+    .section-title-line::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .7s cubic-bezier(0.22,1,0.36,1)}
+    .section-title-line.in-view::after{width:100%}
+
+    /* --- STAT CARD NUMBER GLOW --- */
+    .stat-number{transition:text-shadow .3s,transform .3s}
+    .stat-card:hover .stat-number{text-shadow:0 0 20px rgba(19,201,154,.5);transform:scale(1.04)}
+
+    /* --- TRUST STRIP ITEM HOVER --- */
+    .trust-item{transition:color .2s,transform .2s}
+    .trust-item:hover{color:rgba(168,213,194,.85);transform:translateY(-1px)}
+
+    /* --- BTN SECONDARY SHINE --- */
+    .btn-secondary{overflow:hidden}
+    .btn-secondary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(19,201,154,.12),transparent);transform:skewX(-20deg);transition:left .5s}
+    .btn-secondary:hover::after{left:160%}
+
     /* --- THREE.JS HERO CANVAS --- */
     #hero-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:1; display:block; }
     @media (max-width:768px) { #hero-canvas { display:none; } }
@@ -399,6 +426,12 @@
   <svg aria-hidden="true" class="leaf-particle" style="left:45%;bottom:10%;width:10px;color:#4DB888;animation-duration:11s;animation-delay:4.5s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
 
   <div class="hero-content">
+    <div class="laureate-badge" role="img" aria-label="Lauréat de la Bourse Jeune 2025 — Meilleur projet environnemental">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      <span>Lauréat · Bourse Jeune 2025</span>
+      <span style="opacity:.35">·</span>
+      <span style="font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:none;opacity:.8">Meilleur projet environnemental</span>
+    </div>
     <h1 class="hero-title">
       Des feux qui pensent.
       <span class="hero-title-accent">Pour une ville qui respire.</span>
@@ -630,9 +663,14 @@ window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loa
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
   (function loop(){ rx+=(mx-rx)*0.18; ry+=(my-ry)*0.18; c.style.left=mx+'px'; c.style.top=my+'px'; r.style.left=rx+'px'; r.style.top=ry+'px'; requestAnimationFrame(loop); })();
   document.querySelectorAll('a,button').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2)';r.style.opacity='0.8';});
-    el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.opacity='0.45';});
+    el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2)';r.style.opacity='0.8';r.style.transform='translate(-50%,-50%) scale(1.5)';});
+    el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.opacity='0.45';r.style.transform='translate(-50%,-50%) scale(1)';});
   });
+  const badge=document.querySelector('.laureate-badge');
+  if(badge){
+    badge.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2.5)';r.style.opacity='0.9';r.style.transform='translate(-50%,-50%) scale(2)';r.style.borderColor='rgba(255,215,0,0.7)';});
+    badge.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.opacity='0.45';r.style.transform='translate(-50%,-50%) scale(1)';r.style.borderColor='';});
+  }
 })();
 
 // --- NAVBAR ---
@@ -970,6 +1008,34 @@ gsap.utils.toArray('.reveal').forEach(el=>{
       card.style.transition='transform 0.4s ease';
       setTimeout(()=>card.style.transition='',400);
     });
+  });
+})();
+
+// Badge entrance animation
+(function(){
+  const badge=document.querySelector('.laureate-badge');
+  if(!badge) return;
+  badge.style.opacity='0';
+  badge.style.transform='translateY(12px) scale(0.94)';
+  badge.style.transition='opacity .7s ease, transform .7s cubic-bezier(0.22,1,0.36,1)';
+  setTimeout(()=>{badge.style.opacity='1';badge.style.transform='';},350);
+})();
+
+// Badge magnetic hover
+(function(){
+  const badge=document.querySelector('.laureate-badge');
+  if(!badge) return;
+  badge.style.willChange='transform';
+  badge.addEventListener('mousemove',e=>{
+    const r=badge.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*0.2;
+    const y=(e.clientY-r.top-r.height/2)*0.25;
+    badge.style.transition='transform .08s linear,border-color .3s,background .3s,color .3s';
+    badge.style.transform=`scale(1.055) translateY(-3px) translate(${x}px,${y}px)`;
+  });
+  badge.addEventListener('mouseleave',()=>{
+    badge.style.transition='transform .45s cubic-bezier(0.22,1,0.36,1),border-color .3s,background .3s,color .3s';
+    badge.style.transform='';
   });
 })();
 
