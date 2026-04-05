@@ -37,13 +37,15 @@
     body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
     h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15}
     #cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen}
-    #cursor-ring{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);opacity:.45;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+    #cursor-ring{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);opacity:.45;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .28s cubic-bezier(0.22,1,0.36,1),opacity .2s}
+    #scroll-bar{position:fixed;top:0;left:0;height:1px;background:var(--accent);opacity:.6;z-index:2000;width:0%;transition:width .1s linear}
     #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,31,22,.93);backdrop-filter:blur(18px);box-shadow:0 1px 0 rgba(0,201,167,.12);transition:background .4s,backdrop-filter .4s}
     .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--accent);text-decoration:none}
     .nav-links{display:flex;gap:36px;list-style:none}
     .nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
     .nav-links a:hover,.nav-links a.active{color:var(--accent)}
-    .nav-cta{background:var(--accent);color:var(--bg-main)!important;font-weight:700!important;padding:8px 20px;border-radius:999px}
+    .nav-cta{background:var(--accent);color:var(--bg-main)!important;font-weight:700!important;padding:8px 20px;border-radius:999px;transition:transform .2s,box-shadow .2s!important}
+    .nav-cta:hover{transform:scale(1.04);box-shadow:0 0 16px rgba(0,201,167,.4)}
     @media(max-width:768px){.nav-links{display:none}#navbar{padding:0 20px}}
     .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:1001}
     .hamburger span{display:block;width:22px;height:2px;background:var(--accent);border-radius:2px;transition:transform .3s,opacity .3s}
@@ -166,6 +168,7 @@
   </style>
 </head>
 <body>
+<div id="scroll-bar" aria-hidden="true"></div>
 <div id="cursor" aria-hidden="true"></div>
 <div id="cursor-ring" aria-hidden="true"></div>
 
@@ -394,6 +397,9 @@ document.getElementById('contact-form').addEventListener('submit',function(e){
     alert('Connexion impossible. Vérifiez votre réseau et réessayez.');
   });
 });
+
+// Scroll progress bar
+(function(){const bar=document.getElementById('scroll-bar');window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%';});})();
 </script>
 </body>
 </html>

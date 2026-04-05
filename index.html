@@ -366,8 +366,11 @@
     .pillar-card:hover .pillar-metric{background:rgba(19,201,154,.16);border-color:rgba(19,201,154,.35);transform:translateY(-1px)}
 
     /* --- HERO FLOAT --- */
-    @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .hero-content{animation:heroFloat 7s ease-in-out infinite}
+    @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    .hero-content{animation:heroFloat 8s ease-in-out infinite}
+    /* CRT scanline on "before" panel */
+    .ba-panel--before::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;border-radius:inherit;z-index:0}
+    .ba-panel--before .ba-panel-glow,.ba-panel--before .ba-panel-label,.ba-panel--before .ba-items{position:relative;z-index:1}
 
     /* --- SECTION TITLE ACCENT LINE --- */
     .section-title-line{position:relative;display:inline}
