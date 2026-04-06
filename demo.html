@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartFlow — Simulation Live</title>
+<title>SmartFlow - Simulation Live</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
@@ -170,7 +170,7 @@ canvas{display:block;width:100%}
 <section id="hero">
   <div class="hero-chip">Simulation interactive</div>
   <h1 class="hero-h1">Le même carrefour.<br><span>Deux réalités différentes.</span></h1>
-  <p class="hero-sub">Même flux de voitures, même instant. À gauche les feux classiques — à droite SmartFlow. La différence est immédiate.</p>
+  <p class="hero-sub">Même flux de voitures, même instant. À gauche les feux classiques, à droite SmartFlow. La différence est immédiate.</p>
 </section>
 
 <div class="controls">
@@ -189,7 +189,7 @@ canvas{display:block;width:100%}
       <div class="panel-head">
         <div class="p-dot"></div>
         <span class="p-title">Feux classiques</span>
-        <span class="p-phase" id="fix-phase">EW 🔴 0s</span>
+        <span class="p-phase" id="fix-phase">EW 0s</span>
       </div>
       <canvas id="cv-fix" width="460" height="480"></canvas>
       <div class="stats">
@@ -213,7 +213,7 @@ canvas{display:block;width:100%}
       <div class="panel-head">
         <div class="p-dot"></div>
         <span class="p-title">SmartFlow IA</span>
-        <span class="p-phase" id="smt-phase">EW 🔴 0s</span>
+        <span class="p-phase" id="smt-phase">EW 0s</span>
       </div>
       <canvas id="cv-smt" width="460" height="480"></canvas>
       <div class="stats">
@@ -418,8 +418,7 @@ class Sim{
   }
 
   phaseLabel(){
-    const sym=this.yellow?'🟡':this.phase==='NS'?'🟢':'🔴';
-    return`${this.phase} ${sym} ${Math.round(this.pt)}s`;
+    return`${this.phase} ${Math.round(this.pt)}s`;
   }
 
   // ── DRAW ──
@@ -523,7 +522,7 @@ function updateUI(){
   $('fix-q').textContent=a.waiting;$('fix-w').textContent=a.avgWait.toFixed(1);$('fix-co2').textContent=a.co2;
   $('smt-q').textContent=b.waiting;$('smt-w').textContent=b.avgWait.toFixed(1);$('smt-saved').textContent=Math.max(0,a.co2-b.co2);
   $('fix-phase').textContent=simFix.phaseLabel();$('smt-phase').textContent=simSmt.phaseLabel();
-  if(simSmt.decisionTimer>0&&simSmt.lastDecision)$('brain').textContent='⚡ '+simSmt.lastDecision;
+  if(simSmt.decisionTimer>0&&simSmt.lastDecision)$('brain').textContent=simSmt.lastDecision;
   else $('brain').textContent=simSmt.yellow?'Transition en cours…':`Phase ${simSmt.phase==='NS'?'Nord-Sud':'Est-Ouest'} · NS:${b.nsQ} EW:${b.ewQ} véhicules en file`;
   if(a.avgWait>.8&&b.avgWait>.1){
     const r=a.avgWait/b.avgWait,p=Math.round((1-1/r)*100);
