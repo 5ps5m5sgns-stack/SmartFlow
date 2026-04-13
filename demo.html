@@ -26,7 +26,7 @@ body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;
 #cursor-ring{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);opacity:.45;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .28s cubic-bezier(0.22,1,0.36,1),opacity .2s}
 
 /* ── NAV ── */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,box-shadow .3s}
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;padding:0 32px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,box-shadow .3s,backdrop-filter .3s}
 #navbar.scrolled{background:rgba(10,21,16,.75);backdrop-filter:blur(24px) saturate(1.6);box-shadow:0 1px 0 rgba(19,201,154,.12)}
 .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--accent);text-decoration:none}
 .nav-links{display:flex;gap:36px;list-style:none}
@@ -50,7 +50,7 @@ body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;
 .mobile-nav-close svg{width:28px;height:28px;stroke:var(--accent);stroke-width:2;stroke-linecap:round;fill:none}
 
 /* ── SCROLL BAR ── */
-#scroll-bar{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:9999;width:0%;transition:width .1s linear;border-radius:0 2px 2px 0}
+#scroll-bar{position:fixed;top:0;left:0;height:1px;background:var(--accent);z-index:9999;width:0%;transition:width .1s linear}
 
 /* ── HERO ── */
 #hero{padding:120px 24px 52px;text-align:center;position:relative;overflow:hidden}
@@ -116,7 +116,7 @@ canvas{display:block;width:100%}
 .cmp-label strong{color:#fff}
 .cmp-ratio{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
 .cmp-bar-wrap{flex:1;min-width:120px;height:6px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
-.cmp-bar{height:100%;background:linear-gradient(90deg,var(--accent),#52e8ce);border-radius:4px;width:0%;transition:width .6s ease}
+.cmp-bar{height:100%;background:linear-gradient(90deg,var(--accent),#52e8ce);border-radius:4px;width:0%;transition:width .6s cubic-bezier(0.22,1,0.36,1)}
 
 /* ── DOWNLOAD SECTION ── */
 #download{padding:60px 24px;max-width:1200px;margin:0 auto}
@@ -138,6 +138,27 @@ canvas{display:block;width:100%}
 .legend{display:flex;align-items:center;justify-content:center;gap:20px;padding:8px 0 60px;flex-wrap:wrap}
 .leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
 .leg-dot{width:12px;height:7px;border-radius:2px}
+
+/* ── ACTIVE STATES ── */
+.spd-btn:active,.rst-btn:active{transform:scale(.95)}
+.btn-dl:active{transform:scale(.98)}
+.nav-logo{transition:opacity .2s,letter-spacing .3s}
+.nav-logo:hover{opacity:.85;letter-spacing:.5px}
+
+/* ── FOCUS VISIBLE ── */
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* ── REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+  .cmp-bar{transition:none!important}
+}
+
+/* ── HIDE CURSOR ON TOUCH ── */
+@media(hover:none){
+  body{cursor:auto}
+  #cursor,#cursor-ring{display:none}
+}
 </style>
 </head>
 <body>
@@ -294,7 +315,7 @@ window.addEventListener('scroll',()=>{
   const pct=scrollY/(document.documentElement.scrollHeight-innerHeight)*100;
   sb.style.width=pct+'%';
   document.getElementById('navbar').classList.toggle('scrolled',scrollY>80);
-});
+},{passive:true});
 
 // ── HAMBURGER ──
 (function(){
