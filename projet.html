@@ -301,13 +301,24 @@ gsap.utils.toArray('.reveal').forEach(el=>{
 // 3D tilt on value-cards
 (function(){
   document.querySelectorAll('.value-card').forEach(card=>{
+    card.addEventListener('mouseenter',()=>{
+      card.style.transition='none';
+    });
     card.addEventListener('mousemove',e=>{
       const r=card.getBoundingClientRect();
       const x=(e.clientX-r.left)/r.width-0.5;
       const y=(e.clientY-r.top)/r.height-0.5;
       card.style.transform=`translateY(-5px) perspective(600px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`;
     });
-    card.addEventListener('mouseleave',()=>{card.style.transform='';card.style.transition='transform .4s ease';setTimeout(()=>card.style.transition='',400);});
+    card.addEventListener('mouseleave',()=>{
+      card.style.transition='transform .4s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
+      card.style.transform='translateY(0)';
+      card.addEventListener('transitionend',function handler(){
+        card.style.transition='';
+        card.style.transform='';
+        card.removeEventListener('transitionend',handler);
+      });
+    });
   });
 })();
 
