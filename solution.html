@@ -131,7 +131,7 @@
     @media(max-width:480px){.deploy-grid{grid-template-columns:1fr}}
     .deploy-card{background:rgba(16,43,28,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px 22px;transition:transform .35s cubic-bezier(0.22,1,0.36,1),box-shadow .35s;box-shadow:0 4px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
     .deploy-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(19,201,154,.2),transparent);pointer-events:none}
-    .deploy-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.5),0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);border-color:rgba(255,255,255,.12)}
+    .deploy-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.5),0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);border-color:rgba(19,201,154,.2)}
     .deploy-check{width:32px;height:32px;border-radius:8px;background:rgba(0,201,167,.1);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
     .deploy-check svg{width:16px;height:16px;stroke:var(--accent);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
     .deploy-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
@@ -198,18 +198,13 @@
     .nav-logo:hover{opacity:.85;letter-spacing:.01em}
     .section-tag{transition:color .2s,transform .25s;display:inline-block}
     .section-tag:hover{transform:translateX(3px)}
-    .deploy-card:hover{border-color:rgba(19,201,154,.2)}
     .deploy-card:hover .deploy-check{background:rgba(19,201,154,.18);transform:scale(1.08);transition:background .25s,transform .25s}
     .deploy-check{transition:background .25s,transform .25s}
-    .how-step{transition:transform .25s cubic-bezier(0.22,1,0.36,1)}
-    .how-step:hover{transform:translateX(4px)}
     .btn-secondary{position:relative;overflow:hidden}
     .btn-secondary::before{content:'';position:absolute;inset:0;background:rgba(19,201,154,.07);border-radius:inherit;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(0.22,1,0.36,1)}
     .btn-secondary:hover::before{transform:scaleX(1)}
     .footer-links a{transition:color .2s,transform .2s}
     .footer-links a:not(:last-child):hover{transform:translateY(-1px)}
-    .impact-num{transition:color .25s,transform .25s;display:inline-block}
-    .impact-item:hover .impact-num{transform:scale(1.06)}
     .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
     .footer-copy{font-size:12px;color:var(--text-muted);opacity:.5}
@@ -663,32 +658,13 @@ document.querySelectorAll('.counter').forEach(el=>{
   obs.observe(el);
 });
 
-// Animated counters for impact strip
-(function(){
-  const els=document.querySelectorAll('.counter[data-val]');
-  if(!els.length) return;
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(!e.isIntersecting) return;
-      obs.unobserve(e.target);
-      const el=e.target, target=+el.dataset.val;
-      let start=0; const dur=1600, step=16;
-      const timer=setInterval(()=>{
-        start+=step;
-        const p=Math.min(start/dur,1);
-        const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
-        el.textContent=Math.round(ease*target);
-        if(p>=1){clearInterval(timer);el.textContent=target;}
-      },step);
-    });
-  },{threshold:0.5});
-  els.forEach(el=>obs.observe(el));
-})();
 
 // 3D tilt on deploy-cards
 (function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelectorAll('.deploy-card').forEach(card=>{
     card.addEventListener('mouseenter',()=>{
+      card.style.willChange='transform';
       card.style.transition='none';
     });
     card.addEventListener('mousemove',e=>{
@@ -698,11 +674,12 @@ document.querySelectorAll('.counter').forEach(el=>{
       card.style.transform=`translateY(-6px) perspective(500px) rotateX(${-y*5}deg) rotateY(${x*5}deg)`;
     });
     card.addEventListener('mouseleave',()=>{
-      card.style.transition='transform .4s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
+      card.style.transition='transform .35s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
       card.style.transform='translateY(0)';
       card.addEventListener('transitionend',function handler(){
         card.style.transition='';
         card.style.transform='';
+        card.style.willChange='';
         card.removeEventListener('transitionend',handler);
       });
     });

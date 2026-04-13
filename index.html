@@ -993,7 +993,12 @@ gsap.utils.toArray('.reveal').forEach(el=>{
 
 // Card tilt on mouse
 (function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelectorAll('.stat-card,.pillar-card').forEach(card=>{
+    card.addEventListener('mouseenter',()=>{
+      card.style.willChange='transform';
+      card.style.transition='none';
+    });
     card.addEventListener('mousemove',e=>{
       const r=card.getBoundingClientRect();
       const x=(e.clientX-r.left)/r.width-0.5;
@@ -1001,9 +1006,14 @@ gsap.utils.toArray('.reveal').forEach(el=>{
       card.style.transform=`translateY(-5px) perspective(600px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`;
     });
     card.addEventListener('mouseleave',()=>{
-      card.style.transform='';
-      card.style.transition='transform 0.4s ease';
-      setTimeout(()=>card.style.transition='',400);
+      card.style.transition='transform .35s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
+      card.style.transform='translateY(0)';
+      card.addEventListener('transitionend',function handler(){
+        card.style.transition='';
+        card.style.transform='';
+        card.style.willChange='';
+        card.removeEventListener('transitionend',handler);
+      });
     });
   });
 })();
@@ -1023,20 +1033,28 @@ gsap.utils.toArray('.reveal').forEach(el=>{
   panels.forEach(p=>obs.observe(p));
 
   // 3D mouse-tilt per panel
-  panels.forEach(panel=>{
-    panel.addEventListener('mousemove',e=>{
-      const r=panel.getBoundingClientRect();
-      const x=(e.clientX-r.left)/r.width-0.5;
-      const y=(e.clientY-r.top)/r.height-0.5;
-      panel.style.transition='transform .06s linear';
-      panel.style.transform=`perspective(1200px) rotateY(${x*8}deg) rotateX(${-y*5}deg) translateZ(12px)`;
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    panels.forEach(panel=>{
+      const baseTransform=getComputedStyle(panel).transform;
+      panel.addEventListener('mouseenter',()=>{
+        panel.style.transition='none';
+      });
+      panel.addEventListener('mousemove',e=>{
+        const r=panel.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width-0.5;
+        const y=(e.clientY-r.top)/r.height-0.5;
+        panel.style.transform=`perspective(1400px) rotateY(${x*8}deg) rotateX(${-y*5}deg) translateZ(12px)`;
+      });
+      panel.addEventListener('mouseleave',()=>{
+        panel.style.transition='transform .55s cubic-bezier(0.22,1,0.36,1)';
+        panel.style.transform='';
+        panel.addEventListener('transitionend',function handler(){
+          panel.style.transition='';
+          panel.removeEventListener('transitionend',handler);
+        });
+      });
     });
-    panel.addEventListener('mouseleave',()=>{
-      panel.style.transition='transform .55s cubic-bezier(0.22,1,0.36,1)';
-      panel.style.transform='';
-      setTimeout(()=>{panel.style.transition='';},560);
-    });
-  });
+  }
 })();
 
 // Trust strip fade-in letters

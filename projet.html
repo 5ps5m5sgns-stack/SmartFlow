@@ -84,7 +84,7 @@
     @media(max-width:768px){.values-grid{grid-template-columns:1fr}}
     .value-card{background:rgba(16,43,28,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:transform .35s cubic-bezier(0.22,1,0.36,1),box-shadow .35s;box-shadow:0 4px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
     .value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(19,201,154,.25),transparent);pointer-events:none}
-    .value-card:hover{transform:translateY(-7px);box-shadow:0 28px 70px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);border-color:rgba(255,255,255,.12)}
+    .value-card:hover{transform:translateY(-7px);box-shadow:0 28px 70px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);border-color:rgba(19,201,154,.2)}
     .value-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,201,167,.09);display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .value-icon svg{width:20px;height:20px;stroke:var(--accent)}
     .value-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#fff;margin-bottom:6px}
@@ -137,7 +137,6 @@
     .nav-logo:hover{opacity:.85;letter-spacing:.01em}
     .section-tag{transition:color .2s,transform .25s;display:inline-block}
     .section-tag:hover{transform:translateX(3px)}
-    .value-card:hover{border-color:rgba(19,201,154,.2)}
     .value-card:hover .value-icon{background:rgba(19,201,154,.16);transform:scale(1.08)}
     .value-icon{transition:background .25s,transform .3s cubic-bezier(0.22,1,0.36,1)}
     .reco-card:hover{transform:translateY(-4px);box-shadow:0 20px 64px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,215,0,0.12)}
@@ -300,8 +299,10 @@ gsap.utils.toArray('.reveal').forEach(el=>{
 
 // 3D tilt on value-cards
 (function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.querySelectorAll('.value-card').forEach(card=>{
     card.addEventListener('mouseenter',()=>{
+      card.style.willChange='transform';
       card.style.transition='none';
     });
     card.addEventListener('mousemove',e=>{
@@ -311,11 +312,12 @@ gsap.utils.toArray('.reveal').forEach(el=>{
       card.style.transform=`translateY(-5px) perspective(600px) rotateX(${-y*6}deg) rotateY(${x*6}deg)`;
     });
     card.addEventListener('mouseleave',()=>{
-      card.style.transition='transform .4s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
+      card.style.transition='transform .35s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
       card.style.transform='translateY(0)';
       card.addEventListener('transitionend',function handler(){
         card.style.transition='';
         card.style.transform='';
+        card.style.willChange='';
         card.removeEventListener('transitionend',handler);
       });
     });
