@@ -923,7 +923,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 gsap.registerPlugin(ScrollTrigger);
 gsap.utils.toArray('.reveal').forEach(el=>{
   const delay = el.classList.contains('ba-after') ? 0.15 : 0;
-  gsap.fromTo(el,{opacity:0,y:36},{opacity:1,y:0,duration:0.85,ease:'power2.out',delay,scrollTrigger:{trigger:el,start:'top 88%',once:true},onComplete:()=>gsap.set(el,{clearProps:'transform,opacity'})});
+  gsap.fromTo(el,{opacity:0,y:36},{opacity:1,y:0,duration:0.85,ease:'power2.out',delay,scrollTrigger:{trigger:el,start:'top 88%',once:true},onComplete:()=>{el.classList.remove('reveal');gsap.set(el,{clearProps:'transform,opacity'})}});
 });
 
 // Scroll progress bar
