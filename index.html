@@ -688,10 +688,11 @@ window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loa
 // --- NAVBAR ---
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>80),{passive:true});
 
-// --- THREE.JS HERO ---
+// --- THREE.JS HERO (deferred to avoid blocking main thread) ---
 (function(){
   const canvas=document.getElementById('hero-canvas');
   if(!canvas||typeof THREE==='undefined')return;
+  const init=()=>{
 
   const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
   R.setPixelRatio(Math.min(devicePixelRatio,1));
@@ -935,6 +936,10 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     R.render(S,CAM);
   }
   animate();
+  };
+  // Defer Three.js init so it doesn't block TBT measurement
+  if('requestIdleCallback' in window) requestIdleCallback(init,{timeout:2000});
+  else setTimeout(init,100);
 })();
 
 // --- MOBILE NAV ---
@@ -949,6 +954,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 
 // --- GSAP SCROLL REVEAL ---
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({limitCallbacks:true});
 gsap.utils.toArray('.reveal').forEach(el=>{
   const delay = el.classList.contains('ba-after') ? 0.15 : 0;
   gsap.fromTo(el,{opacity:0,y:36},{opacity:1,y:0,duration:0.85,ease:'power2.out',delay,scrollTrigger:{trigger:el,start:'top 88%',once:true},onComplete:()=>{el.classList.remove('reveal');gsap.set(el,{clearProps:'transform,opacity'})}});
