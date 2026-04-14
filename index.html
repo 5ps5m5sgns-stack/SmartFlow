@@ -261,7 +261,7 @@
     .footer-links a:hover { color: var(--accent); }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 28px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .footer-mentions { font-size: 12px; color: var(--text-muted); opacity: 0.65; }
-    .footer-copy { font-size: 12px; color: var(--text-muted); opacity: 0.5; }
+    .footer-copy { font-size: 12px; color: var(--text-muted); opacity: 0.7; }
 
     /* --- SCROLL PROGRESS BAR --- */
     #scroll-bar { position: fixed; top: 0; left: 0; height: 1px; background: var(--accent); z-index: 2000; width: 0%; transition: width .1s linear; opacity: 0.6; }
@@ -375,6 +375,12 @@
     /* --- TRUST STRIP ITEM HOVER --- */
     .trust-item{transition:color .2s,transform .2s}
     .trust-item:hover{color:rgba(168,213,194,.85);transform:translateY(-1px)}
+    @keyframes trustFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .trust-item{animation:trustFadeIn .4s ease both}
+    .trust-item:nth-child(1){animation-delay:.3s}
+    .trust-item:nth-child(2){animation-delay:.45s}
+    .trust-item:nth-child(3){animation-delay:.6s}
+    .trust-item:nth-child(4){animation-delay:.75s}
 
     /* --- BTN SECONDARY SHINE --- */
     .btn-secondary{overflow:hidden}
@@ -414,6 +420,7 @@
   <a href="contact.html">Contact</a>
 </div>
 
+<main>
 <!-- HERO -->
 <section id="hero">
   <div class="hero-gradient" aria-hidden="true"></div>
@@ -634,6 +641,8 @@
     <path d="M0,0 C360,48 1080,0 1440,24 L1440,48 L0,48Z" fill="#0A1510"/>
   </svg>
 </div>
+
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -1063,18 +1072,6 @@ gsap.utils.toArray('.reveal').forEach(el=>{
   }
 })();
 
-// Trust strip fade-in letters
-(function(){
-  const strip=document.querySelector('.trust-strip');
-  if(!strip) return;
-  const items=strip.querySelectorAll('.trust-item');
-  items.forEach(item=>{item.style.opacity='0';item.style.transform='translateY(8px)';});
-  strip.offsetHeight; // force reflow
-  items.forEach((item,i)=>{
-    item.style.transition=`opacity 0.4s ease ${1.2+i*0.15}s, transform 0.4s ease ${1.2+i*0.15}s`;
-    item.style.opacity='1';item.style.transform='none';
-  });
-})();
 </script>
 </body>
 </html>
