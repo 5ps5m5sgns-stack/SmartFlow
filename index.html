@@ -694,7 +694,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   if(!canvas||typeof THREE==='undefined')return;
 
   const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
-  R.setPixelRatio(Math.min(devicePixelRatio,1.5));
+  R.setPixelRatio(Math.min(devicePixelRatio,1));
   R.setClearColor(0x000000,0);
   R.toneMapping=THREE.ACESFilmicToneMapping;
   R.toneMappingExposure=1.2;
@@ -888,11 +888,17 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   }
   applyPhase(phase);
 
-  // ── Boucle d'animation ────────────────────────────────
-  let camA=0;
+  // ── Boucle d'animation (pause quand hero hors viewport) ──
+  let camA=0, heroVisible=true, rafId=null;
   const clk=new THREE.Clock();
+  const heroObs=new IntersectionObserver(entries=>{
+    heroVisible=entries[0].isIntersecting;
+    if(heroVisible&&!rafId){clk.getDelta();rafId=requestAnimationFrame(animate);}
+  },{threshold:0});
+  heroObs.observe(canvas.closest('#hero')||canvas);
   function animate(){
-    requestAnimationFrame(animate);
+    if(!heroVisible){rafId=null;return;}
+    rafId=requestAnimationFrame(animate);
     const dt=Math.min(clk.getDelta(),0.05);
     const T=Date.now()*0.001;
 
