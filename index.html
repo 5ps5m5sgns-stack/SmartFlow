@@ -699,14 +699,12 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   function init(){
 
   const R=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'high-performance'});
-  R.setPixelRatio(Math.min(devicePixelRatio,1));
+  R.setPixelRatio(0.5);
   R.setClearColor(0x000000,0);
-  R.toneMapping=THREE.ACESFilmicToneMapping;
-  R.toneMappingExposure=1.2;
+  R.toneMapping=THREE.NoToneMapping;
   R.shadowMap.enabled=false;
 
   const S=new THREE.Scene();
-  S.fog=new THREE.Fog(0x0B1D12,18,38);
 
   const CAM=new THREE.PerspectiveCamera(45,1,0.1,100);
   CAM.position.set(0,11,9); CAM.lookAt(0,0,0);
@@ -718,21 +716,14 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   window.addEventListener('resize',resize); resize();
 
   // ── Lumières ──────────────────────────────────────────
-  S.add(new THREE.AmbientLight(0x0C1F14,2.5));
-
-  const dirL=new THREE.DirectionalLight(0xffffff,0.3);
-  dirL.position.set(5,12,8); S.add(dirL);
+  S.add(new THREE.AmbientLight(0x1A3A24,3.5));
 
   // Lumière centrale du carrefour (accent SmartFlow)
   const cL=new THREE.PointLight(0x00C9A7,6,14); cL.position.set(0,4,0); S.add(cL);
 
-  // Lumières de signalisation (changent avec les feux)
-  const lEW=new THREE.PointLight(0x00C9A7,4,10); lEW.position.set(0,1.5,0); S.add(lEW);
-  const lNS=new THREE.PointLight(0xFF3300,4,10); lNS.position.set(0,1.5,0); S.add(lNS);
-
   // ── Matériaux ──────────────────────────────────────────
   const M=(c,r,m,e,ei)=>{
-    const mat=new THREE.MeshStandardMaterial({color:c,roughness:r??0.8,metalness:m??0});
+    const mat=new THREE.MeshLambertMaterial({color:c});
     if(e!==undefined){mat.emissive=new THREE.Color(e);mat.emissiveIntensity=ei??1;}
     return mat;
   };
@@ -747,20 +738,18 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const mTL     = M(0xFF2200,0,0,0xFF2200,2.0);    // feux arrière rouges
   const mGlass  = M(0x050A12,0.05,0.95);
 
-  const add=(geo,mat,x,y,z,cast,recv)=>{
+  const add=(geo,mat,x,y,z)=>{
     const m=new THREE.Mesh(geo,mat);
     if(x!==undefined) m.position.set(x,y,z);
-    if(cast) m.castShadow=true;
-    if(recv) m.receiveShadow=true;
     S.add(m); return m;
   };
 
   // ── Sol & Routes ────────────────────────────────────────
-  const gnd=add(new THREE.PlaneGeometry(80,80),mGround); gnd.rotation.x=-Math.PI/2; gnd.receiveShadow=true;
+  const gnd=add(new THREE.PlaneGeometry(40,40),mGround); gnd.rotation.x=-Math.PI/2;
 
   // Bandes de route (axe X et axe Z)
-  const r1=add(new THREE.BoxGeometry(28,0.08,5.2),mRoad,0,0,0,false,true);
-  const r2=add(new THREE.BoxGeometry(5.2,0.08,28),mRoad,0,0,0,false,true);
+  const r1=add(new THREE.BoxGeometry(28,0.08,5.2),mRoad,0,0,0);
+  const r2=add(new THREE.BoxGeometry(5.2,0.08,28),mRoad,0,0,0);
 
   // Trottoirs
   [[ 0,0.03, 3.6,28,0.06,1.0],[ 0,0.03,-3.6,28,0.06,1.0],
@@ -773,19 +762,19 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   ].forEach(([x,y,z,w,h,d])=>add(new THREE.BoxGeometry(w,h,d),mEdge,x,y,z));
 
   // Pointillés axe X
-  for(let p=-12;p<=12;p+=2.2){
+  for(let p=-12;p<=12;p+=4.4){
     if(Math.abs(p)<2.8) continue;
     add(new THREE.BoxGeometry(1.0,0.04,0.1),mDash,p,0.05,0);
   }
   // Pointillés axe Z
-  for(let p=-12;p<=12;p+=2.2){
+  for(let p=-12;p<=12;p+=4.4){
     if(Math.abs(p)<2.8) continue;
     add(new THREE.BoxGeometry(0.1,0.04,1.0),mDash,0,0.05,p);
   }
 
   // Passages piétons (bandes blanches)
   const mCW=M(0x1E3322,0.7,0,0x0A1A10,0.3);
-  [0,0.32,0.64,0.96].forEach(o=>{
+  [0,0.64].forEach(o=>{
     add(new THREE.BoxGeometry(5.0,0.045,0.18),mCW,0,0.06, 2.75+o);
     add(new THREE.BoxGeometry(5.0,0.045,0.18),mCW,0,0.06,-2.75-o);
     add(new THREE.BoxGeometry(0.18,0.045,5.0),mCW, 2.75+o,0.06,0);
@@ -797,8 +786,8 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     const g=new THREE.Group();
 
     // Poteau
-    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.068,3.4,10),mPole);
-    pole.position.y=1.7; pole.castShadow=true; g.add(pole);
+    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.068,3.4,5),mPole);
+    pole.position.y=1.7; g.add(pole);
 
     // Boîtier
     const box=new THREE.Mesh(new THREE.BoxGeometry(0.28,1.05,0.22),mHsg);
@@ -815,9 +804,9 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     const yM=M(0x1A1000,0.2,0,0xFFAA00,0);
     const gM=M(sg?0x00C9A7:0x001A08,0.2,0,sg?0x00C9A7:0x000000,sg?2.5:0);
 
-    const rb=new THREE.Mesh(new THREE.SphereGeometry(0.095,12,12),rM); rb.position.set(0,3.62,0.12); g.add(rb);
-    const yb=new THREE.Mesh(new THREE.SphereGeometry(0.095,12,12),yM); yb.position.set(0,3.35,0.12); g.add(yb);
-    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.095,12,12),gM); gb.position.set(0,3.08,0.12); g.add(gb);
+    const rb=new THREE.Mesh(new THREE.SphereGeometry(0.095,4,4),rM); rb.position.set(0,3.62,0.12); g.add(rb);
+    const yb=new THREE.Mesh(new THREE.SphereGeometry(0.095,4,4),yM); yb.position.set(0,3.35,0.12); g.add(yb);
+    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.095,4,4),gM); gb.position.set(0,3.08,0.12); g.add(gb);
 
     g.position.set(px,0,pz);
     g.rotation.y=rot;
@@ -842,9 +831,9 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
     const g=new THREE.Group();
     const bm=M(carColors[ci],0.3,0.7);
     const body=new THREE.Mesh(new THREE.BoxGeometry(1.1*sc,0.22*sc,0.52*sc),bm);
-    body.position.y=0.22*sc; body.castShadow=true; g.add(body);
+    body.position.y=0.22*sc; g.add(body);
     const roof=new THREE.Mesh(new THREE.BoxGeometry(0.54*sc,0.18*sc,0.44*sc),mGlass);
-    roof.position.set(-0.06*sc,0.38*sc,0); roof.castShadow=true; g.add(roof);
+    roof.position.set(-0.06*sc,0.38*sc,0); g.add(roof);
     // Phares & feux
     [-0.22*sc,0.22*sc].forEach(z=>{
       const h=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.05,0.04),mHL); h.position.set( 0.56*sc,0.22*sc,z); g.add(h);
@@ -856,14 +845,10 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const ROAD=22;
   const carDefs=[
     {ax:'x',dir:1, ln: 0.85,ph:0.00,ci:0,sc:1.0},
-    {ax:'x',dir:1, ln: 0.85,ph:0.46,ci:2,sc:0.95},
     {ax:'x',dir:-1,ln:-0.85,ph:0.55,ci:1,sc:1.0},
     {ax:'x',dir:-1,ln:-0.85,ph:0.20,ci:3,sc:0.97},
     {ax:'z',dir:1, ln: 0.85,ph:0.28,ci:4,sc:1.0},
-    {ax:'z',dir:1, ln: 0.85,ph:0.74,ci:0,sc:0.95},
     {ax:'z',dir:-1,ln:-0.85,ph:0.65,ci:2,sc:1.0},
-    {ax:'z',dir:-1,ln:-0.85,ph:0.12,ci:3,sc:0.97},
-    {ax:'x',dir:1, ln: 0.85,ph:0.80,ci:4,sc:1.0},
     {ax:'z',dir:-1,ln:-0.85,ph:0.40,ci:1,sc:1.05},
   ];
   const cars=carDefs.map(d=>{
@@ -880,17 +865,17 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   const dur={xg:5,xy:0.8,zg:5,zy:0.8};
   const nxt={xg:'xy',xy:'zg',zg:'zy',zy:'xg'};
   function applyPhase(p){
-    if(p==='xg'){setG(TL[0]);setG(TL[1]);setR(TL[2]);setR(TL[3]);lEW.color.setHex(0x00C9A7);lEW.intensity=4;lNS.color.setHex(0xFF3300);lNS.intensity=2;}
-    else if(p==='xy'){setY(TL[0]);setY(TL[1]);setR(TL[2]);setR(TL[3]);lEW.color.setHex(0xFFAA00);lEW.intensity=3;}
-    else if(p==='zg'){setR(TL[0]);setR(TL[1]);setG(TL[2]);setG(TL[3]);lNS.color.setHex(0x00C9A7);lNS.intensity=4;lEW.color.setHex(0xFF3300);lEW.intensity=2;}
-    else{setR(TL[0]);setR(TL[1]);setY(TL[2]);setY(TL[3]);lNS.color.setHex(0xFFAA00);lNS.intensity=3;}
+    if(p==='xg'){setG(TL[0]);setG(TL[1]);setR(TL[2]);setR(TL[3]);}
+    else if(p==='xy'){setY(TL[0]);setY(TL[1]);setR(TL[2]);setR(TL[3]);}
+    else if(p==='zg'){setR(TL[0]);setR(TL[1]);setG(TL[2]);setG(TL[3]);}
+    else{setR(TL[0]);setR(TL[1]);setY(TL[2]);setY(TL[3]);}
   }
   applyPhase(phase);
 
   // ── Boucle d'animation (throttled + pause quand hero hors viewport) ──
   let camA=0, heroVisible=true, loopRunning=false;
   const clk=new THREE.Clock();
-  const FPS=24, frameInterval=1000/FPS;
+  const FPS=15, frameInterval=1000/FPS;
   const heroObs=new IntersectionObserver(entries=>{
     heroVisible=entries[0].isIntersecting;
     if(heroVisible&&!loopRunning){clk.getDelta();loopRunning=true;setTimeout(animate,frameInterval);}
