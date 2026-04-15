@@ -246,6 +246,7 @@
     @media (prefers-reduced-motion: reduce) {
       .hero-badge { animation: none !important; }
       .hero-title-accent { animation: none !important; background: var(--accent); -webkit-text-fill-color: var(--accent); }
+      .hero-intersection *{animation:none !important}
     }
 
     /* --- FOOTER --- */
@@ -385,9 +386,35 @@
     .btn-secondary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(19,201,154,.12),transparent);transform:skewX(-20deg);transition:left .5s}
     .btn-secondary:hover::after{left:160%}
 
-    /* --- THREE.JS HERO CANVAS --- */
-    #hero-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:1; display:block; }
-    @media (max-width:768px) { #hero-canvas { display:none; } }
+    /* --- HERO INTERSECTION VISUAL --- */
+    .hero-intersection{position:absolute;z-index:1;width:min(520px,75vw);height:min(520px,75vw);opacity:.55;pointer-events:none;transform:rotate(45deg)}
+    .hi-road{position:absolute;background:rgba(19,201,154,.06);border-radius:4px}
+    .hi-road--h{width:100%;height:22%;top:39%;left:0}
+    .hi-road--v{height:100%;width:22%;left:39%;top:0}
+    .hi-edge{position:absolute;background:rgba(19,201,154,.18);border-radius:2px}
+    .hi-edge--ht{width:100%;height:1px;top:39%}.hi-edge--hb{width:100%;height:1px;top:61%}
+    .hi-edge--vl{height:100%;width:1px;left:39%}.hi-edge--vr{height:100%;width:1px;left:61%}
+    .hi-center{position:absolute;top:39%;left:39%;width:22%;height:22%;border-radius:50%;background:radial-gradient(circle,rgba(19,201,154,.18) 0%,transparent 70%);animation:hiPulse 3s ease-in-out infinite}
+    @keyframes hiPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+    .hi-signal{position:absolute;width:6px;height:6px;border-radius:50%;background:#13C99A;box-shadow:0 0 8px #13C99A,0 0 16px rgba(19,201,154,.4);animation:hiSignal 6s ease-in-out infinite}
+    .hi-signal--tl{top:36%;left:36%}.hi-signal--tr{top:36%;right:36%}
+    .hi-signal--bl{bottom:36%;left:36%}.hi-signal--br{bottom:36%;right:36%}
+    .hi-signal--tr,.hi-signal--bl{animation-delay:3s}
+    @keyframes hiSignal{0%,45%{background:#13C99A;box-shadow:0 0 8px #13C99A,0 0 16px rgba(19,201,154,.4)}48%,50%{background:#FFAA00;box-shadow:0 0 8px #FFAA00}53%,95%{background:rgba(255,40,0,.6);box-shadow:0 0 4px rgba(255,40,0,.3)}98%,100%{background:#13C99A;box-shadow:0 0 8px #13C99A,0 0 16px rgba(19,201,154,.4)}}
+    .hi-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:#13C99A;opacity:.7;will-change:transform}
+    .hi-dot--r1{top:45%;animation:hiFlowR 4s linear infinite}.hi-dot--r2{top:55%;animation:hiFlowL 5s linear infinite;animation-delay:1.2s}
+    .hi-dot--r3{top:48%;animation:hiFlowR 4.5s linear infinite;animation-delay:2s}
+    .hi-dot--d1{left:45%;animation:hiFlowD 4s linear infinite;animation-delay:.5s}.hi-dot--d2{left:55%;animation:hiFlowU 5s linear infinite;animation-delay:2.5s}
+    .hi-dot--d3{left:52%;animation:hiFlowD 4.8s linear infinite;animation-delay:3.5s}
+    @keyframes hiFlowR{0%{transform:translateX(-20px);opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateX(calc(min(520px,75vw)));opacity:0}}
+    @keyframes hiFlowL{0%{transform:translateX(calc(min(520px,75vw)));opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateX(-20px);opacity:0}}
+    @keyframes hiFlowD{0%{transform:translateY(-20px);opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateY(calc(min(520px,75vw)));opacity:0}}
+    @keyframes hiFlowU{0%{transform:translateY(calc(min(520px,75vw)));opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateY(-20px);opacity:0}}
+    .hi-node{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(19,201,154,.3);animation:hiNodePulse 4s ease-in-out infinite}
+    .hi-node:nth-child(odd){animation-delay:2s}
+    @keyframes hiNodePulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.6;transform:scale(1.5)}}
+    .hi-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(19,201,154,.12),transparent);transform-origin:left center}
+    @media(max-width:768px){.hero-intersection{width:80vw;height:80vw;opacity:.4}}
   </style>
 </head>
 <body>
@@ -425,7 +452,24 @@
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-orb" aria-hidden="true" style="width:650px;height:650px;background:rgba(19,201,154,0.09);top:-180px;left:-80px;animation-duration:18s;--tx:70px;--ty:50px"></div>
   <div class="hero-orb" aria-hidden="true" style="width:450px;height:450px;background:rgba(19,201,154,0.06);bottom:-80px;right:0;animation-duration:24s;animation-delay:5s;--tx:-50px;--ty:-40px"></div>
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-intersection" aria-hidden="true">
+    <div class="hi-road hi-road--h"></div>
+    <div class="hi-road hi-road--v"></div>
+    <div class="hi-edge hi-edge--ht"></div><div class="hi-edge hi-edge--hb"></div>
+    <div class="hi-edge hi-edge--vl"></div><div class="hi-edge hi-edge--vr"></div>
+    <div class="hi-center"></div>
+    <div class="hi-signal hi-signal--tl"></div><div class="hi-signal hi-signal--tr"></div>
+    <div class="hi-signal hi-signal--bl"></div><div class="hi-signal hi-signal--br"></div>
+    <div class="hi-dot hi-dot--r1"></div><div class="hi-dot hi-dot--r2"></div><div class="hi-dot hi-dot--r3"></div>
+    <div class="hi-dot hi-dot--d1"></div><div class="hi-dot hi-dot--d2"></div><div class="hi-dot hi-dot--d3"></div>
+    <div class="hi-node" style="top:15%;left:20%"></div><div class="hi-node" style="top:10%;left:50%"></div>
+    <div class="hi-node" style="top:20%;right:15%"></div><div class="hi-node" style="bottom:15%;left:18%"></div>
+    <div class="hi-node" style="bottom:12%;right:22%"></div><div class="hi-node" style="bottom:25%;left:50%"></div>
+    <div class="hi-line" style="top:16%;left:22%;width:26%;transform:rotate(-8deg)"></div>
+    <div class="hi-line" style="top:12%;left:52%;width:22%;transform:rotate(15deg)"></div>
+    <div class="hi-line" style="bottom:16%;left:20%;width:28%;transform:rotate(5deg)"></div>
+    <div class="hi-line" style="bottom:14%;right:0;left:52%;width:22%;transform:rotate(-12deg)"></div>
+  </div>
   <div class="hero-vignette" aria-hidden="true"></div>
 
   <svg aria-hidden="true" class="leaf-particle" style="left:7%;bottom:22%;width:18px;color:#4DB888;animation-duration:9s;animation-delay:0s" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 4-8 4S7.98 4.2 17 8z"/></svg>
@@ -683,242 +727,6 @@ window.addEventListener('load',()=>{setTimeout(()=>{const ld=document.getElement
 // --- NAVBAR ---
 window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>80),{passive:true});
 
-// --- THREE.JS HERO (loaded dynamically to avoid blocking) ---
-(function(){
-  const canvas=document.getElementById('hero-canvas');
-  if(!canvas||getComputedStyle(canvas).display==='none')return;
-  // Load Three.js dynamically (non-blocking, skipped on mobile)
-  const s=document.createElement('script');
-  s.src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
-  s.async=true;
-  s.onload=()=>{if('requestIdleCallback' in window)requestIdleCallback(init,{timeout:2000});else setTimeout(init,100);};
-  document.head.appendChild(s);
-  function init(){
-
-  const R=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'high-performance'});
-  R.setPixelRatio(0.5);
-  R.setClearColor(0x000000,0);
-  R.toneMapping=THREE.NoToneMapping;
-  R.shadowMap.enabled=false;
-
-  const S=new THREE.Scene();
-
-  const CAM=new THREE.PerspectiveCamera(45,1,0.1,100);
-  CAM.position.set(0,11,9); CAM.lookAt(0,0,0);
-
-  function resize(){
-    const w=canvas.clientWidth,h=canvas.clientHeight;
-    R.setSize(w,h,false); CAM.aspect=w/h; CAM.updateProjectionMatrix();
-  }
-  window.addEventListener('resize',resize); resize();
-
-  // ── Lumières ──────────────────────────────────────────
-  S.add(new THREE.AmbientLight(0x1A3A24,3.5));
-
-  // Lumière centrale du carrefour (accent SmartFlow)
-  const cL=new THREE.PointLight(0x00C9A7,6,14); cL.position.set(0,4,0); S.add(cL);
-
-  // ── Matériaux ──────────────────────────────────────────
-  const M=(c,r,m,e,ei)=>{
-    const mat=new THREE.MeshLambertMaterial({color:c});
-    if(e!==undefined){mat.emissive=new THREE.Color(e);mat.emissiveIntensity=ei??1;}
-    return mat;
-  };
-  const mGround = M(0x07100A,0.98);
-  const mRoad   = M(0x0C1510,0.08,0.35);           // très réfléchissante
-  const mSidew  = M(0x0D1A10,0.9);
-  const mEdge   = M(0x00C9A7,0.2,0,0x00C9A7,0.8);  // bordure verte lumineuse
-  const mDash   = M(0x1C3A22,0.8,0,0x0A2010,0.4);
-  const mPole   = M(0x0E1812,0.4,0.7);
-  const mHsg    = M(0x080C08,0.9);
-  const mHL     = M(0xFFFFCC,0,0,0xFFFFBB,3.0);    // phares blancs
-  const mTL     = M(0xFF2200,0,0,0xFF2200,2.0);    // feux arrière rouges
-  const mGlass  = M(0x050A12,0.05,0.95);
-
-  const add=(geo,mat,x,y,z)=>{
-    const m=new THREE.Mesh(geo,mat);
-    if(x!==undefined) m.position.set(x,y,z);
-    S.add(m); return m;
-  };
-
-  // ── Sol & Routes ────────────────────────────────────────
-  const gnd=add(new THREE.PlaneGeometry(40,40),mGround); gnd.rotation.x=-Math.PI/2;
-
-  // Bandes de route (axe X et axe Z)
-  const r1=add(new THREE.BoxGeometry(28,0.08,5.2),mRoad,0,0,0);
-  const r2=add(new THREE.BoxGeometry(5.2,0.08,28),mRoad,0,0,0);
-
-  // Trottoirs
-  [[ 0,0.03, 3.6,28,0.06,1.0],[ 0,0.03,-3.6,28,0.06,1.0],
-   [ 3.6,0.03,0,1.0,0.06,28],[-3.6,0.03,0,1.0,0.06,28]
-  ].forEach(([x,y,z,w,h,d])=>add(new THREE.BoxGeometry(w,h,d),mSidew,x,y,z));
-
-  // Bordures lumineuses (lignes vertes bords de route)
-  [[ 0,0.06, 2.6,28,0.04,0.08],[ 0,0.06,-2.6,28,0.04,0.08],
-   [ 2.6,0.06,0,0.08,0.04,28],[-2.6,0.06,0,0.08,0.04,28]
-  ].forEach(([x,y,z,w,h,d])=>add(new THREE.BoxGeometry(w,h,d),mEdge,x,y,z));
-
-  // Pointillés axe X
-  for(let p=-12;p<=12;p+=4.4){
-    if(Math.abs(p)<2.8) continue;
-    add(new THREE.BoxGeometry(1.0,0.04,0.1),mDash,p,0.05,0);
-  }
-  // Pointillés axe Z
-  for(let p=-12;p<=12;p+=4.4){
-    if(Math.abs(p)<2.8) continue;
-    add(new THREE.BoxGeometry(0.1,0.04,1.0),mDash,0,0.05,p);
-  }
-
-  // Passages piétons (bandes blanches)
-  const mCW=M(0x1E3322,0.7,0,0x0A1A10,0.3);
-  [0,0.64].forEach(o=>{
-    add(new THREE.BoxGeometry(5.0,0.045,0.18),mCW,0,0.06, 2.75+o);
-    add(new THREE.BoxGeometry(5.0,0.045,0.18),mCW,0,0.06,-2.75-o);
-    add(new THREE.BoxGeometry(0.18,0.045,5.0),mCW, 2.75+o,0.06,0);
-    add(new THREE.BoxGeometry(0.18,0.045,5.0),mCW,-2.75-o,0.06,0);
-  });
-
-  // ── Feux tricolores ────────────────────────────────────
-  function mkLight(px,pz,rot,sg){
-    const g=new THREE.Group();
-
-    // Poteau
-    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.068,3.4,5),mPole);
-    pole.position.y=1.7; g.add(pole);
-
-    // Boîtier
-    const box=new THREE.Mesh(new THREE.BoxGeometry(0.28,1.05,0.22),mHsg);
-    box.position.y=3.35; g.add(box);
-
-    // Visières
-    [3.62,3.35,3.08].forEach(y=>{
-      const v=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.035,0.15),mPole);
-      v.position.set(0,y,0.12); g.add(v);
-    });
-
-    // Ampoules
-    const rM=M(sg?0x1A0000:0xFF2800,0.2,0,sg?0x000000:0xFF2800,sg?0:2.5);
-    const yM=M(0x1A1000,0.2,0,0xFFAA00,0);
-    const gM=M(sg?0x00C9A7:0x001A08,0.2,0,sg?0x00C9A7:0x000000,sg?2.5:0);
-
-    const rb=new THREE.Mesh(new THREE.SphereGeometry(0.095,4,4),rM); rb.position.set(0,3.62,0.12); g.add(rb);
-    const yb=new THREE.Mesh(new THREE.SphereGeometry(0.095,4,4),yM); yb.position.set(0,3.35,0.12); g.add(yb);
-    const gb=new THREE.Mesh(new THREE.SphereGeometry(0.095,4,4),gM); gb.position.set(0,3.08,0.12); g.add(gb);
-
-    g.position.set(px,0,pz);
-    g.rotation.y=rot;
-    S.add(g);
-    return{rM,yM,gM};
-  }
-  // 4 feux aux coins, orientés vers le carrefour
-  const TL=[
-    mkLight( 3.2, 3.2, Math.PI*1.25, true ),
-    mkLight(-3.2,-3.2, Math.PI*0.25, true ),
-    mkLight( 3.2,-3.2, Math.PI*0.75, false),
-    mkLight(-3.2, 3.2, Math.PI*1.75, false),
-  ];
-
-  const setG=l=>{l.rM.color.setHex(0x1A0000);l.rM.emissiveIntensity=0;l.yM.emissiveIntensity=0;l.gM.color.setHex(0x00C9A7);l.gM.emissive.setHex(0x00C9A7);l.gM.emissiveIntensity=2.5;};
-  const setY=l=>{l.rM.color.setHex(0x1A0000);l.rM.emissiveIntensity=0;l.yM.color.setHex(0xFFAA00);l.yM.emissive.setHex(0xFFAA00);l.yM.emissiveIntensity=2.5;l.gM.color.setHex(0x001A08);l.gM.emissiveIntensity=0;};
-  const setR=l=>{l.rM.color.setHex(0xFF2800);l.rM.emissive.setHex(0xFF2800);l.rM.emissiveIntensity=2.5;l.yM.emissiveIntensity=0;l.gM.color.setHex(0x001A08);l.gM.emissiveIntensity=0;};
-
-  // ── Voitures minimalistes ──────────────────────────────
-  const carColors=[0x1A2C40,0x142814,0x30180A,0x1A1830,0x281420];
-  function mkCar(ci,sc){
-    const g=new THREE.Group();
-    const bm=M(carColors[ci],0.3,0.7);
-    const body=new THREE.Mesh(new THREE.BoxGeometry(1.1*sc,0.22*sc,0.52*sc),bm);
-    body.position.y=0.22*sc; g.add(body);
-    const roof=new THREE.Mesh(new THREE.BoxGeometry(0.54*sc,0.18*sc,0.44*sc),mGlass);
-    roof.position.set(-0.06*sc,0.38*sc,0); g.add(roof);
-    // Phares & feux
-    [-0.22*sc,0.22*sc].forEach(z=>{
-      const h=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.05,0.04),mHL); h.position.set( 0.56*sc,0.22*sc,z); g.add(h);
-      const t=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.05,0.04),mTL); t.position.set(-0.56*sc,0.22*sc,z); g.add(t);
-    });
-    return g;
-  }
-
-  const ROAD=22;
-  const carDefs=[
-    {ax:'x',dir:1, ln: 0.85,ph:0.00,ci:0,sc:1.0},
-    {ax:'x',dir:-1,ln:-0.85,ph:0.55,ci:1,sc:1.0},
-    {ax:'x',dir:-1,ln:-0.85,ph:0.20,ci:3,sc:0.97},
-    {ax:'z',dir:1, ln: 0.85,ph:0.28,ci:4,sc:1.0},
-    {ax:'z',dir:-1,ln:-0.85,ph:0.65,ci:2,sc:1.0},
-    {ax:'z',dir:-1,ln:-0.85,ph:0.40,ci:1,sc:1.05},
-  ];
-  const cars=carDefs.map(d=>{
-    const m=mkCar(d.ci,d.sc);
-    if(d.ax==='x'&&d.dir===-1) m.rotation.y=Math.PI;
-    else if(d.ax==='z'&&d.dir===1)  m.rotation.y=-Math.PI/2;
-    else if(d.ax==='z'&&d.dir===-1) m.rotation.y= Math.PI/2;
-    S.add(m);
-    return{...d,mesh:m,t:d.ph,spd:0.042+Math.random()*0.02};
-  });
-
-  // ── Phase feux ────────────────────────────────────────
-  let phase='xg',phT=0;
-  const dur={xg:5,xy:0.8,zg:5,zy:0.8};
-  const nxt={xg:'xy',xy:'zg',zg:'zy',zy:'xg'};
-  function applyPhase(p){
-    if(p==='xg'){setG(TL[0]);setG(TL[1]);setR(TL[2]);setR(TL[3]);}
-    else if(p==='xy'){setY(TL[0]);setY(TL[1]);setR(TL[2]);setR(TL[3]);}
-    else if(p==='zg'){setR(TL[0]);setR(TL[1]);setG(TL[2]);setG(TL[3]);}
-    else{setR(TL[0]);setR(TL[1]);setY(TL[2]);setY(TL[3]);}
-  }
-  applyPhase(phase);
-
-  // ── Boucle d'animation (throttled + pause quand hero hors viewport) ──
-  let camA=0, heroVisible=true, loopRunning=false;
-  const clk=new THREE.Clock();
-  const FPS=15, frameInterval=1000/FPS;
-  const heroObs=new IntersectionObserver(entries=>{
-    heroVisible=entries[0].isIntersecting;
-    if(heroVisible&&!loopRunning){clk.getDelta();loopRunning=true;setTimeout(animate,frameInterval);}
-  },{threshold:0});
-  heroObs.observe(canvas.closest('#hero')||canvas);
-  function animate(){
-    if(!heroVisible){loopRunning=false;return;}
-    setTimeout(animate,frameInterval);
-    const dt=Math.min(clk.getDelta(),0.08);
-    const T=Date.now()*0.001;
-
-    // Phase
-    phT+=dt;
-    if(phT>=dur[phase]){phT=0;phase=nxt[phase];applyPhase(phase);}
-
-    // Voitures
-    cars.forEach(c=>{
-      const go=(c.ax==='x')?(phase==='xg'):(phase==='zg');
-      const yo=(c.ax==='x')?(phase==='xy'):(phase==='zy');
-      const raw=(c.t*ROAD)-(ROAD/2);
-      let spd=c.spd;
-      if(!go&&!yo&&raw>-3.8&&raw<-1.5){const f=Math.max(0,(-1.5-raw)/2.3);spd*=f*f*f;}
-      if(yo&&raw>-3.8&&raw<-0.8){const f=Math.max(0,(-0.8-raw)/3.0);spd*=f*f;}
-      c.t=(c.t+spd*dt)%1;
-      const p=(c.t*ROAD)-(ROAD/2);
-      if(c.ax==='x') c.mesh.position.set(c.dir>0?p:-p,0.06,c.ln);
-      else c.mesh.position.set(c.ln,0.06,c.dir>0?p:-p);
-    });
-
-    // Caméra : légère rotation lente + légère oscillation verticale
-    camA+=0.00045;
-    CAM.position.set(
-      Math.sin(camA)*11,
-      10+Math.sin(T*0.18)*0.4,
-      Math.cos(camA)*9
-    );
-    CAM.lookAt(0,0,0);
-
-    // Pulsation lumière centrale
-    cL.intensity=5.5+Math.sin(T*1.4)*1.2;
-
-    R.render(S,CAM);
-  }
-  animate();
-  }
-})();
 
 // --- MOBILE NAV ---
 (function(){
