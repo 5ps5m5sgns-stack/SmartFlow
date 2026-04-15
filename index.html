@@ -246,7 +246,7 @@
     @media (prefers-reduced-motion: reduce) {
       .hero-badge { animation: none !important; }
       .hero-title-accent { animation: none !important; background: var(--accent); -webkit-text-fill-color: var(--accent); }
-      .hero-intersection *{animation:none !important}
+      .hero-pulse *{animation:none !important}
     }
 
     /* --- FOOTER --- */
@@ -386,35 +386,33 @@
     .btn-secondary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(19,201,154,.12),transparent);transform:skewX(-20deg);transition:left .5s}
     .btn-secondary:hover::after{left:160%}
 
-    /* --- HERO INTERSECTION VISUAL --- */
-    .hero-intersection{position:absolute;z-index:1;width:min(520px,75vw);height:min(520px,75vw);opacity:.55;pointer-events:none;transform:rotate(45deg)}
-    .hi-road{position:absolute;background:rgba(19,201,154,.06);border-radius:4px}
-    .hi-road--h{width:100%;height:22%;top:39%;left:0}
-    .hi-road--v{height:100%;width:22%;left:39%;top:0}
-    .hi-edge{position:absolute;background:rgba(19,201,154,.18);border-radius:2px}
-    .hi-edge--ht{width:100%;height:1px;top:39%}.hi-edge--hb{width:100%;height:1px;top:61%}
-    .hi-edge--vl{height:100%;width:1px;left:39%}.hi-edge--vr{height:100%;width:1px;left:61%}
-    .hi-center{position:absolute;top:39%;left:39%;width:22%;height:22%;border-radius:50%;background:radial-gradient(circle,rgba(19,201,154,.18) 0%,transparent 70%);animation:hiPulse 3s ease-in-out infinite}
-    @keyframes hiPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
-    .hi-signal{position:absolute;width:6px;height:6px;border-radius:50%;background:#13C99A;box-shadow:0 0 8px #13C99A,0 0 16px rgba(19,201,154,.4);animation:hiSignal 6s ease-in-out infinite}
-    .hi-signal--tl{top:36%;left:36%}.hi-signal--tr{top:36%;right:36%}
-    .hi-signal--bl{bottom:36%;left:36%}.hi-signal--br{bottom:36%;right:36%}
-    .hi-signal--tr,.hi-signal--bl{animation-delay:3s}
-    @keyframes hiSignal{0%,45%{background:#13C99A;box-shadow:0 0 8px #13C99A,0 0 16px rgba(19,201,154,.4)}48%,50%{background:#FFAA00;box-shadow:0 0 8px #FFAA00}53%,95%{background:rgba(255,40,0,.6);box-shadow:0 0 4px rgba(255,40,0,.3)}98%,100%{background:#13C99A;box-shadow:0 0 8px #13C99A,0 0 16px rgba(19,201,154,.4)}}
-    .hi-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:#13C99A;opacity:.7;will-change:transform}
-    .hi-dot--r1{top:45%;animation:hiFlowR 4s linear infinite}.hi-dot--r2{top:55%;animation:hiFlowL 5s linear infinite;animation-delay:1.2s}
-    .hi-dot--r3{top:48%;animation:hiFlowR 4.5s linear infinite;animation-delay:2s}
-    .hi-dot--d1{left:45%;animation:hiFlowD 4s linear infinite;animation-delay:.5s}.hi-dot--d2{left:55%;animation:hiFlowU 5s linear infinite;animation-delay:2.5s}
-    .hi-dot--d3{left:52%;animation:hiFlowD 4.8s linear infinite;animation-delay:3.5s}
-    @keyframes hiFlowR{0%{transform:translateX(-20px);opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateX(calc(min(520px,75vw)));opacity:0}}
-    @keyframes hiFlowL{0%{transform:translateX(calc(min(520px,75vw)));opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateX(-20px);opacity:0}}
-    @keyframes hiFlowD{0%{transform:translateY(-20px);opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateY(calc(min(520px,75vw)));opacity:0}}
-    @keyframes hiFlowU{0%{transform:translateY(calc(min(520px,75vw)));opacity:0}5%{opacity:.7}95%{opacity:.7}100%{transform:translateY(-20px);opacity:0}}
-    .hi-node{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(19,201,154,.3);animation:hiNodePulse 4s ease-in-out infinite}
-    .hi-node:nth-child(odd){animation-delay:2s}
-    @keyframes hiNodePulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.6;transform:scale(1.5)}}
-    .hi-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(19,201,154,.12),transparent);transform-origin:left center}
-    @media(max-width:768px){.hero-intersection{width:80vw;height:80vw;opacity:.4}}
+    /* --- HERO PULSE VISUAL --- */
+    .hero-pulse{position:absolute;z-index:1;width:min(600px,85vw);height:min(600px,85vw);pointer-events:none;opacity:.6}
+    .hp-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(19,201,154,.08);animation:hpExpand 6s ease-out infinite}
+    .hp-ring:nth-child(2){animation-delay:1.5s}.hp-ring:nth-child(3){animation-delay:3s}.hp-ring:nth-child(4){animation-delay:4.5s}
+    @keyframes hpExpand{0%{transform:scale(.15);opacity:.6}100%{transform:scale(1);opacity:0}}
+    .hp-orbit{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(19,201,154,.06)}
+    .hp-orbit--1{inset:18%}.hp-orbit--2{inset:32%}.hp-orbit--3{inset:45%}
+    .hp-core{position:absolute;top:50%;left:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent);animation:hpCorePulse 3s ease-in-out infinite}
+    .hp-core::after{content:'';position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,rgba(19,201,154,.25) 0%,transparent 70%);animation:hpCorePulse 3s ease-in-out infinite reverse}
+    @keyframes hpCorePulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+    .hp-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.5;top:50%;left:50%;margin:-2px 0 0 -2px}
+    .hp-dot--1{animation:hpOrbit1 12s linear infinite}
+    .hp-dot--2{animation:hpOrbit2 18s linear infinite;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;opacity:.35}
+    .hp-dot--3{animation:hpOrbit3 10s linear infinite reverse;opacity:.6}
+    .hp-dot--4{animation:hpOrbit1 15s linear infinite reverse;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;opacity:.3}
+    .hp-dot--5{animation:hpOrbit2 14s linear infinite reverse;opacity:.45}
+    @keyframes hpOrbit1{0%{transform:rotate(0deg) translateX(min(96px,14vw)) rotate(0deg)}100%{transform:rotate(360deg) translateX(min(96px,14vw)) rotate(-360deg)}}
+    @keyframes hpOrbit2{0%{transform:rotate(0deg) translateX(min(155px,22vw)) rotate(0deg)}100%{transform:rotate(360deg) translateX(min(155px,22vw)) rotate(-360deg)}}
+    @keyframes hpOrbit3{0%{transform:rotate(0deg) translateX(min(205px,30vw)) rotate(0deg)}100%{transform:rotate(360deg) translateX(min(205px,30vw)) rotate(-360deg)}}
+    .hp-line{position:absolute;top:50%;left:50%;height:1px;transform-origin:left center;background:linear-gradient(90deg,rgba(19,201,154,.15),transparent)}
+    .hp-line--1{width:min(205px,30vw);transform:rotate(30deg)}
+    .hp-line--2{width:min(155px,22vw);transform:rotate(110deg)}
+    .hp-line--3{width:min(205px,30vw);transform:rotate(200deg)}
+    .hp-line--4{width:min(155px,22vw);transform:rotate(290deg)}
+    .hp-line--5{width:min(180px,26vw);transform:rotate(160deg)}
+    .hp-line--6{width:min(180px,26vw);transform:rotate(340deg)}
+    @media(max-width:768px){.hero-pulse{opacity:.35}}
   </style>
 </head>
 <body>
@@ -452,23 +450,18 @@
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-orb" aria-hidden="true" style="width:650px;height:650px;background:rgba(19,201,154,0.09);top:-180px;left:-80px;animation-duration:18s;--tx:70px;--ty:50px"></div>
   <div class="hero-orb" aria-hidden="true" style="width:450px;height:450px;background:rgba(19,201,154,0.06);bottom:-80px;right:0;animation-duration:24s;animation-delay:5s;--tx:-50px;--ty:-40px"></div>
-  <div class="hero-intersection" aria-hidden="true">
-    <div class="hi-road hi-road--h"></div>
-    <div class="hi-road hi-road--v"></div>
-    <div class="hi-edge hi-edge--ht"></div><div class="hi-edge hi-edge--hb"></div>
-    <div class="hi-edge hi-edge--vl"></div><div class="hi-edge hi-edge--vr"></div>
-    <div class="hi-center"></div>
-    <div class="hi-signal hi-signal--tl"></div><div class="hi-signal hi-signal--tr"></div>
-    <div class="hi-signal hi-signal--bl"></div><div class="hi-signal hi-signal--br"></div>
-    <div class="hi-dot hi-dot--r1"></div><div class="hi-dot hi-dot--r2"></div><div class="hi-dot hi-dot--r3"></div>
-    <div class="hi-dot hi-dot--d1"></div><div class="hi-dot hi-dot--d2"></div><div class="hi-dot hi-dot--d3"></div>
-    <div class="hi-node" style="top:15%;left:20%"></div><div class="hi-node" style="top:10%;left:50%"></div>
-    <div class="hi-node" style="top:20%;right:15%"></div><div class="hi-node" style="bottom:15%;left:18%"></div>
-    <div class="hi-node" style="bottom:12%;right:22%"></div><div class="hi-node" style="bottom:25%;left:50%"></div>
-    <div class="hi-line" style="top:16%;left:22%;width:26%;transform:rotate(-8deg)"></div>
-    <div class="hi-line" style="top:12%;left:52%;width:22%;transform:rotate(15deg)"></div>
-    <div class="hi-line" style="bottom:16%;left:20%;width:28%;transform:rotate(5deg)"></div>
-    <div class="hi-line" style="bottom:14%;right:0;left:52%;width:22%;transform:rotate(-12deg)"></div>
+  <div class="hero-pulse" aria-hidden="true">
+    <div class="hp-ring"></div><div class="hp-ring"></div><div class="hp-ring"></div><div class="hp-ring"></div>
+    <div class="hp-orbit hp-orbit--1"></div>
+    <div class="hp-orbit hp-orbit--2"></div>
+    <div class="hp-orbit hp-orbit--3"></div>
+    <div class="hp-line hp-line--1"></div><div class="hp-line hp-line--2"></div>
+    <div class="hp-line hp-line--3"></div><div class="hp-line hp-line--4"></div>
+    <div class="hp-line hp-line--5"></div><div class="hp-line hp-line--6"></div>
+    <div class="hp-dot hp-dot--1"></div><div class="hp-dot hp-dot--2"></div>
+    <div class="hp-dot hp-dot--3"></div><div class="hp-dot hp-dot--4"></div>
+    <div class="hp-dot hp-dot--5"></div>
+    <div class="hp-core"></div>
   </div>
   <div class="hero-vignette" aria-hidden="true"></div>
 
