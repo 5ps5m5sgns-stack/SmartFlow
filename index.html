@@ -698,13 +698,12 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   document.head.appendChild(s);
   function init(){
 
-  const R=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+  const R=new THREE.WebGLRenderer({canvas,antialias:false,alpha:true,powerPreference:'high-performance'});
   R.setPixelRatio(Math.min(devicePixelRatio,1));
   R.setClearColor(0x000000,0);
   R.toneMapping=THREE.ACESFilmicToneMapping;
   R.toneMappingExposure=1.2;
-  R.shadowMap.enabled=true;
-  R.shadowMap.type=THREE.PCFSoftShadowMap;
+  R.shadowMap.enabled=false;
 
   const S=new THREE.Scene();
   S.fog=new THREE.Fog(0x0B1D12,18,38);
@@ -722,12 +721,7 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   S.add(new THREE.AmbientLight(0x0C1F14,2.5));
 
   const dirL=new THREE.DirectionalLight(0xffffff,0.3);
-  dirL.position.set(5,12,8); dirL.castShadow=true;
-  dirL.shadow.mapSize.set(1024,1024);
-  dirL.shadow.camera.near=1; dirL.shadow.camera.far=40;
-  dirL.shadow.camera.left=dirL.shadow.camera.bottom=-14;
-  dirL.shadow.camera.right=dirL.shadow.camera.top=14;
-  dirL.shadow.bias=-0.002; S.add(dirL);
+  dirL.position.set(5,12,8); S.add(dirL);
 
   // Lumière centrale du carrefour (accent SmartFlow)
   const cL=new THREE.PointLight(0x00C9A7,6,14); cL.position.set(0,4,0); S.add(cL);
@@ -893,18 +887,19 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
   }
   applyPhase(phase);
 
-  // ── Boucle d'animation (pause quand hero hors viewport) ──
-  let camA=0, heroVisible=true, rafId=null;
+  // ── Boucle d'animation (throttled + pause quand hero hors viewport) ──
+  let camA=0, heroVisible=true, loopRunning=false;
   const clk=new THREE.Clock();
+  const FPS=24, frameInterval=1000/FPS;
   const heroObs=new IntersectionObserver(entries=>{
     heroVisible=entries[0].isIntersecting;
-    if(heroVisible&&!rafId){clk.getDelta();rafId=requestAnimationFrame(animate);}
+    if(heroVisible&&!loopRunning){clk.getDelta();loopRunning=true;setTimeout(animate,frameInterval);}
   },{threshold:0});
   heroObs.observe(canvas.closest('#hero')||canvas);
   function animate(){
-    if(!heroVisible){rafId=null;return;}
-    rafId=requestAnimationFrame(animate);
-    const dt=Math.min(clk.getDelta(),0.05);
+    if(!heroVisible){loopRunning=false;return;}
+    setTimeout(animate,frameInterval);
+    const dt=Math.min(clk.getDelta(),0.08);
     const T=Date.now()*0.001;
 
     // Phase
