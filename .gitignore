@@ -7,3 +7,9 @@ Docs & Notes/
 Démo & Web/
 Présentation Jury/
 Scripts & Textes/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
