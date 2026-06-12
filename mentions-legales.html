@@ -127,6 +127,16 @@
     .footer-mentions { font-size: 12px; color: rgba(168,213,194,0.5); }
     .footer-copy { font-size: 12px; color: rgba(168,213,194,0.4); }
     @media (max-width: 768px) { .footer-inner { padding: 0 20px; } .footer-top { flex-direction: column; } .footer-bottom { flex-direction: column; } }
+
+    /* ── Polish global : sélection, scrollbar, transitions de page ── */
+    ::selection{background:rgba(19,201,154,.28);color:#fff}
+    h1,h2,h3{text-wrap:balance}
+    @view-transition{navigation:auto}
+    html{scrollbar-width:thin;scrollbar-color:rgba(19,201,154,.35) #0C2015}
+    ::-webkit-scrollbar{width:10px}
+    ::-webkit-scrollbar-track{background:#0C2015}
+    ::-webkit-scrollbar-thumb{background:rgba(19,201,154,.3);border-radius:5px;border:2px solid #0C2015}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(19,201,154,.5)}
   </style>
 </head>
 <body>

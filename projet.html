@@ -157,6 +157,16 @@
     .value-card:hover::after{opacity:1}
     .skip-link{position:absolute;left:-9999px;top:0;background:var(--accent);color:#0C2015;font-weight:700;font-size:14px;padding:10px 18px;border-radius:0 0 10px 0;z-index:10001;text-decoration:none}
     .skip-link:focus{left:0}
+
+    /* ── Polish global : sélection, scrollbar, transitions de page ── */
+    ::selection{background:rgba(19,201,154,.28);color:#fff}
+    h1,h2,h3{text-wrap:balance}
+    @view-transition{navigation:auto}
+    html{scrollbar-width:thin;scrollbar-color:rgba(19,201,154,.35) #0C2015}
+    ::-webkit-scrollbar{width:10px}
+    ::-webkit-scrollbar-track{background:#0C2015}
+    ::-webkit-scrollbar-thumb{background:rgba(19,201,154,.3);border-radius:5px;border:2px solid #0C2015}
+    ::-webkit-scrollbar-thumb:hover{background:rgba(19,201,154,.5)}
   </style>
 </head>
 <body>
@@ -283,6 +293,7 @@
         <a href="projet.html">Le Projet</a>
         <a href="demo.html">Démo</a>
         <a href="contact.html">Contact</a>
+        <a href="https://github.com/5ps5m5sgns-stack/SmartFlow" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
     </div>
     <div class="footer-bottom">
