@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Solution · SmartFlow</title>
+  <meta name="description" content="Découvrez comment SmartFlow optimise les feux de circulation en 5 étapes clés grâce à l'IA. Déployable en 1 jour par carrefour, sans matériel propriétaire." />
+  <meta name="keywords" content="solution feux intelligents, optimisation trafic IA, carrefour intelligent, déploiement rapide, infrastructure existante, smart traffic light" />
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <meta name="theme-color" content="#102B1C" />
+  <link rel="canonical" href="https://smartflowprojet.com/solution.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://smartflowprojet.com/solution.html" />
+  <meta property="og:title" content="La Solution · SmartFlow" />
+  <meta property="og:description" content="De la détection à l'apprentissage, comment SmartFlow optimise les feux en 5 étapes." />
+  <meta property="og:image" content="https://smartflowprojet.com/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="La Solution SmartFlow" />
+  <meta name="twitter:description" content="5 étapes pour transformer chaque carrefour en carrefour intelligent." />
+  <meta name="twitter:image" content="https://smartflowprojet.com/og-image.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "La Solution SmartFlow",
+    "url": "https://smartflowprojet.com/solution.html",
+    "description": "Comment SmartFlow optimise les feux de circulation en 5 étapes grâce à l'IA.",
+    "isPartOf": { "@type": "WebSite", "url": "https://smartflowprojet.com" }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg-main:#102B1C;--bg-secondary:#1B3D2C;--accent:#13C99A;--accent2:#4DB888;--text:#FFFFFF;--text-muted:#A8C8B8;--highlight:#13C99A;--bg-darkest:#0C2015}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg-main);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;cursor:none}
+    h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15}
+
+    #cursor{position:fixed;width:12px;height:12px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen}
+    #cursor-ring{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--accent);opacity:.45;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .28s cubic-bezier(0.22,1,0.36,1),opacity .2s}
+
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,backdrop-filter .4s,box-shadow .4s}
+    #navbar.scrolled{background:rgba(13,31,22,.93);backdrop-filter:blur(18px);box-shadow:0 1px 0 rgba(0,201,167,.12)}
+    .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--accent);text-decoration:none}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+    .nav-cta{background:var(--accent);color:var(--bg-main)!important;font-weight:700!important;padding:8px 20px;border-radius:999px;transition:transform .2s,box-shadow .2s!important}
+    .nav-cta:hover{transform:scale(1.04);box-shadow:0 0 16px rgba(0,201,167,.4)}
+    @media(max-width:768px){.nav-links{display:none}#navbar{padding:0 20px}}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:1001}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--accent);border-radius:2px;transition:transform .3s,opacity .3s}
+    @media(max-width:768px){.hamburger{display:flex}}
+    .mobile-nav{display:none;position:fixed;inset:0;z-index:997;background:rgba(10,21,16,.97);backdrop-filter:blur(24px);flex-direction:column;align-items:center;justify-content:center;gap:40px}
+    .mobile-nav.open{display:flex}
+    .mobile-nav a{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,6vw,36px);font-weight:700;color:#fff;text-decoration:none;transition:color .2s}
+    .mobile-nav a:hover,.mobile-nav a.active{color:var(--accent)}
+    .mobile-nav-close{position:absolute;top:24px;right:24px;background:none;border:none;cursor:pointer;padding:8px}
+    .mobile-nav-close svg{width:28px;height:28px;stroke:var(--accent);stroke-width:2;stroke-linecap:round;fill:none}
+    @media(hover:none){body{cursor:auto!important}#cursor,#cursor-ring{display:none!important}}
+    a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+    /* Page hero */
+    .page-hero{padding:130px 24px 70px;text-align:center;background:var(--bg-main);position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% -10%,rgba(0,201,167,.1) 0%,transparent 60%);pointer-events:none}
+    .page-hero-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:block}
+    .page-hero-title{font-size:clamp(32px,5vw,60px);font-weight:800;color:#fff;max-width:800px;margin:0 auto 20px;letter-spacing:-0.02em}
+    .page-hero-title span{background:linear-gradient(120deg,var(--accent) 0%,#52e8ce 50%,var(--accent2) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite}
+    @keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+    .page-hero-sub{color:var(--text-muted);font-size:17px;max-width:580px;margin:0 auto 40px;line-height:1.7}
+
+    /* Signal diagram in hero */
+    .signal-diagram{display:flex;align-items:center;justify-content:center;gap:0;margin:0 auto;max-width:600px}
+    .sig-step{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1}
+    .sig-icon{width:48px;height:48px;border-radius:12px;background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.2);display:flex;align-items:center;justify-content:center;transition:background .3s,border-color .3s,transform .3s cubic-bezier(0.22,1,0.36,1)}
+    .sig-icon:hover{background:rgba(0,201,167,.2);border-color:rgba(0,201,167,.4);transform:translateY(-3px)}
+    .sig-icon svg{width:22px;height:22px;stroke:var(--accent);stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .sig-label{font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:.04em;text-align:center}
+    .sig-arrow{color:rgba(0,201,167,.3);font-size:20px;flex-shrink:0;margin:0 4px;margin-bottom:20px}
+    @media(max-width:600px){.sig-arrow{font-size:14px;margin:0 2px}.sig-icon{width:40px;height:40px}.sig-icon svg{width:18px;height:18px}}
+
+    .wave{display:block;width:100%;overflow:hidden;line-height:0}
+    .wave svg{display:block}
+
+    section{padding:100px 24px}
+    .section-inner{max-width:1100px;margin:0 auto}
+    .section-tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
+    .section-title{font-size:clamp(26px,4vw,44px);font-weight:700;margin-bottom:16px;color:#fff}
+    .section-subtitle{color:var(--text-muted);font-size:16px;margin-bottom:56px;max-width:680px}
+    .reveal{opacity:0;transform:translateY(32px)}
+
+    /* Timeline */
+    #how{background:var(--bg-secondary)}
+    .timeline-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+    @media(max-width:900px){.timeline-wrap{grid-template-columns:1fr;gap:0}}
+    .timeline{position:relative;padding-left:48px}
+    .tl-line{position:absolute;left:14px;top:0;bottom:0;width:2px;background:rgba(0,201,167,.1);border-radius:2px;overflow:hidden}
+    .tl-fill{position:absolute;top:0;left:0;right:0;height:0%;background:var(--accent);border-radius:2px;box-shadow:0 0 10px rgba(0,201,167,.55)}
+    .tl-step{position:relative;margin-bottom:56px}
+    .tl-step:last-child{margin-bottom:0}
+    .tl-dot{position:absolute;left:-42px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--bg-secondary);border:2px solid rgba(0,201,167,.4);box-shadow:0 0 8px rgba(0,201,167,.2);transition:border-color .3s,box-shadow .3s}
+    @keyframes dotPulse{0%,100%{box-shadow:0 0 14px rgba(0,201,167,.6)}50%{box-shadow:0 0 22px rgba(0,201,167,.9)}}
+    .tl-step.active .tl-dot{border-color:var(--accent);box-shadow:0 0 14px rgba(0,201,167,.6);animation:dotPulse 2s ease-in-out infinite}
+    .step-label{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+    .step-label svg{width:14px;height:14px;flex-shrink:0}
+    .step-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;color:#fff}
+    .step-desc{color:var(--text-muted);font-size:15px;line-height:1.65}
+    /* Result callout per step */
+    .step-result{display:flex;align-items:flex-start;gap:10px;margin-top:14px;padding:12px 16px;background:rgba(0,0,0,.25);border-radius:10px;border-left:2px solid rgba(0,168,141,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+    .step-result svg{width:14px;height:14px;flex-shrink:0;stroke:var(--accent);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+    .step-result span{font-size:13px;color:var(--text-muted);line-height:1.55}
+    .step-result strong{color:#fff}
+
+    .rgpd-box{margin-top:40px;padding:16px 20px;background:rgba(0,201,167,.06);border:1px solid rgba(0,201,167,.18);border-radius:12px;color:var(--text-muted);font-size:13px;line-height:1.6;display:flex;gap:12px;align-items:flex-start}
+    .rgpd-box svg{width:18px;height:18px;flex-shrink:0;color:var(--accent);margin-top:2px}
+
+    /* Right panel (sticky) */
+    .how-visual{position:sticky;top:100px}
+    @media(max-width:900px){.how-visual{display:none}}
+    .how-visual-inner{background:rgba(16,43,28,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.1)}
+    .mini-step{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:10px;background:rgba(0,201,167,.03);border:1px solid transparent;transition:background .3s,border-color .3s,transform .2s}
+    .mini-step.active{background:rgba(0,201,167,.1);border-color:rgba(0,201,167,.3);transform:translateX(4px)}
+    .mini-num{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0}
+    .mini-text{font-size:13px;color:var(--text-muted);line-height:1.4}
+    .mini-step.active .mini-text{color:#fff}
+
+    /* Deploy section */
+    #deploy{background:var(--bg-main)}
+    .deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media(max-width:768px){.deploy-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:480px){.deploy-grid{grid-template-columns:1fr}}
+    .deploy-card{background:rgba(16,43,28,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px 22px;transition:transform .35s cubic-bezier(0.22,1,0.36,1),box-shadow .35s,border-color .3s;box-shadow:0 4px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden}
+    .deploy-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(19,201,154,.2),transparent);pointer-events:none}
+    .deploy-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.5),0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.12);border-color:rgba(19,201,154,.2)}
+    .deploy-check{width:32px;height:32px;border-radius:8px;background:rgba(0,201,167,.1);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+    .deploy-check svg{width:16px;height:16px;stroke:var(--accent);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .deploy-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+    .deploy-detail{font-size:13px;color:var(--text-muted);line-height:1.55}
+
+    /* Impact */
+    #impact{background:var(--bg-secondary);position:relative;overflow:hidden}
+    .grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:56px 56px;z-index:0;pointer-events:none}
+    #impact .section-inner{position:relative;z-index:1}
+    /* At-a-glance strip */
+    .impact-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-radius:16px;overflow:hidden;border:1px solid rgba(0,201,167,.15);margin-bottom:64px}
+    @media(max-width:600px){.impact-strip{grid-template-columns:1fr}}
+    .impact-strip-item{background:rgba(13,31,22,.7);padding:24px 28px;text-align:center}
+    .impact-strip-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,52px);font-weight:800;line-height:1;margin-bottom:6px;letter-spacing:-0.02em}
+    .impact-strip-item:nth-child(1) .impact-strip-num{color:var(--accent)}
+    .impact-strip-item:nth-child(2) .impact-strip-num{color:var(--accent)}
+    .impact-strip-item:nth-child(3) .impact-strip-num{color:var(--accent)}
+    .impact-strip-label{font-size:13px;color:var(--text-muted);line-height:1.4}
+    /* Detailed grid */
+    .impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+    @media(max-width:768px){.impact-grid{grid-template-columns:1fr;gap:40px}}
+    .big-stat{display:flex;align-items:flex-end;gap:16px;margin-bottom:36px}
+    .big-stat:last-child{margin-bottom:0}
+    .big-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(52px,7vw,76px);font-weight:800;line-height:1;color:var(--accent);letter-spacing:-0.02em}
+    .big-stat:nth-child(2) .big-num{color:var(--accent)}
+    .big-stat:nth-child(3) .big-num{color:var(--accent)}
+    .big-label{color:var(--text-muted);font-size:16px;padding-bottom:8px;max-width:200px;line-height:1.4}
+    .benefits-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+    .benefits-list li{color:var(--text-muted);font-size:15px;line-height:1.5;display:flex;align-items:flex-start;gap:10px}
+    .benefits-list li svg{width:16px;height:16px;flex-shrink:0;color:var(--accent);margin-top:3px}
+    .sources{margin-top:40px;font-size:11px;color:var(--accent2);opacity:.7;line-height:1.7}
+
+    /* Comparison */
+    #comparison{background:var(--bg-main)}
+    .table-wrap{overflow-x:auto;border-radius:16px;border:1px solid rgba(0,201,167,.12)}
+    table{width:100%;border-collapse:collapse;font-size:15px}
+    thead th{color:var(--accent);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:16px 20px;border-bottom:1px solid rgba(0,201,167,.2);text-align:left;white-space:nowrap}
+    tbody td{padding:16px 20px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,.04);transition:background .2s}
+    tbody tr:nth-child(even) td{background:rgba(13,31,22,.35)}
+    tbody tr.highlight-row td{background:rgba(0,201,167,.09);color:var(--accent);font-weight:700}
+    tbody tr.highlight-row td:first-child::before{content:'★ ';opacity:.6}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr:hover:not(.highlight-row) td{background:rgba(0,201,167,.04)}
+
+    .section-cta{text-align:center;margin-top:56px;display:flex;gap:16px;justify-content:center;align-items:center;flex-wrap:wrap}
+    .btn-primary{background:var(--accent);color:#0C2015;font-weight:700;font-size:15px;padding:14px 32px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:transform .3s cubic-bezier(0.22,1,0.36,1),box-shadow .3s;box-shadow:0 4px 20px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.25)}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.45),0 4px 16px rgba(19,201,154,.2),inset 0 1px 0 rgba(255,255,255,.3)}
+    .btn-secondary{background:transparent;color:var(--accent);font-weight:600;font-size:15px;padding:13px 28px;border-radius:999px;border:1.5px solid rgba(0,201,167,.6);cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .2s,border-color .2s}
+    .btn-secondary:hover{background:rgba(0,201,167,.1);transform:scale(1.03);border-color:var(--accent)}
+
+    footer{background:var(--bg-darkest);padding:60px 24px 40px;border-top:1px solid rgba(0,201,167,.08)}
+    .footer-inner{max-width:1100px;margin:0 auto}
+    .footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:48px}
+    .footer-logo{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);text-decoration:none}
+    .footer-slogan{color:var(--text-muted);font-size:14px;margin-top:8px;font-style:italic}
+    .footer-links{display:flex;gap:28px;flex-wrap:wrap}
+    .footer-links a{color:var(--text-muted);text-decoration:none;font-size:14px;transition:color .2s}
+    .footer-links a:hover{color:var(--accent)}
+
+    /* --- HOVER EFFECTS --- */
+    .nav-links a:not(.nav-cta){position:relative;transition:color .2s,transform .2s}
+    .nav-links a:not(.nav-cta):hover{transform:translateY(-1px)}
+    .nav-logo{transition:opacity .2s,letter-spacing .25s}
+    .nav-logo:hover{opacity:.85;letter-spacing:.01em}
+    .section-tag{transition:color .2s,transform .25s;display:inline-block}
+    .section-tag:hover{transform:translateX(3px)}
+    .deploy-card:hover .deploy-check{background:rgba(19,201,154,.18);transform:scale(1.08);transition:background .25s,transform .25s}
+    .deploy-check{transition:background .25s,transform .25s}
+    .btn-secondary{position:relative;overflow:hidden}
+    .btn-secondary::before{content:'';position:absolute;inset:0;background:rgba(19,201,154,.07);border-radius:inherit;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(0.22,1,0.36,1)}
+    .btn-secondary:hover::before{transform:scaleX(1)}
+    .footer-links a{transition:color .2s,transform .2s}
+    .footer-links a:hover{transform:translateY(-1px)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .footer-mentions{font-size:12px;color:var(--text-muted);opacity:.65}
+    .footer-copy{font-size:12px;color:var(--text-muted);opacity:.7}
+    #scroll-bar{position:fixed;top:0;left:0;height:1px;background:var(--accent);opacity:.6;z-index:2000;width:0%;transition:width .1s linear}
+    .deploy-card{position:relative;overflow:hidden}
+    .deploy-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,201,167,0.08) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;border-radius:inherit;pointer-events:none}
+    .deploy-card:hover::after{opacity:1}
+    .skip-link{position:absolute;left:-9999px;top:0;background:var(--accent);color:#0C2015;font-weight:700;font-size:14px;padding:10px 18px;border-radius:0 0 10px 0;z-index:10001;text-decoration:none}
+    .skip-link:focus{left:0}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+<div id="scroll-bar" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<nav id="navbar" role="navigation" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="SmartFlow, Accueil">SmartFlow</a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="solution.html" class="active">La Solution</a></li>
+    <li><a href="projet.html">Le Projet</a></li>
+    <li><a href="demo.html">Démo</a></li>
+    <li><a href="contact.html" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger-btn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Navigation principale">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Fermer le menu"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="index.html">Accueil</a>
+  <a href="solution.html" class="active">La Solution</a>
+  <a href="projet.html">Le Projet</a>
+  <a href="demo.html">Démo</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <span class="page-hero-label">La Solution</span>
+  <h1 class="page-hero-title">Comment SmartFlow <span>rend les feux intelligents</span></h1>
+  <p class="page-hero-sub">Une caméra regarde le trafic. Un logiciel réfléchit. Le feu s'adapte. En 5 étapes simples, sans changer vos équipements.</p>
+
+  <!-- Diagramme signal -->
+  <div class="signal-diagram" role="img" aria-label="Diagramme des 5 étapes SmartFlow : Détecter, Prédire, Décider, Connecter, Apprendre">
+    <div class="sig-step">
+      <div class="sig-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <span class="sig-label">Détecter</span>
+    </div>
+    <span class="sig-arrow" aria-hidden="true">→</span>
+    <div class="sig-step">
+      <div class="sig-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <span class="sig-label">Prédire</span>
+    </div>
+    <span class="sig-arrow" aria-hidden="true">→</span>
+    <div class="sig-step">
+      <div class="sig-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <span class="sig-label">Décider</span>
+    </div>
+    <span class="sig-arrow" aria-hidden="true">→</span>
+    <div class="sig-step">
+      <div class="sig-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l5 3"/></svg>
+      </div>
+      <span class="sig-label">Connecter</span>
+    </div>
+    <span class="sig-arrow" aria-hidden="true">→</span>
+    <div class="sig-step">
+      <div class="sig-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+      </div>
+      <span class="sig-label">Apprendre</span>
+    </div>
+  </div>
+</div>
+
+<div class="wave" aria-hidden="true" style="background:#0D1F16">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:48px;width:100%">
+    <path d="M0,24 C360,0 1080,48 1440,24 L1440,48 L0,48Z" fill="#1C3829"/>
+  </svg>
+</div>
+
+<main id="main">
+<!-- COMMENT CA MARCHE -->
+<section id="how">
+  <div class="section-inner">
+    <span class="section-tag reveal">Fonctionnement</span>
+    <h2 class="section-title reveal">5 étapes, expliquées simplement</h2>
+    <p class="section-subtitle reveal">Pas de jargon technique. Voilà ce qui se passe concrètement à chaque carrefour SmartFlow.</p>
+    <div class="timeline-wrap">
+      <div class="timeline reveal" id="timeline-container">
+        <div class="tl-line"><div class="tl-fill" id="tl-fill"></div></div>
+
+        <div class="tl-step" id="step-1">
+          <div class="tl-dot"></div>
+          <div class="step-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Étape 1. Détecter
+          </div>
+          <div class="step-title">La caméra compte les voitures, c'est tout</div>
+          <p class="step-desc">Une caméra compte les véhicules et leur direction. Aucune image gardée, aucune plaque lue.</p>
+          <div class="step-result">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>En pratique :</strong> compatible avec les caméras de surveillance déjà en place. Aucune installation lourde.</span>
+          </div>
+        </div>
+
+        <div class="tl-step" id="step-2">
+          <div class="tl-dot"></div>
+          <div class="step-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Étape 2. Prédire
+          </div>
+          <div class="step-title">Il voit venir le bouchon avant vous</div>
+          <p class="step-desc">Le logiciel anticipe le trafic dans la minute suivante. Il empêche le bouchon de se former avant même qu'il existe.</p>
+          <div class="step-result">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>En pratique :</strong> les heures de pointe sont absorbées plus facilement. Moins de freinages inutiles, moins de CO₂.</span>
+          </div>
+        </div>
+
+        <div class="tl-step" id="step-3">
+          <div class="tl-dot"></div>
+          <div class="step-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Étape 3. Décider
+          </div>
+          <div class="step-title">Le feu passe au vert au bon moment</div>
+          <p class="step-desc">Le système choisit la durée de vert idéale. Priorité paramétrable : bus, vélos, urgences.</p>
+          <div class="step-result">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>En pratique :</strong> −25% de temps d'attente moyen. Les bus arrivent à l'heure. Les ambulances passent sans attendre.</span>
+          </div>
+        </div>
+
+        <div class="tl-step" id="step-4">
+          <div class="tl-dot"></div>
+          <div class="step-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 4.9A10 10 0 1 1 4.9 19.1"/><path d="M2 12h4M6 8l-4 4 4 4"/></svg>
+            Étape 4. Connecter
+          </div>
+          <div class="step-title">Les carrefours voisins se coordonnent</div>
+          <p class="step-desc">Les carrefours se coordonnent pour créer une vague verte sur toute la rue. Vous ne vous arrêtez plus à chaque feu.</p>
+          <div class="step-result">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>En pratique :</strong> vous ne vous arrêtez plus à chaque feu. Le trafic s'écoule sans à-coups.</span>
+          </div>
+        </div>
+
+        <div class="tl-step" id="step-5">
+          <div class="tl-dot"></div>
+          <div class="step-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            Étape 5. Apprendre
+          </div>
+          <div class="step-title">Il s'améliore tout seul chaque nuit</div>
+          <p class="step-desc">Chaque nuit, le système analyse sa journée et ajuste ses réglages automatiquement.</p>
+          <div class="step-result">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>En pratique :</strong> les résultats progressent avec le temps. Après 6 mois, les gains sont 15 à 25% supérieurs au premier jour.</span>
+          </div>
+        </div>
+
+        <div class="rgpd-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span><strong>Zéro donnée personnelle.</strong> Aucune image stockée, aucune plaque lue. Uniquement des comptages de flux anonymisés, traités en local.</span>
+        </div>
+      </div>
+
+      <!-- Panneau droit -->
+      <div class="how-visual" aria-hidden="true">
+        <div class="how-visual-inner">
+          <p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Vous êtes à l'étape</p>
+          <div class="mini-step active" id="mini-1"><span class="mini-num">01</span><span class="mini-text">Caméra, comptage véhicules</span></div>
+          <div class="mini-step" id="mini-2"><span class="mini-num">02</span><span class="mini-text">Anticipation du trafic</span></div>
+          <div class="mini-step" id="mini-3"><span class="mini-num">03</span><span class="mini-text">Passage au vert automatique</span></div>
+          <div class="mini-step" id="mini-4"><span class="mini-num">04</span><span class="mini-text">Coordination réseau voisin</span></div>
+          <div class="mini-step" id="mini-5"><span class="mini-num">05</span><span class="mini-text">Amélioration automatique nocturne</span></div>
+          <div style="margin-top:20px;padding:16px;background:rgba(0,201,167,.06);border-radius:10px;border:1px solid rgba(0,201,167,.15)">
+            <p style="font-size:12px;color:var(--text-muted);line-height:1.65">Chaque composant est <strong style="color:#fff">open-source MIT</strong> et tourne sur votre infrastructure existante, sans matériel propriétaire.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave" aria-hidden="true" style="background:#1C3829">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:48px;width:100%">
+    <path d="M0,0 C480,48 960,0 1440,32 L1440,48 L0,48Z" fill="#0D1F16"/>
+  </svg>
+</div>
+
+<!-- DÉPLOIEMENT EN PRATIQUE -->
+<section id="deploy">
+  <div class="section-inner">
+    <span class="section-tag reveal">Pour les décideurs</span>
+    <h2 class="section-title reveal">Ça s'installe en 1 jour, sur ce que vous avez déjà</h2>
+    <p class="section-subtitle reveal">Pas besoin de changer les feux, creuser les routes ou signer un contrat de 10 ans. SmartFlow s'adapte à votre infrastructure existante.</p>
+    <div class="deploy-grid">
+      <div class="deploy-card reveal">
+        <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="deploy-name">Caméra IP simple</div>
+        <div class="deploy-detail">Compatible avec les caméras existantes. Sinon, une caméra abordable suffit.</div>
+      </div>
+      <div class="deploy-card reveal">
+        <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="deploy-name">Matériel léger &lt; 10W</div>
+        <div class="deploy-detail">Fonctionne sur un Raspberry Pi 4 ou petit boîtier économique. Consommation électrique négligeable.</div>
+      </div>
+      <div class="deploy-card reveal">
+        <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="deploy-name">Réseau 4G/fibre standard</div>
+        <div class="deploy-detail">Utilise le réseau existant. Aucune infrastructure dédiée requise.</div>
+      </div>
+      <div class="deploy-card reveal">
+        <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="deploy-name">1 jour par carrefour</div>
+        <div class="deploy-detail">Installation et mise en service complète. Un technicien suffit, sans couper le trafic.</div>
+      </div>
+      <div class="deploy-card reveal">
+        <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="deploy-name">Open-source MIT</div>
+        <div class="deploy-detail">Code libre et auditable. La ville garde le contrôle total, sans dépendance à un éditeur.</div>
+      </div>
+      <div class="deploy-card reveal">
+        <div class="deploy-check"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="deploy-name">Conforme RGPD</div>
+        <div class="deploy-detail">Données traitées en local uniquement. Aucun envoi vers un cloud tiers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave" aria-hidden="true" style="background:#0D1F16">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:48px;width:100%">
+    <path d="M0,32 C480,0 960,48 1440,16 L1440,48 L0,48Z" fill="#1C3829"/>
+  </svg>
+</div>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="section-inner">
+    <span class="section-tag reveal">Résultats mesurés</span>
+    <h2 class="section-title reveal">L'impact en chiffres</h2>
+    <p class="section-subtitle reveal">Basés sur les données des villes pionnières (Pittsburgh, Dijon, Singapour) et les modèles ADEME.</p>
+
+    <!-- At-a-glance strip -->
+    <div class="impact-strip reveal">
+      <div class="impact-strip-item">
+        <div class="impact-strip-num">-<span class="counter" data-val="30">0</span>%</div>
+        <div class="impact-strip-label">de CO₂ à l'échelle du réseau</div>
+      </div>
+      <div class="impact-strip-item">
+        <div class="impact-strip-num"><span class="counter" data-val="8500">0</span> t</div>
+        <div class="impact-strip-label">CO₂ évitées / an · 50 carrefours</div>
+      </div>
+      <div class="impact-strip-item">
+        <div class="impact-strip-num">-<span class="counter" data-val="25">0</span>%</div>
+        <div class="impact-strip-label">de temps d'attente aux feux</div>
+      </div>
+    </div>
+
+    <div class="impact-grid">
+      <div class="reveal">
+        <ul class="benefits-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Réduction des NOx et particules fines PM2.5 aux abords des carrefours
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Nuisances sonores réduites de 3 à 5 dB (arrêts/redémarrages moteur)
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Priorité réglable : bus, vélos, piétons, véhicules d'urgence
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Quartiers sensibles et zones à faibles émissions ciblés en priorité
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Code réplicable sur toutes les communes françaises équipées de feux
+          </li>
+        </ul>
+        <p class="sources">Sources : ADEME 2022 · SYTRAL 2022 · DeepMind Green Light 2023 · MIT Urban Mobility Lab 2021</p>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:0">
+        <div class="big-stat">
+          <div class="big-num">-<span style="font-size:inherit">30</span>%</div>
+          <div class="big-label">de CO₂ à l'échelle du réseau</div>
+        </div>
+        <div class="big-stat">
+          <div class="big-num" style="font-size:clamp(40px,5vw,60px)">8 500 t</div>
+          <div class="big-label">de CO₂ évitées / an sur 50 carrefours</div>
+        </div>
+        <div class="big-stat">
+          <div class="big-num">-25%</div>
+          <div class="big-label">de temps d'attente aux feux</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave" aria-hidden="true" style="background:#1C3829">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:48px;width:100%">
+    <path d="M0,0 C360,48 1080,0 1440,16 L1440,48 L0,48Z" fill="#0D1F16"/>
+  </svg>
+</div>
+
+<!-- COMPARAISON INTERNATIONALE -->
+<section id="comparison">
+  <div class="section-inner">
+    <span class="section-tag reveal">Benchmarks mondiaux</span>
+    <h2 class="section-title reveal">D'autres villes l'ont déjà fait.</h2>
+    <p class="section-subtitle reveal">Pittsburgh, Singapour, Dijon : partout où des feux intelligents ont été déployés, les résultats sont là. SmartFlow vise encore plus haut, et son code est entièrement ouvert.</p>
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Ville</th>
+            <th>Système</th>
+            <th>Résultat CO₂</th>
+            <th>Résultat trafic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pittsburgh, USA</td>
+            <td>SURTRAC (CMU)</td>
+            <td>−21% CO₂</td>
+            <td>−25% temps d'attente</td>
+          </tr>
+          <tr>
+            <td>Singapour</td>
+            <td>Green Light · DeepMind</td>
+            <td>−12% GES</td>
+            <td>−20% arrêts</td>
+          </tr>
+          <tr>
+            <td>Dijon, France</td>
+            <td>DiviaCités</td>
+            <td>−14% CO₂</td>
+            <td>−18% attente</td>
+          </tr>
+          <tr>
+            <td>Amsterdam</td>
+            <td>DAMN! Smart Signals</td>
+            <td>−15% CO₂</td>
+            <td>−17% congestion</td>
+          </tr>
+          <tr class="highlight-row">
+            <td>Votre ville (objectif)</td>
+            <td>SmartFlow (open-source)</td>
+            <td>−30% CO₂</td>
+            <td>−25% attente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="section-cta reveal">
+      <a href="contact.html" class="btn-primary">Devenir ville pilote</a>
+      <a href="projet.html" class="btn-secondary">En savoir plus sur le projet</a>
+    </div>
+  </div>
+</section>
+
+<div class="wave" aria-hidden="true" style="background:#0D1F16">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:48px;width:100%">
+    <path d="M0,0 C360,48 1080,0 1440,24 L1440,48 L0,48Z" fill="#0A1510"/>
+  </svg>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-logo">SmartFlow</a>
+        <p class="footer-slogan">Des feux qui pensent. Pour une ville qui respire.</p>
+      </div>
+      <nav class="footer-links" aria-label="Liens du pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="solution.html">La Solution</a>
+        <a href="projet.html">Le Projet</a>
+        <a href="demo.html">Démo</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-mentions">Open-source MIT License · Respect total de la vie privée · <a href="mentions-legales.html" style="color:inherit;text-decoration:underline">Mentions légales</a> · <a href="politique-confidentialite.html" style="color:inherit;text-decoration:underline">Confidentialité</a></p>
+      <p class="footer-copy">© 2026 Philippine Carpentier &amp; Gabriel Ponthieu</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Cursor
+(function(){const c=document.getElementById('cursor'),r=document.getElementById('cursor-ring');let mx=-100,my=-100,rx=-100,ry=-100;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});(function loop(){rx+=(mx-rx)*0.18;ry+=(my-ry)*0.18;c.style.left=mx+'px';c.style.top=my+'px';r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(loop);})();document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2)';r.style.opacity='.8';r.style.transform='translate(-50%,-50%) scale(1.5)';});el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.opacity='.45';r.style.transform='translate(-50%,-50%) scale(1)';});});})();
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>80),{passive:true});
+
+// Mobile nav
+(function(){const b=document.getElementById('hamburger-btn'),n=document.getElementById('mobile-nav'),cl=document.getElementById('mobile-nav-close');if(!b)return;const close=()=>{n.classList.remove('open');document.body.style.overflow='';b.setAttribute('aria-expanded','false');};b.addEventListener('click',()=>{n.classList.add('open');document.body.style.overflow='hidden';b.setAttribute('aria-expanded','true');});cl.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});})();
+
+// --- SCROLL REVEAL (GSAP chargé async pour ne pas bloquer le rendu) ---
+(function(){
+  const gs=document.createElement('script');
+  gs.src='https://cdn.jsdelivr.net/npm/gsap@3.12.4/dist/gsap.min.js';
+  gs.async=true;
+  gs.onload=function(){
+    const revealObs=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting)return;
+        revealObs.unobserve(e.target);
+        const el=e.target;
+        gsap.fromTo(el,{opacity:0,y:36},{opacity:1,y:0,duration:0.85,ease:'power2.out',onComplete:()=>{el.classList.remove('reveal');gsap.set(el,{clearProps:'transform,opacity'})}});
+      });
+    },{threshold:0,rootMargin:'0px 0px -12% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+  };
+  document.head.appendChild(gs);
+})();
+
+// Timeline fill (scroll-based, no ScrollTrigger)
+(function(){
+  const fill=document.getElementById('tl-fill'),cont=document.getElementById('timeline-container');
+  if(!fill||!cont)return;
+  window.addEventListener('scroll',()=>{
+    const r=cont.getBoundingClientRect(),vh=window.innerHeight;
+    const start=vh*0.8,end=vh*0.35;
+    const progress=Math.min(1,Math.max(0,(start-r.top)/(r.height-(vh-start-end+end))));
+    fill.style.height=(progress*100)+'%';
+  },{passive:true});
+})();
+
+// Scroll-linked step highlighting
+(function(){
+  const steps=[1,2,3,4,5].map(i=>document.getElementById('step-'+i));
+  const minis=[1,2,3,4,5].map(i=>document.getElementById('mini-'+i));
+  if(!steps[0]||!minis[0])return;
+  function setActive(idx){
+    steps.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    minis.forEach((m,i)=>m.classList.toggle('active',i===idx));
+  }
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const idx=steps.indexOf(entry.target);
+        if(idx>=0)setActive(idx);
+      }
+    });
+  },{threshold:0.4,rootMargin:'-10% 0px -40% 0px'});
+  steps.forEach(s=>obs.observe(s));
+})();
+
+// Scroll progress bar
+(function(){const bar=document.getElementById('scroll-bar');window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(h>0?scrollY/h*100:0)+'%';},{passive:true});})();
+
+// Counters
+document.querySelectorAll('.counter').forEach(el=>{
+  const obs=new IntersectionObserver(entries=>{
+    if(!entries[0].isIntersecting)return;
+    obs.unobserve(el);
+    const target=parseInt(el.dataset.val,10),dur=1600,start=performance.now();
+    (function step(now){const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3);el.textContent=Math.round(ease*target).toLocaleString('fr-FR');if(p<1)requestAnimationFrame(step);else el.textContent=target.toLocaleString('fr-FR');})(start);
+  },{threshold:0.5});
+  obs.observe(el);
+});
+
+
+// 3D tilt on deploy-cards
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.deploy-card').forEach(card=>{
+    card.addEventListener('mouseenter',()=>{
+      card.style.willChange='transform';
+      card.style.transition='none';
+    });
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-0.5;
+      const y=(e.clientY-r.top)/r.height-0.5;
+      card.style.transform=`translateY(-6px) perspective(500px) rotateX(${-y*5}deg) rotateY(${x*5}deg)`;
+    });
+    card.addEventListener('mouseleave',()=>{
+      card.style.transition='transform .35s cubic-bezier(0.22,1,0.36,1), box-shadow .35s';
+      card.style.transform='translateY(0)';
+      card.addEventListener('transitionend',function handler(){
+        card.style.transition='';
+        card.style.transform='';
+        card.style.willChange='';
+        card.removeEventListener('transitionend',handler);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
